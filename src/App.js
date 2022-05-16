@@ -1,9 +1,15 @@
 import './App.css';
+import LandingScreen from './pages/LandingScreen'
+import GameScreen from './pages/GameScreen';
 
 function App() {
   return (
     <div className="App">
-      <p>Hello from battleship</p>
+      
+      <LandingScreen />
+
+      <GameScreen />
+
     </div>
   );
 }
