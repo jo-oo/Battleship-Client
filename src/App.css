@@ -11,3 +11,12 @@
   justify-content: center;
   align-items: center;
 }
+
+.waiting-screen {
+  background-color: bisque;
+  min-height: 100vh;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+}
