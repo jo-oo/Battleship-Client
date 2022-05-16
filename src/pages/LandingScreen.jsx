@@ -1,15 +1,26 @@
-import React from 'react'
+import { useEffect, useRef, useState } from 'react'
 
-const landing = () => {
+const Landing = () => {
+
+  const [nameInput, setNameInput] = useState()
+  const searchInputRef = useRef()
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+
+    console.log('Your name is:', nameInput )
+  }
+
   return (
     <section className='start-screen'>
         <h1>Battleship</h1>
-        <form>
-          <input type="text" id="username" className="form-control form-control-lg" placeholder="Your name" required autoFocus />
+        <form className='form' onSubmit={handleSubmit}>
+          <input type="text" id="username" className="form-control form-control-lg" onChange={e => setNameInput(e.target.value)} ref={searchInputRef} placeholder="Your name" required autoFocus />
+          <br />
           <button type="submit" className="btn btn-primary">Enter queue</button>
         </form>
     </section>
   )
 }
 
-export default landing
+export default Landing
