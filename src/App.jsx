@@ -11,7 +11,7 @@ function App() {
   return (
     <div className="App">
 
-      <LandingScreen />
+      <LandingScreen socket={ socket } />
 
     </div>
   );
