@@ -1,5 +1,6 @@
 // Import hooks from react
 import { useRef, useState } from 'react'
+import GameScreen from '../pages/GameScreen';
 
 const Landing = () => {
 
@@ -18,32 +19,36 @@ const Landing = () => {
 
   return (
     <>
-    {
-      // Show start screen form when loading state is false
-      !isLoading && 
-      (
-        <section className='start-screen'>
+      {
+        // Show start screen form when loading state is false
+        !isLoading &&
+        (
+          <section className='start-screen'>
             <h1>Battleship</h1>
             <form className='form' onSubmit={handleSubmit}>
               <input type="text" id="username" className="form-control form-control-lg" onChange={e => setNameInput(e.target.value)} ref={searchInputRef} placeholder="Your name" required autoFocus />
               <br />
               <button type="submit" className="btn btn-primary">Enter queue</button>
             </form>
-        </section>
-      )
-    }
+          </section>
+        )
+      }
 
-    {
-      // Show waiting screen when loading state is true
-      isLoading && 
-      (
-        <section className='waiting-screen'>
-          <p>Hello {nameInput}</p>
-          <p>Waiting for opponent...</p>
-        </section>
-      )
-    }
-    
+      {
+        // Show waiting screen when loading state is true
+        isLoading &&
+        (
+          <section className='waiting-screen'>
+            <p>Hello {nameInput}</p>
+            <p>Waiting for opponent...</p>
+
+
+
+
+          </section>
+        )
+      }
+
     </>
   )
 }
