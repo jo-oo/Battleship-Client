@@ -42,7 +42,7 @@ const Landing = () => {
             <p>Hello {nameInput}</p>
             <p>Waiting for opponent...</p>
 
-
+            <GameScreen />
 
 
           </section>
