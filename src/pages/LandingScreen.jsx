@@ -1,7 +1,8 @@
 // Import hooks from react
 import { useRef, useEffect, useState, useCallback } from 'react'
 import GameScreen from '../pages/GameScreen';
-
+import Spinner from 'react-bootstrap/Spinner'
+import LoadingSpinner from '../components/LoadingSpinner';
 
 const Landing = ({ socket }) => {
 
@@ -63,10 +64,15 @@ const Landing = ({ socket }) => {
         // Show waiting screen when loading state is true
         isLoading &&
         (
-          <section className='waiting-screen'>
+          <section className='waiting-screen mt-4"'>
 
             <p>Hello {nameInput}</p>
             <p>Waiting for opponent...</p>
+            <LoadingSpinner
+		          loading={isLoading}
+              Spinner={Spinner}
+            >
+            </LoadingSpinner>
 
           </section>
         )
@@ -76,7 +82,7 @@ const Landing = ({ socket }) => {
         // Show gamescreen when a game is live
         isGameLive && 
         (
-          <GameScreen opponent={ opponentName } />
+          <GameScreen opponent= {opponentName} />
         )
       }
 
