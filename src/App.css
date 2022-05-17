@@ -43,6 +43,11 @@
     background-color: rgb(175, 114, 124); 
   }
 
+  .pixelOne {
+    background-color: rgb(192, 40, 65); 
+
+  }
+
   #scoreBoard {
     background-color: rgb(28, 21, 117); 
     width: 15rem; 
