@@ -7,18 +7,39 @@ import Container from 'react-bootstrap/Container'
 
 const GameScreen = () => {
 
-  const pixelArray = Array.from(Array(100).keys())
+  //Function for random number
+  function getRandomNumber(min, max) {
+    return Math.floor(Math.random() * (max - min) + min);
+  }
+
+  ;
+
+
+  let shipOne = getRandomNumber(1, 11) * getRandomNumber(1, 11)
+  let shipTwo = getRandomNumber(1, 11) * getRandomNumber(1, 11)
+  let shipThree = getRandomNumber(1, 11) * getRandomNumber(1, 11)
+  let shipFour = getRandomNumber(1, 11) * getRandomNumber(1, 11)
+
+  const pixelArray = Array.from(Array(101).keys())
+  delete pixelArray[0];
 
   return (
 
     <Container>
+      <div> {shipOne}, {shipTwo}, {shipThree}, {shipFour}</div>
       <Row>
         <Col>
           <div className="gameBoard">
-            {pixelArray.map((pixel, i) =>
-              <div key={i} className="pixel"> {i} </div>
-            )}
+            {pixelArray.map((pixel, i) => {
+              return shipOne === i || shipTwo === i || shipThree === i || shipFour === i ?
+                <div className="pixelOne">{i}</div>
+                :
+                <div className="pixel"> {i}</div>
+            })}
+
           </div>
+
+
 
           <div className="gameBoard">
             {pixelArray.map(pixel =>
@@ -35,7 +56,7 @@ const GameScreen = () => {
         </Col>
 
       </Row>
-    </Container>
+    </Container >
 
   )
 }
