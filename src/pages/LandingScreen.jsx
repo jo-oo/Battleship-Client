@@ -14,7 +14,7 @@ const Landing = ({ socket }) => {
   const [nameInput, setNameInput] = useState()
   const searchInputRef = useRef()
   const [opponentName, setOpponentName] = useState()
-  const [shouldStart, setShouldStart] = useState()
+  const [shouldStart, setShouldStart] = useState(false)
 
   // Stuff to happen when game starts
   const handleGameStart = useCallback( (players, startingPlayer) => {

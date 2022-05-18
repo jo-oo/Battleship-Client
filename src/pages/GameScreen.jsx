@@ -13,12 +13,14 @@ const GameScreen = ({opponent, player, shouldStart, socket}) => {
   // Function that handles when opponent has clicked a sqaure
   const handleOppClick = (index) => {
     console.log('Your opponent clicked on square', index)
+    setIsYourTurn( true )
   }
 
   // Function that handles when player clicks opponent board
   const handleOppBoardClick = (index) => {
     if (isYourTurn) {
       socket.emit('game:click', index)
+      setIsYourTurn( false )
     }
   }
 
@@ -114,6 +116,12 @@ const GameScreen = ({opponent, player, shouldStart, socket}) => {
           <div id="scoreBoard">
             <h3> Player 2: {opponent}</h3>
             <h3> Player 1: {player}</h3>
+            {
+              isYourTurn && (<h3> It's your turn </h3>)
+            }
+            {
+              !isYourTurn && (<h3> Opponents turn </h3>)
+            }
           </div>
         </Col>
 
