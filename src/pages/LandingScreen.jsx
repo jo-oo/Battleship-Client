@@ -14,17 +14,22 @@ const Landing = ({ socket }) => {
   const [nameInput, setNameInput] = useState()
   const searchInputRef = useRef()
   const [opponentName, setOpponentName] = useState()
+  const [shouldStart, setShouldStart] = useState()
 
   // Stuff to happen when game starts
-  const handleGameStart = useCallback( (players) => {
-
-    setIsGameLive(true)
-    setIsLoading(false)
+  const handleGameStart = useCallback( (players, startingPlayer) => {
     
     // Find name of opponent
     setOpponentName( players.find( (player) => {
       return player !== nameInput
     } ) )
+
+    if (startingPlayer === nameInput) {
+      setShouldStart(true)
+    }
+
+    setIsGameLive(true)
+    setIsLoading(false)
 
   }, [nameInput] ) 
 
@@ -82,7 +87,7 @@ const Landing = ({ socket }) => {
         // Show gamescreen when a game is live
         isGameLive && 
         (
-          <GameScreen opponent= {opponentName} />
+          <GameScreen opponent= {opponentName} shouldStart={shouldStart} socket={socket} />
         )
       }
 

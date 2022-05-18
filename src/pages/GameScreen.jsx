@@ -1,11 +1,23 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
 
 
 
-const GameScreen = () => {
+const GameScreen = ({opponent, shouldStart, socket}) => {
+
+  const [isYourTurn, setIsYourTurn] = useState(shouldStart)
+
+  const handleOppClick = (index) => {
+    console.log('Your opponent clicked on square', index)
+  }
+
+  const handleOppBoardClick = (index) => {
+    if (isYourTurn) {
+      socket.emit('game:click', index)
+    }
+  }
 
   //Function for random number
   function getRandomNumber(min, max) {
@@ -66,6 +78,12 @@ const GameScreen = () => {
   const pixelArray = Array.from(Array(101).keys())
   delete pixelArray[0];
 
+  useEffect( () => {
+
+    socket.on('game:click', handleOppClick)
+
+  }, [socket] )
+
   return (
 
     <Container>
@@ -85,16 +103,16 @@ const GameScreen = () => {
 
 
           <div className="gameBoard">
-            {pixelArray.map(pixel =>
-              <div className="pixel"></div>
+            {pixelArray.map((pixel, i) =>
+              <div key={i} className="pixel" onClick={() =>{handleOppBoardClick(i)}}></div>
             )}
           </div>
         </Col>
 
         <Col>
           <div id="scoreBoard">
-            <h3> Player 2:</h3>
-            <h3> Player 1: </h3>
+            <h3> Your opponent: {opponent}</h3>
+            <h3> you </h3>
           </div>
         </Col>
 
