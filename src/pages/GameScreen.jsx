@@ -18,25 +18,21 @@ const GameScreen = () => {
       length: 2,
       startPos: null,
       coords: [],
-      direction: [1, 2, 3, 4]
     },
     {
       length: 2,
       startPos: null,
-      coords: [],
-      direction: [1, 2, 3, 4]
+      coords: []
     },
     {
       length: 3,
       startPos: null,
       coords: [],
-      direction: [1, 2, 3, 4]
     },
     {
       length: 4,
       startPos: null,
       coords: [],
-      direction: [1, 2, 3, 4]
     }
   ]
 
@@ -49,39 +45,66 @@ const GameScreen = () => {
   // Function to set coordinates for all ships
   const fillShipCoord = () => {
 
-
-
     ships.forEach((ship) => {
       const randomDirection = Math.floor(Math.random() * 3);
-      // Randomize ship starting position
-      ship.startPos = getRandomNumber(1, 11) * getRandomNumber(1, 11)
 
       if (randomDirection === 0) {
         console.log("This is random direction 0")
-        // Loop through index values from start position of ship up until it's length, and push values to it's coords array
-        for (let i = ship.startPos; i < ship.startPos + ship.length; i++) {
+
+        // Randomize ship starting position
+        do {
+          ship.startPos = getRandomNumber(1, 11) * getRandomNumber(1, 11)
+        } while (ship.startPos === 10 || ship.startPos === 20 || ship.startPos === 30 || ship.startPos === 40 || ship.startPos === 50 || ship.startPos === 60 || ship.startPos === 70 || ship.startPos === 80 || ship.startPos === 90 || ship.startPos === 100)
+
+
+        for (let i = ship.startPos; ship.coords.length < ship.length; i++) {
           ship.coords.push(i)
         }
 
       }
+
       if (randomDirection === 1) {
         console.log("This is random direction 1")
+        // Randomize ship starting position
+        do {
+          ship.startPos = getRandomNumber(1, 11) * getRandomNumber(1, 11)
+        } while (ship.startPos === 1 || ship.startPos === 11 || ship.startPos === 21 || ship.startPos === 31 || ship.startPos === 41 || ship.startPos === 51 || ship.startPos === 61 || ship.startPos === 71 || ship.startPos === 81 || ship.startPos === 91)
+
+
         for (let i = ship.startPos; ship.coords.length < ship.length; i -= 1) {
+
           ship.coords.push(i)
+
         }
+
       }
       if (randomDirection === 2) {
         console.log("This is random direction 2")
+        // Randomize ship starting position
+        do {
+          ship.startPos = getRandomNumber(1, 11) * getRandomNumber(1, 11)
+        } while (ship.startPos === 1 || ship.startPos === 2 || ship.startPos === 3 || ship.startPos === 4 || ship.startPos === 5 || ship.startPos === 6 || ship.startPos === 7 || ship.startPos === 8 || ship.startPos === 9 || ship.startPos === 10)
+
+
         for (let i = ship.startPos; ship.coords.length < ship.length; i -= 10) {
+
           ship.coords.push(i)
+
         }
       }
       if (randomDirection === 3) {
         console.log("This is random direction 3")
+        // Randomize ship starting position
+        do {
+          ship.startPos = getRandomNumber(1, 11) * getRandomNumber(1, 11)
+        } while (ship.startPos === 91 || ship.startPos === 92 || ship.startPos === 93 || ship.startPos === 94 || ship.startPos === 95 || ship.startPos === 96 || ship.startPos === 97 || ship.startPos === 98 || ship.startPos === 99 || ship.startPos === 100)
+
         for (let i = ship.startPos; ship.coords.length < ship.length; i += 10) {
           ship.coords.push(i)
+
         }
       }
+
 
 
     })
@@ -94,10 +117,6 @@ const GameScreen = () => {
     console.log('ship of length', ship.length, 'has coords', ship.coords)
   })
 
-  let shipOne = getRandomNumber(1, 11) * getRandomNumber(1, 11)
-  let shipTwo = getRandomNumber(1, 11) * getRandomNumber(1, 11)
-  let shipThree = getRandomNumber(1, 11) * getRandomNumber(1, 11)
-  let shipFour = getRandomNumber(1, 11) * getRandomNumber(1, 11)
 
   const pixelArray = Array.from(Array(101).keys())
   delete pixelArray[0];
@@ -105,12 +124,11 @@ const GameScreen = () => {
   return (
 
     <Container>
-      <div> {shipOne}, {shipTwo}, {shipThree}, {shipFour}</div>
       <Row>
         <Col>
           <div className="gameBoard">
             {pixelArray.map((pixel, i) => {
-              return shipOne === i || shipTwo === i || shipThree === i || shipFour === i ?
+              return ships[0].coords[0] === i || ships[0].coords[1] === i || ships[1].coords[0] === i || ships[1].coords[1] === i || ships[2].coords[0] === i || ships[2].coords[1] === i || ships[2].coords[2] === i || ships[3].coords[0] === i || ships[3].coords[1] === i || ships[3].coords[2] === i || ships[3].coords[3] === i ?
                 <div className="pixelOne">{i}</div>
                 :
                 <div className="pixel"> {i}</div>
