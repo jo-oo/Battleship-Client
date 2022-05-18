@@ -5,7 +5,8 @@ import Container from 'react-bootstrap/Container'
 
 
 
-const GameScreen = () => {
+
+const GameScreen = ( {opponent, player }) => {
 
   //Function for random number
   function getRandomNumber(min, max) {
@@ -39,8 +40,6 @@ const GameScreen = () => {
 
           </div>
 
-
-
           <div className="gameBoard">
             {pixelArray.map(pixel =>
               <div className="pixel"></div>
@@ -50,8 +49,8 @@ const GameScreen = () => {
 
         <Col>
           <div id="scoreBoard">
-            <h3> Player 2:</h3>
-            <h3> Player 1: </h3>
+            <h3> Player 2: {opponent}</h3>
+            <h3> Player 1: {player}</h3>
           </div>
         </Col>
 

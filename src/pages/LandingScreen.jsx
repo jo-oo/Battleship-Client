@@ -82,7 +82,7 @@ const Landing = ({ socket }) => {
         // Show gamescreen when a game is live
         isGameLive && 
         (
-          <GameScreen opponent= {opponentName} />
+          <GameScreen opponent= {opponentName} player= {nameInput}/>
         )
       }
 
