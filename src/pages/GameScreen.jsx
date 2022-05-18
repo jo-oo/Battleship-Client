@@ -7,12 +7,15 @@ import Container from 'react-bootstrap/Container'
 
 const GameScreen = ({opponent, player, shouldStart, socket}) => {
 
+  // State for player to know if it is their turn
   const [isYourTurn, setIsYourTurn] = useState(shouldStart)
 
+  // Function that handles when opponent has clicked a sqaure
   const handleOppClick = (index) => {
     console.log('Your opponent clicked on square', index)
   }
 
+  // Function that handles when player clicks opponent board
   const handleOppBoardClick = (index) => {
     if (isYourTurn) {
       socket.emit('game:click', index)
