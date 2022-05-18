@@ -87,7 +87,7 @@ const Landing = ({ socket }) => {
         // Show gamescreen when a game is live
         isGameLive && 
         (
-          <GameScreen opponent= {opponentName} shouldStart={shouldStart} socket={socket} />
+          <GameScreen opponent= {opponentName} player={nameInput} shouldStart={shouldStart} socket={socket} />
         )
       }
 

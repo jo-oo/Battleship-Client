@@ -5,7 +5,7 @@ import Container from 'react-bootstrap/Container'
 
 
 
-const GameScreen = ({opponent, shouldStart, socket}) => {
+const GameScreen = ({opponent, player, shouldStart, socket}) => {
 
   const [isYourTurn, setIsYourTurn] = useState(shouldStart)
 
@@ -100,8 +100,6 @@ const GameScreen = ({opponent, shouldStart, socket}) => {
 
           </div>
 
-
-
           <div className="gameBoard">
             {pixelArray.map((pixel, i) =>
               <div key={i} className="pixel" onClick={() =>{handleOppBoardClick(i)}}></div>
@@ -111,8 +109,8 @@ const GameScreen = ({opponent, shouldStart, socket}) => {
 
         <Col>
           <div id="scoreBoard">
-            <h3> Your opponent: {opponent}</h3>
-            <h3> you </h3>
+            <h3> Player 2: {opponent}</h3>
+            <h3> Player 1: {player}</h3>
           </div>
         </Col>
 

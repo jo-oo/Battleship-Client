@@ -4,7 +4,6 @@ const LoadingSpinner = ( { loading, Spinner } ) => {
         <>
             <div className="d-flex justify-content-between align-items-center mt-4">
                 
-                {/* loading spinner */}
 				{loading &&
                     (
                         <div className="mt-4">
