@@ -45,17 +45,43 @@ const GameScreen = () => {
   // Function to set coordinates for all ships
   const fillShipCoord = () => {
 
+
+
     ships.forEach((ship) => {
+
+
+
+      //Get random direction
       const randomDirection = Math.floor(Math.random() * 3);
 
+      //random direction to the right
       if (randomDirection === 0) {
+
         console.log("This is random direction 0")
 
-        // Randomize ship starting position
-        do {
-          ship.startPos = getRandomNumber(1, 11) * getRandomNumber(1, 11)
-        } while (ship.startPos === 10 || ship.startPos === 20 || ship.startPos === 30 || ship.startPos === 40 || ship.startPos === 50 || ship.startPos === 60 || ship.startPos === 70 || ship.startPos === 80 || ship.startPos === 90 || ship.startPos === 100)
+        //arrays of shipcoordinates that can not be startPos for this direction
+        const arrayNotIncludeTwoPixels = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
+        const arrayNotIncludeThreePixels = [9, 10, 19, 20, 29, 30, 39, 40, 49, 50, 59, 60, 69, 70, 79, 80, 89, 90, 99, 100]
+        const arrayNotIncludeFourPixels = [8, 9, 10, 18, 19, 20, 28, 29, 30, 38, 39, 40, 48, 49, 50, 58, 59, 60, 68, 69, 70, 78, 79, 80, 88, 89, 90, 98, 99, 100]
 
+
+        if (ship.length === 2) {
+          do {
+            ship.startPos = getRandomNumber(1, 11) * getRandomNumber(1, 11)
+          } while (arrayNotIncludeTwoPixels.includes(ship.startPos))
+        }
+
+        if (ship.length === 3) {
+          do {
+            ship.startPos = getRandomNumber(1, 11) * getRandomNumber(1, 11)
+          } while (arrayNotIncludeThreePixels.includes(ship.startPos))
+        }
+
+        if (ship.length === 4) {
+          do {
+            ship.startPos = getRandomNumber(1, 11) * getRandomNumber(1, 11)
+          } while (arrayNotIncludeFourPixels.includes(ship.startPos))
+        }
 
         for (let i = ship.startPos; ship.coords.length < ship.length; i++) {
           ship.coords.push(i)
@@ -63,49 +89,122 @@ const GameScreen = () => {
 
       }
 
+
+      //this is random position left
       if (randomDirection === 1) {
         console.log("This is random direction 1")
-        // Randomize ship starting position
-        do {
-          ship.startPos = getRandomNumber(1, 11) * getRandomNumber(1, 11)
-        } while (ship.startPos === 1 || ship.startPos === 11 || ship.startPos === 21 || ship.startPos === 31 || ship.startPos === 41 || ship.startPos === 51 || ship.startPos === 61 || ship.startPos === 71 || ship.startPos === 81 || ship.startPos === 91)
 
+        //arrays of shipcoordinates that can not be startPos for this direction
+        const arrayNotIncludeTwoPixels = [1, 11, 21, 31, 41, 51, 61, 71, 81, 91]
+        const arrayNotIncludeThreePixels = [1, 2, 11, 12, 21, 22, 31, 32, 41, 42, 51, 52, 61, 62, 71, 72, 81, 82, 91, 92]
+        const arrayNotIncludeFourPixels = [1, 2, 3, 11, 12, 13, 21, 22, 23, 31, 32, 33, 41, 42, 43, 51, 52, 53, 61, 62, 63, 71, 72, 72, 81, 82, 83, 91, 92, 93]
+
+
+        if (ship.length === 2) {
+          do {
+            // Randomize ship starting position
+            ship.startPos = getRandomNumber(1, 11) * getRandomNumber(1, 11)
+          } while (arrayNotIncludeTwoPixels.includes(ship.startPos))
+        }
+
+        if (ship.length === 3) {
+          do {
+            // Randomize ship starting position
+            ship.startPos = getRandomNumber(1, 11) * getRandomNumber(1, 11)
+          } while (arrayNotIncludeThreePixels.includes(ship.startPos))
+        }
+
+        if (ship.length === 4) {
+          do {
+            // Randomize ship starting position
+            ship.startPos = getRandomNumber(1, 11) * getRandomNumber(1, 11)
+          } while (arrayNotIncludeFourPixels.includes(ship.startPos))
+        }
 
         for (let i = ship.startPos; ship.coords.length < ship.length; i -= 1) {
-
           ship.coords.push(i)
-
         }
-
       }
+
+      //this is random position up
       if (randomDirection === 2) {
         console.log("This is random direction 2")
-        // Randomize ship starting position
-        do {
-          ship.startPos = getRandomNumber(1, 11) * getRandomNumber(1, 11)
-        } while (ship.startPos === 1 || ship.startPos === 2 || ship.startPos === 3 || ship.startPos === 4 || ship.startPos === 5 || ship.startPos === 6 || ship.startPos === 7 || ship.startPos === 8 || ship.startPos === 9 || ship.startPos === 10)
 
+        const arrayNotIncludeTwoPixels = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+        const arrayNotIncludeThreePixels = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+        const arrayNotIncludeFourPixels = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30]
+
+
+        if (ship.length === 2) {
+          do {
+            // Randomize ship starting position
+            ship.startPos = getRandomNumber(1, 11) * getRandomNumber(1, 11)
+          } while (arrayNotIncludeTwoPixels.includes(ship.startPos))
+        }
+
+        if (ship.length === 3) {
+          do {
+            // Randomize ship starting position
+            ship.startPos = getRandomNumber(1, 11) * getRandomNumber(1, 11)
+          } while (arrayNotIncludeThreePixels.includes(ship.startPos))
+        }
+
+        if (ship.length === 4) {
+          do {
+            // Randomize ship starting position
+            ship.startPos = getRandomNumber(1, 11) * getRandomNumber(1, 11)
+          } while (arrayNotIncludeFourPixels.includes(ship.startPos))
+        }
 
         for (let i = ship.startPos; ship.coords.length < ship.length; i -= 10) {
-
           ship.coords.push(i)
 
         }
+
       }
+
+
+
+      //this is random position down 
       if (randomDirection === 3) {
         console.log("This is random direction 3")
-        // Randomize ship starting position
-        do {
-          ship.startPos = getRandomNumber(1, 11) * getRandomNumber(1, 11)
-        } while (ship.startPos === 91 || ship.startPos === 92 || ship.startPos === 93 || ship.startPos === 94 || ship.startPos === 95 || ship.startPos === 96 || ship.startPos === 97 || ship.startPos === 98 || ship.startPos === 99 || ship.startPos === 100)
+
+
+        const arrayNotIncludeTwoPixels = [91, 92, 93, 94, 95, 96, 97, 98, 99, 100]
+        const arrayNotIncludeThreePixels = [81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100]
+        const arrayNotIncludeFourPixels = [71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100]
+
+
+        if (ship.length === 2) {
+          do {
+            // Randomize ship starting position
+            ship.startPos = getRandomNumber(1, 11) * getRandomNumber(1, 11)
+          } while (arrayNotIncludeTwoPixels.includes(ship.startPos))
+        }
+
+        if (ship.length === 3) {
+          do {
+            // Randomize ship starting position
+            ship.startPos = getRandomNumber(1, 11) * getRandomNumber(1, 11)
+          } while (arrayNotIncludeThreePixels.includes(ship.startPos))
+        }
+
+        if (ship.length === 4) {
+          do {
+            // Randomize ship starting position
+            ship.startPos = getRandomNumber(1, 11) * getRandomNumber(1, 11)
+          } while (arrayNotIncludeFourPixels.includes(ship.startPos))
+        }
 
         for (let i = ship.startPos; ship.coords.length < ship.length; i += 10) {
           ship.coords.push(i)
 
         }
+
+
+
+
       }
-
-
 
     })
 
@@ -131,7 +230,7 @@ const GameScreen = () => {
               return ships[0].coords[0] === i || ships[0].coords[1] === i || ships[1].coords[0] === i || ships[1].coords[1] === i || ships[2].coords[0] === i || ships[2].coords[1] === i || ships[2].coords[2] === i || ships[3].coords[0] === i || ships[3].coords[1] === i || ships[3].coords[2] === i || ships[3].coords[3] === i ?
                 <div className="pixelOne">{i}</div>
                 :
-                <div className="pixel"> {i}</div>
+                <div className="pixel">{i}</div>
             })}
 
           </div>
