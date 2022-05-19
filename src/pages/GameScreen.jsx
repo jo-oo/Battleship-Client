@@ -56,16 +56,49 @@ const GameScreen = ({opponent, player, shouldStart, socket}) => {
 
   // Function that handles when opponent has clicked a sqaure
   const handleOppClick = (index) => {
+
+    // Variable for if click was a hit
+    let hasHit = false
     console.log('Your opponent clicked on square', index)
+    // Loop through coords of all ships
+    ships.forEach( (ship) => {
+
+      ship.coords.forEach( (coord) => {
+
+        // If coord is same as the square the opponent clicked on, set hasHit to true
+        if (coord === index) {
+          hasHit = true
+        }
+
+      } )
+
+    } )
+    
+    // Inform server if click was a hit
+    socket.emit('game:click-result', hasHit)
     setIsYourTurn( true )
+
   }
 
   // Function that handles when player clicks opponent board
   const handleOppBoardClick = (index) => {
+
     if (isYourTurn) {
       socket.emit('game:click', index)
       setIsYourTurn( false )
     }
+
+  }
+
+  // Function that handles what happens when a click made by player was a hit
+  const handleClickResult = (result) => {
+
+    if (result) {
+      console.log('You hit')
+    } else {
+      console.log('You missed')
+    }
+
   }
 
   
@@ -81,6 +114,7 @@ const GameScreen = ({opponent, player, shouldStart, socket}) => {
   useEffect( () => {
 
     socket.on('game:click', handleOppClick)
+    socket.on('game:click-result', handleClickResult)
 
   }, [socket] )
 
