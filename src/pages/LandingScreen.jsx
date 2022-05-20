@@ -1,7 +1,8 @@
 // Import hooks from react
 import { useRef, useEffect, useState, useCallback } from 'react'
 import GameScreen from '../pages/GameScreen';
-
+import Spinner from 'react-bootstrap/Spinner'
+import LoadingSpinner from '../components/LoadingSpinner';
 
 const Landing = ({ socket }) => {
 
@@ -13,17 +14,23 @@ const Landing = ({ socket }) => {
   const [nameInput, setNameInput] = useState()
   const searchInputRef = useRef()
   const [opponentName, setOpponentName] = useState()
+  const [shouldStart, setShouldStart] = useState(false)
 
   // Stuff to happen when game starts
-  const handleGameStart = useCallback( (players) => {
-
-    setIsGameLive(true)
-    setIsLoading(false)
+  const handleGameStart = useCallback( (players, startingPlayer) => {
     
     // Find name of opponent
     setOpponentName( players.find( (player) => {
       return player !== nameInput
     } ) )
+
+    // Change state if this players name is the one to start game
+    if (startingPlayer === nameInput) {
+      setShouldStart(true)
+    }
+
+    setIsGameLive(true)
+    setIsLoading(false)
 
   }, [nameInput] ) 
 
@@ -63,10 +70,15 @@ const Landing = ({ socket }) => {
         // Show waiting screen when loading state is true
         isLoading &&
         (
-          <section className='waiting-screen'>
+          <section className='waiting-screen mt-4"'>
 
             <p>Hello {nameInput}</p>
             <p>Waiting for opponent...</p>
+            <LoadingSpinner
+		          loading={isLoading}
+              Spinner={Spinner}
+            >
+            </LoadingSpinner>
 
           </section>
         )
@@ -76,7 +88,7 @@ const Landing = ({ socket }) => {
         // Show gamescreen when a game is live
         isGameLive && 
         (
-          <GameScreen opponent={ opponentName } />
+          <GameScreen opponent= {opponentName} player={nameInput} shouldStart={shouldStart} socket={socket} />
         )
       }
 
