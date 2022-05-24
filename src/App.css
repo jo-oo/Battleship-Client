@@ -38,14 +38,22 @@
     height: 3rem; 
 
   }
-
+/* 
   .pixel:hover {
     background-color: rgb(175, 114, 124); 
-  }
+  } */
 
-  .pixelOne {
+  .pixelShip {
     background-color: rgb(192, 40, 65); 
 
+  }
+
+  .pixelHit {
+    background-color: green; 
+  }
+
+  .pixelMiss {
+    background-color: yellow;
   }
 
   #scoreBoard {
