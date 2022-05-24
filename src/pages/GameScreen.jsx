@@ -267,6 +267,7 @@ const GameScreen = ({ opponent, player, shouldStart, socket }) => {
   const [arrayOfMissed, setArrayOfMissed] = useState([]);
   const [arrayOfHits, setArrayOfHits] = useState([]);
 
+  // States for how many ships the player/opponent still have
   const [playerShipsLeft, setPlayerShipsLeft] = useState(ships.length)
   const [oppShipsLeft, setOppShipsLeft] = useState(ships.length)
 
@@ -298,11 +299,14 @@ const GameScreen = ({ opponent, player, shouldStart, socket }) => {
             hasHit = true;
             console.log('its a hit');
 
+            // Decrease parts left for the ship
             ship.partsLeft--
             console.log("PARTS LEFT::", ship.partsLeft)
 
+            // If all parts of ship is gone, update number of ships player still has
             if (ship.partsLeft === 0) {
-              console.log('GAME OVER!!!')
+              console.log('OUR SHIP SUNK!!!')
+              setPlayerShipsLeft( (prevState) => prevState - 1 )
             } 
 
             //add the index to an array
@@ -315,7 +319,7 @@ const GameScreen = ({ opponent, player, shouldStart, socket }) => {
       });
 
       // Inform server if click was a hit
-      socket.emit('game:click-result', hasHit, index);
+      socket.emit('game:click-result', hasHit, index, playerShipsLeft);
       setIsYourTurn(true);
     },
     [socket]
