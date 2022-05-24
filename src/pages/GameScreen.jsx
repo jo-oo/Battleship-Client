@@ -62,38 +62,7 @@ const fillShipCoord = () => {
       //arrays of shipcoordinates that can not be startPos for this direction
       const arrayNotIncludeTwoPixels = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
       const arrayNotIncludeThreePixels = [9, 10, 19, 20, 29, 30, 39, 40, 49, 50, 59, 60, 69, 70, 79, 80, 89, 90, 99, 100,];
-      const arrayNotIncludeFourPixels = [
-        8,
-        9,
-        10,
-        18,
-        19,
-        20,
-        28,
-        29,
-        30,
-        38,
-        39,
-        40,
-        48,
-        49,
-        50,
-        58,
-        59,
-        60,
-        68,
-        69,
-        70,
-        78,
-        79,
-        80,
-        88,
-        89,
-        90,
-        98,
-        99,
-        100,
-      ];
+      const arrayNotIncludeFourPixels = [8, 9, 10, 18, 19, 20, 28, 29, 30, 38, 39, 40, 48, 49, 50, 58, 59, 60, 68, 69, 70, 78, 79, 80, 88, 89, 90, 98, 99, 100];
 
       //Randomize ships starting position
       if (ship.length === 2) {
@@ -172,38 +141,7 @@ const fillShipCoord = () => {
 
       const arrayNotIncludeTwoPixels = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
       const arrayNotIncludeThreePixels = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
-      const arrayNotIncludeFourPixels = [
-        1,
-        2,
-        3,
-        4,
-        5,
-        6,
-        7,
-        8,
-        9,
-        10,
-        11,
-        12,
-        13,
-        14,
-        15,
-        16,
-        17,
-        18,
-        19,
-        20,
-        21,
-        22,
-        23,
-        24,
-        25,
-        26,
-        27,
-        28,
-        29,
-        30,
-      ];
+      const arrayNotIncludeFourPixels = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30]
 
       if (ship.length === 2) {
         do {
@@ -242,61 +180,9 @@ const fillShipCoord = () => {
       console.log('This is random direction 3');
 
       const arrayNotIncludeTwoPixels = [91, 92, 93, 94, 95, 96, 97, 98, 99, 100];
-      const arrayNotIncludeThreePixels = [
-        81,
-        82,
-        83,
-        84,
-        85,
-        86,
-        87,
-        88,
-        89,
-        90,
-        91,
-        92,
-        93,
-        94,
-        95,
-        96,
-        97,
-        98,
-        99,
-        100,
-      ];
-      const arrayNotIncludeFourPixels = [
-        71,
-        72,
-        73,
-        74,
-        75,
-        76,
-        77,
-        78,
-        79,
-        80,
-        81,
-        82,
-        83,
-        84,
-        85,
-        86,
-        87,
-        88,
-        89,
-        90,
-        91,
-        92,
-        93,
-        94,
-        95,
-        96,
-        97,
-        98,
-        99,
-        100,
-      ];
-
+      const arrayNotIncludeThreePixels = [81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100,];
+      const arrayNotIncludeFourPixels = [71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100]
+ 
       if (ship.length === 2) {
         do {
           // Randomize ship starting position
