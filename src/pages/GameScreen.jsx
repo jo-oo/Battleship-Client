@@ -2,8 +2,8 @@ import React, { useEffect, useState, useCallback } from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
-const arrayOfHits = [];
-const arrayOfMissed = [];
+/* const arrayOfHits = [];
+const arrayOfMissed = []; */
 const arrayOppHits = [];
 
 //Function for random number
@@ -425,6 +425,9 @@ const GameScreen = ({ opponent, player, shouldStart, socket }) => {
   //state so the pixelArray is updated
   const [pixelArray, setPixelArray] = useState(createPixelArray());
 
+  const [arrayOfMissed, setArrayOfMissed] = useState([]);
+  const [arrayOfHits, setArrayOfHits] = useState([]);
+
   // Function that handles when opponent has clicked a sqaure
   const handleOppClick = useCallback(
     (index) => {
@@ -454,6 +457,7 @@ const GameScreen = ({ opponent, player, shouldStart, socket }) => {
             console.log('its a hit');
 
             //add the index to an array
+
             arrayOppHits.push(index);
 
             console.log('this is the array of opp hits', arrayOppHits, 'and length', arrayOppHits.length);
@@ -481,11 +485,16 @@ const GameScreen = ({ opponent, player, shouldStart, socket }) => {
     console.log(result);
     if (result) {
       console.log('You hit on this square', index);
-      arrayOfHits.push(index);
+      setArrayOfHits((arrayOfHits) => {
+        return [index, ...arrayOfHits];
+      });
       console.log('this is array of hits (handleClickResult)', arrayOfHits.length);
     } else {
       console.log('You missed this square', index);
-      arrayOfMissed.push(index);
+      setArrayOfMissed((arrayOfMissed) => {
+        return [index, ...arrayOfMissed];
+      });
+
       console.log('this is array of missed (handleClickResult)', arrayOfMissed.length);
     }
   };
