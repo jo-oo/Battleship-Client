@@ -289,6 +289,7 @@ const GameScreen = ({ opponent, player, shouldStart, socket }) => {
 
       console.log('Your opponent clicked on square', index);
       let hasHit = false;
+      let shipSunk = false
       // Loop through coords of all ships
       ships.forEach((ship) => {
         ship.coords.forEach((coord) => {
@@ -306,6 +307,7 @@ const GameScreen = ({ opponent, player, shouldStart, socket }) => {
             // If all parts of ship is gone, update number of ships player still has
             if (ship.partsLeft === 0) {
               console.log('OUR SHIP SUNK!!!')
+              shipSunk = true
               setPlayerShipsLeft( (prevState) => prevState - 1 )
             } 
 
@@ -319,7 +321,7 @@ const GameScreen = ({ opponent, player, shouldStart, socket }) => {
       });
 
       // Inform server if click was a hit
-      socket.emit('game:click-result', hasHit, index, playerShipsLeft);
+      socket.emit('game:click-result', hasHit, index, shipSunk);
       setIsYourTurn(true);
     },
     [socket]
@@ -334,7 +336,7 @@ const GameScreen = ({ opponent, player, shouldStart, socket }) => {
   };
 
   // Function that handles what happens when a click made by player was a hit (not opponent)
-  const handleClickResult = (result, index) => {
+  const handleClickResult = (result, index, shipSunk) => {
     console.log(result);
     if (result) {
       console.log('You hit on this square', index);
@@ -342,6 +344,11 @@ const GameScreen = ({ opponent, player, shouldStart, socket }) => {
         return [index, ...arrayOfHits];
       });
       console.log('this is array of hits (handleClickResult)', arrayOfHits.length);
+      if (shipSunk) {
+        console.log("You sunk their ship!!!")
+        setOppShipsLeft( (prevState) => prevState - 1 )
+      }
+      
     } else {
       console.log('You missed this square', index);
       setArrayOfMissed((arrayOfMissed) => {
