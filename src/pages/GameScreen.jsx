@@ -47,6 +47,7 @@ const checkCoordinates = (UsedCoordinates, coordinate) => {
 
 // Function to set coordinates for all ships
 const fillShipCoord = () => {
+
   //empty array to be filled with coordinates as they are created
   const UsedCoordinates = [];
 
@@ -60,28 +61,7 @@ const fillShipCoord = () => {
 
       //arrays of shipcoordinates that can not be startPos for this direction
       const arrayNotIncludeTwoPixels = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
-      const arrayNotIncludeThreePixels = [
-        9,
-        10,
-        19,
-        20,
-        29,
-        30,
-        39,
-        40,
-        49,
-        50,
-        59,
-        60,
-        69,
-        70,
-        79,
-        80,
-        89,
-        90,
-        99,
-        100,
-      ];
+      const arrayNotIncludeThreePixels = [9, 10, 19, 20, 29, 30, 39, 40, 49, 50, 59, 60, 69, 70, 79, 80, 89, 90, 99, 100,];
       const arrayNotIncludeFourPixels = [
         8,
         9,
@@ -152,38 +132,7 @@ const fillShipCoord = () => {
       //arrays of shipcoordinates that can not be startPos for this direction
       const arrayNotIncludeTwoPixels = [1, 11, 21, 31, 41, 51, 61, 71, 81, 91];
       const arrayNotIncludeThreePixels = [1, 2, 11, 12, 21, 22, 31, 32, 41, 42, 51, 52, 61, 62, 71, 72, 81, 82, 91, 92];
-      const arrayNotIncludeFourPixels = [
-        1,
-        2,
-        3,
-        11,
-        12,
-        13,
-        21,
-        22,
-        23,
-        31,
-        32,
-        33,
-        41,
-        42,
-        43,
-        51,
-        52,
-        53,
-        61,
-        62,
-        63,
-        71,
-        72,
-        72,
-        81,
-        82,
-        83,
-        91,
-        92,
-        93,
-      ];
+      const arrayNotIncludeFourPixels = [1, 2, 3, 11, 12, 13, 21, 22, 23, 31, 32, 33, 41, 42, 43, 51, 52, 53, 61, 62, 63, 71, 72, 72, 81, 82, 83, 91, 92, 93,];
 
       if (ship.length === 2) {
         do {
