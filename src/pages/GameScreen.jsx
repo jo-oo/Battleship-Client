@@ -480,32 +480,30 @@ const GameScreen = ({ opponent, player, shouldStart, socket }) => {
     }
   };
 
-  // Function that handles what happens when a click made by player was a hit (not opponent)
-  const handleClickResult = (result, index) => {
-    console.log(result);
-    if (result) {
-      console.log('You hit on this square', index);
-      setArrayOfHits((arrayOfHits) => {
-        return [index, ...arrayOfHits];
-      });
-      console.log('this is array of hits (handleClickResult)', arrayOfHits.length);
-    } else {
-      console.log('You missed this square', index);
-      setArrayOfMissed((arrayOfMissed) => {
-        return [index, ...arrayOfMissed];
-      });
-
-      console.log('this is array of missed (handleClickResult)', arrayOfMissed.length);
-    }
-  };
-
   useEffect(() => {
+    // Function that handles what happens when a click made by player was a hit (not opponent)
+    const handleClickResult = (result, index) => {
+      console.log(result);
+      if (result) {
+        console.log('You hit on this square', index);
+        setArrayOfHits((arrayOfHits) => {
+          return [index, ...arrayOfHits];
+        });
+      } else {
+        console.log('You missed this square', index);
+        setArrayOfMissed((arrayOfMissed) => {
+          return [index, ...arrayOfMissed];
+        });
+      }
+    };
     socket.on('game:click', handleOppClick);
     socket.on('game:click-result', handleClickResult);
+
     return () => {
       //needed to remove the socket otherwise it was running four times
       socket.removeListener('game:click');
       socket.removeListener('game:click-result');
+      handleClickResult();
     };
   }, [socket, handleOppClick]);
 
@@ -568,10 +566,20 @@ const GameScreen = ({ opponent, player, shouldStart, socket }) => {
 
         <Col>
           <div id='scoreBoard'>
-            <h3> Player 2: {opponent}</h3>
-            <h3> Player 1: {player}</h3>
-            {isYourTurn && <h3> It's your turn </h3>}
-            {!isYourTurn && <h3> Opponents turn </h3>}
+            <div id='opponent-board'>
+              <h3> Player 2: {opponent}</h3>
+              <h4>Ship hits: </h4>
+            </div>
+
+            <div id='currentPlayer-board'>
+              <h3> Player 1: {player}</h3>
+              <h4>Ship hits: </h4>
+            </div>
+
+            <div id='turnToggle'>
+              {isYourTurn && <h3> It's your turn </h3>}
+              {!isYourTurn && <h3> Opponents turn </h3>}
+            </div>
           </div>
         </Col>
       </Row>

@@ -22,45 +22,49 @@
   font-size: 1.5rem;
 }
 
+.gameBoard {
+  display: grid;
+  grid-template-columns: 3rem 3rem 3rem 3rem 3rem 3rem 3rem 3rem 3rem 3rem;
+  grid-gap: 0.1rem;
+  margin: 2rem;
+}
 
-  .gameBoard{
-    display: grid;
-    grid-template-columns: 3rem 3rem 3rem 3rem 3rem 3rem 3rem 3rem 3rem 3rem;
-    grid-gap: 0.1rem;
-    margin: 2rem;
-  
-
-  }
-
-  .pixel {
-    background-color: pink; 
-    width: 3rem;
-    height: 3rem; 
-
-  }
+.pixel {
+  background-color: pink;
+  width: 3rem;
+  height: 3rem;
+}
 /* 
   .pixel:hover {
     background-color: rgb(175, 114, 124); 
   } */
 
-  .pixelShip {
-    background-color: rgb(192, 40, 65); 
+.pixelShip {
+  background-color: rgb(192, 40, 65);
+  width: 3rem;
+  height: 3rem;
+}
 
-  }
+.pixelHit {
+  background-color: green;
+  width: 3rem;
+  height: 3rem;
+}
 
-  .pixelHit {
-    background-color: green; 
-  }
+.pixelMiss {
+  background-color: yellow;
+  width: 3rem;
+  height: 3rem;
+}
 
-  .pixelMiss {
-    background-color: yellow;
-  }
+#scoreBoard {
+  background-color: rgb(28, 21, 117);
+  width: 15rem;
+  height: 10rem;
+  margin: 2rem 0 0 0;
+  color: pink;
+}
 
-  #scoreBoard {
-    background-color: rgb(28, 21, 117); 
-    width: 15rem; 
-    height: 10rem;  
-    margin: 2rem 0 0 0;
-    padding:0.5rem;
-    color: pink; 
-  }
+#turnToggle {
+  background-color: rgb(121, 102, 165);
+}
