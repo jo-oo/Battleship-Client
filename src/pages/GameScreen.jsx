@@ -377,6 +377,9 @@ const GameScreen = ({ opponent, player, shouldStart, socket }) => {
   const [arrayOfMissed, setArrayOfMissed] = useState([]);
   const [arrayOfHits, setArrayOfHits] = useState([]);
 
+  const [playerShipsLeft, setPlayerShipsLeft] = useState(ships.length)
+  const [oppShipsLeft, setOppShipsLeft] = useState(ships.length)
+
   // Function that handles when opponent has clicked a sqaure
   const handleOppClick = useCallback(
     (index) => {
@@ -518,7 +521,9 @@ const GameScreen = ({ opponent, player, shouldStart, socket }) => {
         <Col>
           <div id='scoreBoard'>
             <h3> Player 2: {opponent}</h3>
+            <p>{oppShipsLeft} ships left</p>
             <h3> Player 1: {player}</h3>
+            <p>{playerShipsLeft} ships left</p>
             {isYourTurn && <h3> It's your turn </h3>}
             {!isYourTurn && <h3> Opponents turn </h3>}
           </div>

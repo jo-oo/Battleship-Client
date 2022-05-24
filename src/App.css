@@ -59,7 +59,7 @@
   #scoreBoard {
     background-color: rgb(28, 21, 117); 
     width: 15rem; 
-    height: 10rem;  
+    /* height: 10rem;   */
     margin: 2rem 0 0 0;
     padding:0.5rem;
     color: pink; 
