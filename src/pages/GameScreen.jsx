@@ -50,13 +50,6 @@ const checkCoordinates = (UsedCoordinates, coordinates) => {
   return isTaken;
 };
 
-
-/*kan funka om jag istället tar ships.coords istället för shops.startposition- 
-Skillnaden är dock att nu kollar jag om arrayen inte innehåller enskilda index-positioner, 
-men sen kollar jag om arrayen innehålker en array med coordinater för varje skepp. 
-funktionen "includes" kanske inte kan hantera det. Testa!""
-*/
-
 // Function to set coordinates for all ships
 const fillShipCoord = () => {
 
