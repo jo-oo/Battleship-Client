@@ -6,11 +6,6 @@ const arrayOfHits = [];
 const arrayOfMissed = [];
 const arrayOppHits = [];
 
-//Function for random number
-function getRandomNumber(min, max) {
-  return Math.floor(Math.random() * (max - min) + min);
-}
-
 // Array of four ships to place
 const ships = [
   {
@@ -34,6 +29,17 @@ const ships = [
     coords: [],
   },
 ];
+
+
+//Function for random number
+function getRandomNumber(min, max) {
+  return Math.floor(Math.random() * (max - min) + min);
+}
+
+//Function for random position x and a y position from 1 to 10
+function getRandomPosition() {
+  return getRandomNumber(1, 11) * getRandomNumber(1, 11); 
+}
 
 //Function to check that coordinate does not already exist. takes the empty "UsedCoordinates"-array and checks the cordinate in it
 //If coordinate exists then true
@@ -74,7 +80,7 @@ const fillShipCoord = () => {
       if (ship.length === 2) {
         do {
           takenCoordinates = []
-          ship.startPos = getRandomNumber(1, 11) * getRandomNumber(1, 11); //gets a x and a y position from 1 to 10
+          ship.startPos = getRandomPosition();
           takenCoordinates = [ship.startPos, ship.startPos + 1] //fills array with index for start position + start position + antal pixlar (längd)
         } while (checkCoordinates(UsedCoordinates, takenCoordinates) || arrayNotIncludeTwoPixels.includes(ship.startPos));
       } //uses function "checkCoordinates" to see if there is any coordinates in the array "Usedcoordinates" on the start position OR if the ship with 2 pixels does not start at the set coordinates of that array
@@ -82,7 +88,7 @@ const fillShipCoord = () => {
       if (ship.length === 3) {
         do {
           takenCoordinates = []
-          ship.startPos = getRandomNumber(1, 11) * getRandomNumber(1, 11);
+          ship.startPos = getRandomPosition();
           takenCoordinates = [ship.startPos, ship.startPos + 2] //start position + sytart positioon + antal
         } while (
           checkCoordinates(UsedCoordinates, takenCoordinates) || arrayNotIncludeThreePixels.includes(ship.startPos)
@@ -92,7 +98,7 @@ const fillShipCoord = () => {
       if (ship.length === 4) {
         do {
           takenCoordinates = []
-          ship.startPos = getRandomNumber(1, 11) * getRandomNumber(1, 11);
+          ship.startPos = getRandomPosition();
           takenCoordinates = [ship.startPos, ship.startPos + 3] //start position + sytart positioon + antal
         } while (checkCoordinates(UsedCoordinates, takenCoordinates) || arrayNotIncludeFourPixels.includes(ship.startPos));
       }
@@ -118,7 +124,7 @@ const fillShipCoord = () => {
         do {
           takenCoordinates = []
           // Randomize ship starting position
-          ship.startPos = getRandomNumber(1, 11) * getRandomNumber(1, 11);
+          ship.startPos = getRandomPosition();
           takenCoordinates = [ship.startPos, ship.startPos - 1] //start position + sytart positioon + antal
         } while (checkCoordinates(UsedCoordinates, takenCoordinates) || UsedCoordinates.includes(ship.coords) ||arrayNotIncludeTwoPixels.includes(ship.startPos));
       }
@@ -128,7 +134,7 @@ const fillShipCoord = () => {
         do {
           takenCoordinates=[]
           // Randomize ship starting position
-          ship.startPos = getRandomNumber(1, 11) * getRandomNumber(1, 11);
+          ship.startPos = getRandomPosition();
           takenCoordinates = [ship.startPos, ship.startPos - 2] //start position + sytart positioon + antal
         } while (
           checkCoordinates(UsedCoordinates, takenCoordinates)  ||arrayNotIncludeThreePixels.includes(ship.startPos)
@@ -139,7 +145,7 @@ const fillShipCoord = () => {
         do {
           takenCoordinates = []
           // Randomize ship starting position
-          ship.startPos = getRandomNumber(1, 11) * getRandomNumber(1, 11);
+          ship.startPos = getRandomPosition();
           takenCoordinates = [ship.startPos, ship.startPos - 3] //start position + sytart positioon + antal
         } while (checkCoordinates(UsedCoordinates, takenCoordinates) ||  arrayNotIncludeFourPixels.includes(ship.startPos));
       }
@@ -163,7 +169,7 @@ const fillShipCoord = () => {
         do {
           takenCoordinates= []
           // Randomize ship starting position
-          ship.startPos = getRandomNumber(1, 11) * getRandomNumber(1, 11);
+          ship.startPos = getRandomPosition();
           takenCoordinates = [ship.startPos, ship.startPos - 10] //start position + sytart positioon + antal
         } while (checkCoordinates(UsedCoordinates, takenCoordinates)  ||arrayNotIncludeTwoPixels.includes(ship.startPos));
       }
@@ -172,7 +178,7 @@ const fillShipCoord = () => {
         do {
           takenCoordinates=[]
           // Randomize ship starting position
-          ship.startPos = getRandomNumber(1, 11) * getRandomNumber(1, 11);
+          ship.startPos = getRandomPosition();
           takenCoordinates = [ship.startPos, ship.startPos - 20] //start position + sytart positioon + antal
         } while (
           checkCoordinates(UsedCoordinates, takenCoordinates)  ||arrayNotIncludeThreePixels.includes(ship.startPos)
@@ -183,7 +189,7 @@ const fillShipCoord = () => {
         do {
           takenCoordinates=[]
           // Randomize ship starting position
-          ship.startPos = getRandomNumber(1, 11) * getRandomNumber(1, 11);
+          ship.startPos = getRandomPosition();
           takenCoordinates = [ship.startPos, ship.startPos - 30] //start position + sytart positioon + antal
         } while (checkCoordinates(UsedCoordinates, takenCoordinates)  ||arrayNotIncludeFourPixels.includes(ship.startPos));
       }
@@ -208,7 +214,7 @@ const fillShipCoord = () => {
         do {
           takenCoordinates=[]
           // Randomize ship starting position
-          ship.startPos = getRandomNumber(1, 11) * getRandomNumber(1, 11);
+          ship.startPos = getRandomPosition();
           takenCoordinates = [ship.startPos, ship.startPos + 10] //start position + sytart positioon + antal
         } while (checkCoordinates(UsedCoordinates, takenCoordinates)   ||arrayNotIncludeTwoPixels.includes(ship.startPos));
       }
@@ -217,7 +223,7 @@ const fillShipCoord = () => {
         do {
           takenCoordinates=[]
           // Randomize ship starting position
-          ship.startPos = getRandomNumber(1, 11) * getRandomNumber(1, 11);
+          ship.startPos = getRandomPosition();
           takenCoordinates = [ship.startPos, ship.startPos + 20] //start position + sytart positioon + antal
         } while (
           checkCoordinates(UsedCoordinates, takenCoordinates)  ||arrayNotIncludeThreePixels.includes(ship.startPos)
@@ -228,7 +234,7 @@ const fillShipCoord = () => {
         do {
           takenCoordinates= []
           // Randomize ship starting position
-          ship.startPos = getRandomNumber(1, 11) * getRandomNumber(1, 11);
+          ship.startPos = getRandomPosition();
           takenCoordinates = [ship.startPos, ship.startPos + 30] //start position + sytart positioon + antal
         } while (checkCoordinates(UsedCoordinates, takenCoordinates)   ||arrayNotIncludeFourPixels.includes(ship.startPos));
       }
@@ -240,19 +246,12 @@ const fillShipCoord = () => {
         }
       }
       console.log('Used coordinates is now ' + UsedCoordinates);
-
-      const checkCordinatesResult1 = checkCoordinates([1, 24, 15], 15);
-      const checkCordinatesResult2 = checkCoordinates([1, 24], 15);
-      const checkCordinatesResult3 = checkCoordinates([], 15);
-
-      console.log('TEST ska vara true: ', checkCordinatesResult1);
-      console.log('TEST ska vara false: ', checkCordinatesResult2);
-      console.log('TEST: ', checkCordinatesResult3);
     }
   });
 };
 
 fillShipCoord();
+
 
 // Console log info about each ship to make sure it's correct
 ships.forEach((ship) => {
