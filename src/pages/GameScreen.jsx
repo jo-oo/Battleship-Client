@@ -15,21 +15,25 @@ function getRandomNumber(min, max) {
 const ships = [
   {
     length: 2,
+    partsLeft: 2,
     startPos: null,
     coords: [],
   },
   {
     length: 2,
+    partsLeft: 2,
     startPos: null,
     coords: [],
   },
   {
     length: 3,
+    partsLeft: 3,
     startPos: null,
     coords: [],
   },
   {
     length: 4,
+    partsLeft: 4,
     startPos: null,
     coords: [],
   },
@@ -287,12 +291,19 @@ const GameScreen = ({ opponent, player, shouldStart, socket }) => {
       // Loop through coords of all ships
       ships.forEach((ship) => {
         ship.coords.forEach((coord) => {
-          console.log('IS IT HIT??', coord, index);
+          // console.log('IS IT HIT??', coord, index);
 
           // If coord is same as the square the opponent clicked on, set hasHit to true
           if (coord === index) {
             hasHit = true;
             console.log('its a hit');
+
+            ship.partsLeft--
+            console.log("PARTS LEFT::", ship.partsLeft)
+
+            if (ship.partsLeft === 0) {
+              console.log('GAME OVER!!!')
+            } 
 
             //add the index to an array
 
