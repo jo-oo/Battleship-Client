@@ -10,11 +10,13 @@ const Landing = ({ socket }) => {
   const [isLoading, setIsLoading] = useState(false)
   // State for if a game has started
   const [isGameLive, setIsGameLive] = useState(false)
+  const [isGameOver, setIsGameOver] = useState(false)
   // State for name entered in form
   const [nameInput, setNameInput] = useState()
   const searchInputRef = useRef()
   const [opponentName, setOpponentName] = useState()
   const [shouldStart, setShouldStart] = useState(false)
+  const [isWinner, setIsWinner] = useState()
 
   // Stuff to happen when game starts
   const handleGameStart = useCallback( (players, startingPlayer) => {
@@ -31,6 +33,7 @@ const Landing = ({ socket }) => {
 
     setIsGameLive(true)
     setIsLoading(false)
+    setIsGameOver(false)
 
   }, [nameInput] ) 
 
@@ -39,8 +42,15 @@ const Landing = ({ socket }) => {
     e.preventDefault()
     // Set loading state to true
     setIsLoading(true)
+    setIsGameOver(false)
 
     socket.emit('user:join-queue', nameInput, handleGameStart)
+  }
+
+  const handleGameOver = (winner = false) => {
+    setIsGameLive(false)
+    setIsGameOver(true)
+    setIsWinner(winner)
   }
 
   useEffect( () => {
@@ -53,7 +63,7 @@ const Landing = ({ socket }) => {
     <>
       {
         // Show start screen form when loading state is false
-        !isLoading && !isGameLive &&
+        !isLoading && !isGameLive && !isGameOver &&
         (
           <section className='start-screen'>
             <h1>Battleship</h1>
@@ -88,7 +98,20 @@ const Landing = ({ socket }) => {
         // Show gamescreen when a game is live
         isGameLive && 
         (
-          <GameScreen opponent= {opponentName} player={nameInput} shouldStart={shouldStart} socket={socket} />
+          <GameScreen opponent= {opponentName} player={nameInput} shouldStart={shouldStart} socket={socket} onGameOver={handleGameOver} />
+        )
+      }
+
+      {
+        // Show result screen when game is over
+        isGameOver &&
+        (
+          <section className='result-screen'>
+            <div>Game is over</div>
+            {isWinner && (<div>You won the game!</div>)}
+            {!isWinner && (<div>You lost the game!</div>)}
+            <button className="btn btn-primary" onClick={handleSubmit}>Play again</button>
+          </section>  
         )
       }
 

@@ -12,7 +12,7 @@
   align-items: center;
 }
 
-.waiting-screen {
+.waiting-screen, .result-screen {
   background-color: bisque;
   min-height: 100vh;
   display: flex;

@@ -284,7 +284,7 @@ const createPixelArray = () => {
   return result;
 };
 
-const GameScreen = ({ opponent, player, shouldStart, socket }) => {
+const GameScreen = ({ opponent, player, shouldStart, socket, onGameOver }) => {
   // State for player to know if it is their turn
   const [isYourTurn, setIsYourTurn] = useState(shouldStart);
 
@@ -336,7 +336,7 @@ const GameScreen = ({ opponent, player, shouldStart, socket }) => {
               console.log('OUR SHIP SUNK!!!')
               shipSunk = true
               setPlayerShipsLeft( (prevState) => prevState - 1 )
-            } 
+            }
 
             //add the index to an array
 
@@ -356,6 +356,7 @@ const GameScreen = ({ opponent, player, shouldStart, socket }) => {
 
   // Function that handles when player clicks opponent board
   const handleOppBoardClick = (index) => {
+    onGameOver()
     if (isYourTurn) {
       socket.emit('game:click', index);
       setIsYourTurn(false);
