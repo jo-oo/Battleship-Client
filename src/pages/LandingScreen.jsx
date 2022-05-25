@@ -16,7 +16,7 @@ const Landing = ({ socket }) => {
   const searchInputRef = useRef()
   const [opponentName, setOpponentName] = useState()
   const [shouldStart, setShouldStart] = useState(false)
-  const [isWinner, setIsWinner] = useState()
+  const [resultData, setResultData] = useState({won: false, playerShipsSunk: 2, oppShipsSunk: 4})
 
   // Stuff to happen when game starts
   const handleGameStart = useCallback( (players, startingPlayer) => {
@@ -47,10 +47,10 @@ const Landing = ({ socket }) => {
     socket.emit('user:join-queue', nameInput, handleGameStart)
   }
 
-  const handleGameOver = (winner = false) => {
-    setIsGameLive(false)
+  const handleGameOver = (results = {won: false, playerShipsSunk: 2, oppShipsSunk: 4}) => {
+    //setIsGameLive(false)
     setIsGameOver(true)
-    setIsWinner(winner)
+    setResultData(results)
   }
 
   useEffect( () => {
@@ -58,6 +58,10 @@ const Landing = ({ socket }) => {
     socket.on('game:start', handleGameStart)
 
   }, [socket, handleGameStart] )
+
+  // useEffect ( () => {
+  //   handleGameOver()
+  // }, [] )
 
   return (
     <>
@@ -107,10 +111,25 @@ const Landing = ({ socket }) => {
         isGameOver &&
         (
           <section className='result-screen'>
-            <div>Game is over</div>
-            {isWinner && (<div>You won the game!</div>)}
-            {!isWinner && (<div>You lost the game!</div>)}
+            <div className='result-screen-wrapper'>
+            {
+              resultData.won && (
+                <>
+                  <div>Congratulations, you won!</div>
+                  <div>You sank all enemy ships while your opponent only sank {resultData.playerShipsSunk}</div>
+                </>
+              )
+            }
+            {
+              !resultData.won && (
+                <>
+                  <div>You lost the game :&#40;</div>
+                  <div>The enemy sank all your ships while you only shot down {resultData.oppShipsSunk}</div>
+                </>
+              )
+            }
             <button className="btn btn-primary" onClick={handleSubmit}>Play again</button>
+            </div>
           </section>  
         )
       }

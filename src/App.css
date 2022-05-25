@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  position: relative;
 }
 
 .start-screen {
@@ -12,7 +13,7 @@
   align-items: center;
 }
 
-.waiting-screen, .result-screen {
+.waiting-screen {
   background-color: bisque;
   min-height: 100vh;
   display: flex;
@@ -20,6 +21,35 @@
   justify-content: center;
   align-items: center;
   font-size: 1.5rem;
+}
+
+.result-screen {
+  background-color: rgba(100, 100, 100, 0.8);
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.result-screen-wrapper {
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+  height: 50%;
+  width: 50%;
+  background-color: rgb(163, 248, 248);
+  padding: 1rem 2rem;
+}
+
+.result-screen-wrapper button {
+  margin: 0;
+  margin-top: 1rem;
 }
 
 .gameBoard {

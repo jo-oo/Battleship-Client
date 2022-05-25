@@ -356,10 +356,11 @@ const GameScreen = ({ opponent, player, shouldStart, socket, onGameOver }) => {
 
   // Function that handles when player clicks opponent board
   const handleOppBoardClick = (index) => {
-    onGameOver()
+    // onGameOver({won: true, playerShipsSunk: 2, oppShipsSunk: 4})
     if (isYourTurn) {
       socket.emit('game:click', index);
       setIsYourTurn(false);
+      onGameOver({won: true, playerShipsSunk: 2, oppShipsSunk: 4})
     }
   };
 
