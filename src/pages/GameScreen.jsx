@@ -1,7 +1,8 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import Container from 'react-bootstrap/Container';
+//import Container from 'react-bootstrap/Container';
+import ShipColours from '../components/ShipColours'
 /* const arrayOfHits = [];
 const arrayOfMissed = []; */
 const arrayOppHits = [];
@@ -284,12 +285,14 @@ const createPixelArray = () => {
   return result;
 };
 
+
+
 const GameScreen = ({ opponent, player, shouldStart, socket }) => {
   // State for player to know if it is their turn
   const [isYourTurn, setIsYourTurn] = useState(shouldStart);
 
   //state so the pixelArray is updated
-  const [pixelArray, setPixelArray] = useState(createPixelArray());
+  const [pixelArray, setPixelArray] =  useState(createPixelArray());
 
   const [arrayOfMissed, setArrayOfMissed] = useState([]);
   const [arrayOfHits, setArrayOfHits] = useState([]);
@@ -406,29 +409,15 @@ const GameScreen = ({ opponent, player, shouldStart, socket }) => {
   }, []);
 
   return (
-    <Container>
+    <> 
       <Row>
         <Col>
-          <div className='gameBoard'>
-            {pixelArray.map((pixel) => {
-              //if pixel not include miss, hit or ship render it as a pixel
-              if (!pixel.miss && !pixel.hit && !pixel.hasShip) {
-                return <div className='pixel'>{pixel.number}</div>;
-              }
-              //if pixel has ship and no hit
-              if (pixel.hasShip && !pixel.hit) {
-                return <div className='pixelShip'>{pixel.number}</div>;
-              }
-              //if pixel has ship and hit
-              if (pixel.hasShip && pixel.hit) {
-                return <div className='pixelHit'>{pixel.number}</div>;
-              }
 
-              //if pixel is a miss
-              return <div className='pixelMiss'>{pixel.number}</div>;
-            })}
-          </div>
-
+          <ShipColours
+            pixelArray={pixelArray}
+          >
+          </ShipColours>
+ 
           <div className='gameBoard'>
             {pixelArray.map((pixel) => {
               //render out the array containing hit coords for player (not opponent)
@@ -474,7 +463,7 @@ const GameScreen = ({ opponent, player, shouldStart, socket }) => {
           </div>
         </Col>
       </Row>
-    </Container>
+    </>
   );
 };
 
