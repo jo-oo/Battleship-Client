@@ -2,29 +2,33 @@ import React, { useEffect, useState, useCallback } from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
-const arrayOfHits = [];
-const arrayOfMissed = [];
+/* const arrayOfHits = [];
+const arrayOfMissed = []; */
 const arrayOppHits = [];
 
 // Array of four ships to place
 const ships = [
   {
     length: 2,
+    partsLeft: 2,
     startPos: null,
     coords: [],
   },
   {
     length: 2,
+    partsLeft: 2,
     startPos: null,
     coords: [],
   },
   {
     length: 3,
+    partsLeft: 3,
     startPos: null,
     coords: [],
   },
   {
     length: 4,
+    partsLeft: 4,
     startPos: null,
     coords: [],
   },
@@ -287,6 +291,13 @@ const GameScreen = ({ opponent, player, shouldStart, socket }) => {
   //state so the pixelArray is updated
   const [pixelArray, setPixelArray] = useState(createPixelArray());
 
+  const [arrayOfMissed, setArrayOfMissed] = useState([]);
+  const [arrayOfHits, setArrayOfHits] = useState([]);
+
+  // States for how many ships the player/opponent still have
+  const [playerShipsLeft, setPlayerShipsLeft] = useState(ships.length)
+  const [oppShipsLeft, setOppShipsLeft] = useState(ships.length)
+
   // Function that handles when opponent has clicked a sqaure
   const handleOppClick = useCallback(
     (index) => {
@@ -305,17 +316,30 @@ const GameScreen = ({ opponent, player, shouldStart, socket }) => {
 
       console.log('Your opponent clicked on square', index);
       let hasHit = false;
+      let shipSunk = false
       // Loop through coords of all ships
       ships.forEach((ship) => {
         ship.coords.forEach((coord) => {
-          console.log('IS IT HIT??', coord, index);
+          // console.log('IS IT HIT??', coord, index);
 
           // If coord is same as the square the opponent clicked on, set hasHit to true
           if (coord === index) {
             hasHit = true;
             console.log('its a hit');
 
+            // Decrease parts left for the ship
+            ship.partsLeft--
+            console.log("PARTS LEFT::", ship.partsLeft)
+
+            // If all parts of ship is gone, update number of ships player still has
+            if (ship.partsLeft === 0) {
+              console.log('OUR SHIP SUNK!!!')
+              shipSunk = true
+              setPlayerShipsLeft( (prevState) => prevState - 1 )
+            } 
+
             //add the index to an array
+
             arrayOppHits.push(index);
 
             console.log('this is the array of opp hits', arrayOppHits, 'and length', arrayOppHits.length);
@@ -324,7 +348,7 @@ const GameScreen = ({ opponent, player, shouldStart, socket }) => {
       });
 
       // Inform server if click was a hit
-      socket.emit('game:click-result', hasHit, index);
+      socket.emit('game:click-result', hasHit, index, shipSunk);
       setIsYourTurn(true);
     },
     [socket]
@@ -338,27 +362,39 @@ const GameScreen = ({ opponent, player, shouldStart, socket }) => {
     }
   };
 
-  // Function that handles what happens when a click made by player was a hit (not opponent)
-  const handleClickResult = (result, index) => {
-    console.log(result);
-    if (result) {
-      console.log('You hit on this square', index);
-      arrayOfHits.push(index);
-      console.log('this is array of hits (handleClickResult)', arrayOfHits.length);
-    } else {
-      console.log('You missed this square', index);
-      arrayOfMissed.push(index);
-      console.log('this is array of missed (handleClickResult)', arrayOfMissed.length);
-    }
-  };
-
   useEffect(() => {
+    // Function that handles what happens when a click made by player was a hit (not opponent)
+    const handleClickResult = (result, index, shipSunk) => {
+
+      if (result) {
+        console.log('You hit on this square', index);
+        setArrayOfHits((arrayOfHits) => {
+          return [index, ...arrayOfHits];
+        });
+
+        // If a whole ship was sunk, decrease number of ships for opponent
+        if (shipSunk) {
+          console.log("You sunk their ship!!!")
+          setOppShipsLeft( (prevState) => prevState - 1 )
+        }
+        
+      } else {
+        console.log('You missed this square', index);
+        setArrayOfMissed((arrayOfMissed) => {
+          return [index, ...arrayOfMissed];
+        });
+      }
+
+    };
+
     socket.on('game:click', handleOppClick);
     socket.on('game:click-result', handleClickResult);
+
     return () => {
       //needed to remove the socket otherwise it was running four times
       socket.removeListener('game:click');
       socket.removeListener('game:click-result');
+      handleClickResult();
     };
   }, [socket, handleOppClick]);
 
@@ -421,10 +457,20 @@ const GameScreen = ({ opponent, player, shouldStart, socket }) => {
 
         <Col>
           <div id='scoreBoard'>
-            <h3> Player 2: {opponent}</h3>
-            <h3> Player 1: {player}</h3>
-            {isYourTurn && <h3> It's your turn </h3>}
-            {!isYourTurn && <h3> Opponents turn </h3>}
+            <div id='opponent-board'>
+              <h3>Player 2: {opponent}</h3>
+              <h4>Ships remaning: {oppShipsLeft}</h4>
+            </div>
+
+            <div id='currentPlayer-board'>
+              <h3>Player 1: {player}</h3>
+              <h4>Ships remaining: {playerShipsLeft}</h4>
+            </div>
+
+            <div id='turnToggle'>
+              {isYourTurn && <h3> It's your turn </h3>}
+              {!isYourTurn && <h3> Opponents turn </h3>}
+            </div>
           </div>
         </Col>
       </Row>
