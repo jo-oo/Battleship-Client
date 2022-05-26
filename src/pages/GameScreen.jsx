@@ -45,6 +45,34 @@ function getRandomPosition() {
   return getRandomNumber(1, 11) * getRandomNumber(1, 11); 
 }
 
+function randomTest(num) {
+  return Math.ceil(Math.random() * num);
+}
+
+function randomTestTen(num) {
+  return Math.floor(Math.random() * num);
+}
+
+function testFunction(shipDirection, shipLength) {
+  switch(shipDirection) {
+    case 0:
+      return getRandomNumber(1, 12 - shipLength) + getRandomNumber(0, 10) * 10
+    case 1:
+      // getRandomNumber(0 + shipLength, 11) + (getRandomNumber(0, 10) * 10)
+      return randomTest(10) + randomTestTen(10) * 10
+    case 2:
+      return getRandomNumber(1, 10) + getRandomNumber(0 + shipLength, 10) * 10
+    case 3:
+      return getRandomNumber(1, 10) + getRandomNumber(0, 10 - shipLength) * 10
+    default:
+      return false
+  }
+}
+
+for (let h = 0; h < 100; h++) {
+  console.log(testFunction(1, 4))
+}
+
 //Function to check that coordinate does not already exist. takes the empty "UsedCoordinates"-array and checks the cordinate in it
 //If coordinate exists then true
 const checkCoordinates = (UsedCoordinates, coordinates) => {
