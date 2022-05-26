@@ -59,10 +59,6 @@ const Landing = ({ socket }) => {
 
   }, [socket, handleGameStart] )
 
-  // useEffect ( () => {
-  //   handleGameOver()
-  // }, [] )
-
   return (
     <>
       {

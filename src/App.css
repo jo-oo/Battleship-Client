@@ -24,7 +24,7 @@
 }
 
 .result-screen {
-  background-color: rgba(100, 100, 100, 0.8);
+  background-color: rgba(100, 100, 100, 0.5);
   position: fixed;
   top: 0;
   bottom: 0;
@@ -43,7 +43,10 @@
   font-size: 1.5rem;
   height: 50%;
   width: 50%;
-  background-color: rgb(163, 248, 248);
+  background-color: rgb(231, 255, 255);
+  border: 1px solid black;
+  border-radius: 3px;
+  box-shadow: 0 0 25px 3px black;
   padding: 1rem 2rem;
 }
 
