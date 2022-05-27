@@ -40,33 +40,55 @@ function getRandomNumber(min, max) {
   return Math.floor(Math.random() * (max - min) + min);
 }
 
-//Function for random position x and a y position from 1 to 10
-function getShipPosIncrement(randomDirection) {
-  switch(randomDirection) {
+/**
+ * 
+ * Function that returns a randomized start position that's within a valid range depending on the direction of the ship
+ * 
+ */
+const getShipStartPos = (shipDirection, shipLength) => {
+  // A switch case block that performs a different calculation depending on the case value
+  switch(shipDirection) {
     case 0:
-      return 1
+      // Calculate a valid start position for ships going right
+      //     Random horizontal placemant         + Random vertical placement
+      return getRandomNumber(1, 12 - shipLength) + getRandomNumber(0, 10) * 10
     case 1:
-      return -1
+      // Calculate a valid start position for ships going left
+      return getRandomNumber(0 + shipLength, 11) + (getRandomNumber(0, 10) * 10)
     case 2:
-      return 10
+      // Calculate a valid start position for ships going down
+      return getRandomNumber(1, 11) + getRandomNumber(0, 10 - shipLength + 1) * 10
     case 3:
-      return -10
+      // Calculate a valid start position for ships going up
+      return getRandomNumber(1, 11) + getRandomNumber(0 + shipLength - 1, 10) * 10
     default:
+      // Default return value if no other case matches
       return false
   }
 }
 
-function getShipStartPos(shipDirection, shipLength) {
-  switch(shipDirection) {
+/**
+ * 
+ * Function that returns how much every coordinate in a ship should increase/decrease depending on the direction of the ship
+ * 
+ */
+const getShipPosIncrement = (randomDirection) => {
+  // A switch case block that calculates a different increment value depending on the case value
+  switch(randomDirection) {
     case 0:
-      return getRandomNumber(1, 12 - shipLength) + getRandomNumber(0, 10) * 10
+      // For ships going right, increment should be +1 for every new coord in the ship
+      return 1
     case 1:
-      return getRandomNumber(0 + shipLength, 11) + (getRandomNumber(0, 10) * 10)
+      // For ships going left, increment should be -1 for every new coord in the ship
+      return -1
     case 2:
-      return getRandomNumber(1, 11) + getRandomNumber(0, 10 - shipLength + 1) * 10
+      // For ships going down, increment should be +10 for every new coord in the ship
+      return 10
     case 3:
-      return getRandomNumber(1, 11) + getRandomNumber(0 + shipLength - 1, 10) * 10
+      // For ships going up, increment should be -10 for every new coord in the ship
+      return -10
     default:
+      // Default return value if no other case matches
       return false
   }
 }
@@ -86,274 +108,46 @@ const checkCoordinates = (UsedCoordinates, coordinates) => {
   return isTaken;
 };
 
-
-// for (let h = ship.startPos; h < ship.startPos + (ship.length) * increment; h += h*increment) {
-//   takenCoordinates.push(h)
-// }
-
 // Function to set coordinates for all ships
 const fillShipCoord = () => {
 
-  //empty arrays to be filled with coordinates as they are created
+  // Array with coordinates for all ships whos coordinates has been decided
   const UsedCoordinates = [];
+  // Array with test coordinates that will be compared with UsedCoordinates array
   let takenCoordinates = []
-  
-  
 
   ships.forEach((ship) => {
 
-    //Get random direction
+    //Get random number to represent direction of the ship
     const randomDirection = Math.floor(Math.random() * 4);
     console.log("YOU HAVE RANDOM DIRECTION: ", randomDirection)
+    // Get increment value for each coord within a ship
     const increment = getShipPosIncrement(randomDirection)
-    console.log("YOU HAVE RANDOM INCREMENT: ", increment)
-
-    //Randomize ships starting position
+    console.log("YOU HAVE INCREMENT: ", increment)
     
+    // A do-while loop that calculates possible coordinates for the ship until all coordinates are valid
     do {
+      // Empty test coordinates at the start of each loop iteration
       takenCoordinates = []
-      //ship.startPos = getRandomPosition();
+      // Give ship a random start position
       ship.startPos = getShipStartPos(randomDirection, ship.length)
-      for (let j = 0; j < ship.length; j++) {
-        takenCoordinates.push(ship.startPos + (j * increment))
+      // For every position in ship, push in the coordinates thats gonna be checked if valid
+      for (let coordPos = 0; coordPos < ship.length; coordPos++) {
+        takenCoordinates.push(ship.startPos + (coordPos * increment))
       }
-       //fills array with index for start position + start position + antal pixlar (längd)
+      // If any of the coordinates is already occupied, redo the loop
     } while (checkCoordinates(UsedCoordinates, takenCoordinates));
-    //uses function "checkCoordinates" to see if there is any coordinates in the array "Usedcoordinates" on the start position OR if the ship with 2 pixels does not start at the set coordinates of that array
 
-    // if (ship.length === 3) {
-    //   do {
-    //     takenCoordinates = []
-    //     //ship.startPos = getRandomPosition();
-    //     //ship.startPos = getShipStartPos(0, 3)
-    //     ship.startPos = getShipStartPos(randomDirection, ship.length)
-    //     takenCoordinates = [ship.startPos, ship.startPos + (1 * increment), ship.startPos + (2 * increment)] //start position + sytart positioon + antal
-    //   } while (
-    //     checkCoordinates(UsedCoordinates, takenCoordinates)
-    //   );
-    // }
-
-    // if (ship.length === 4) {
-    //   do {
-    //     takenCoordinates = []
-    //     //ship.startPos = getRandomPosition();
-    //     //ship.startPos = getShipStartPos(0, 4)
-    //     ship.startPos = getShipStartPos(randomDirection, ship.length)
-    //     takenCoordinates = [ship.startPos, ship.startPos + (1 * increment), ship.startPos + (2 * increment), ship.startPos + (3 * increment)] //start position + sytart positioon + antal
-    //   } while (checkCoordinates(UsedCoordinates, takenCoordinates));
-    // }
-
-    for (let i = 0; i < ship.length; i++) {
-      ship.coords.push(takenCoordinates[i]);
-      UsedCoordinates.push(takenCoordinates[i]);
+    // For each position in ship, push in the (now valid) coordinates from takenCoordinates
+    for (let coordPos = 0; coordPos < ship.length; coordPos++) {
+      // Push in to current ship coords
+      ship.coords.push(takenCoordinates[coordPos]);
+      // Push into array of all occupied values
+      UsedCoordinates.push(takenCoordinates[coordPos]);
     }
-
-    // //random direction to the right
-    // if (randomDirection === 0) {
-    //   console.log('This is random direction 0');
-
-
-    //   //Randomize ships starting position
-    //   if (ship.length === 2) {
-    //     do {
-    //       takenCoordinates = []
-    //       //ship.startPos = getRandomPosition();
-    //       ship.startPos = getShipStartPos(randomDirection, ship.length)
-    //       takenCoordinates = [ship.startPos, ship.startPos + (1 * increment)] //fills array with index for start position + start position + antal pixlar (längd)
-    //     } while (checkCoordinates(UsedCoordinates, takenCoordinates));
-    //   } //uses function "checkCoordinates" to see if there is any coordinates in the array "Usedcoordinates" on the start position OR if the ship with 2 pixels does not start at the set coordinates of that array
-
-    //   if (ship.length === 3) {
-    //     do {
-    //       takenCoordinates = []
-    //       //ship.startPos = getRandomPosition();
-    //       //ship.startPos = getShipStartPos(0, 3)
-    //       ship.startPos = getShipStartPos(randomDirection, ship.length)
-    //       takenCoordinates = [ship.startPos, ship.startPos + (1 * increment), ship.startPos + (2 * increment)] //start position + sytart positioon + antal
-    //     } while (
-    //       checkCoordinates(UsedCoordinates, takenCoordinates)
-    //     );
-    //   }
-
-    //   if (ship.length === 4) {
-    //     do {
-    //       takenCoordinates = []
-    //       //ship.startPos = getRandomPosition();
-    //       //ship.startPos = getShipStartPos(0, 4)
-    //       ship.startPos = getShipStartPos(randomDirection, ship.length)
-    //       takenCoordinates = [ship.startPos, ship.startPos + (1 * increment), ship.startPos + (2 * increment), ship.startPos + (3 * increment)] //start position + sytart positioon + antal
-    //     } while (checkCoordinates(UsedCoordinates, takenCoordinates));
-    //   }
-
-    //   for (let i = ship.startPos; ship.coords.length < ship.length; i++) {
-    //     ship.coords.push(i);
-    //     UsedCoordinates.push(i);
-    //   }
-    // }
-
-    // console.log('Used coordinates is now' + UsedCoordinates);
-
-    // //this is random position left
-    // if (randomDirection === 1) {
-    //   console.log('This is random direction 1');
-
-
-    //   if (ship.length === 2) {
-    //     do {
-    //       takenCoordinates = []
-    //       // Randomize ship starting position
-    //       //ship.startPos = getRandomPosition();
-    //       //ship.startPos = getShipStartPos(1, 2)
-    //       ship.startPos = getShipStartPos(randomDirection, ship.length)
-    //       takenCoordinates = [ship.startPos, ship.startPos + (1 * increment)] //start position + sytart positioon + antal
-    //     } while (checkCoordinates(UsedCoordinates, takenCoordinates) );
-    //   }
-    //   console.log('Used coordinates is now' + UsedCoordinates);
-
-    //   if (ship.length === 3) {
-    //     do {
-    //       takenCoordinates=[]
-    //       // Randomize ship starting position
-    //       //ship.startPos = getRandomPosition();
-    //       //ship.startPos = getShipStartPos(1, 3)
-    //       ship.startPos = getShipStartPos(randomDirection, ship.length)
-    //       takenCoordinates = [ship.startPos, ship.startPos + (1 * increment), ship.startPos + (2 * increment)] //start position + sytart positioon + antal
-    //     } while (
-    //       checkCoordinates(UsedCoordinates, takenCoordinates)
-    //     );
-    //   }
-
-    //   if (ship.length === 4) {
-    //     do {
-    //       takenCoordinates = []
-    //       // Randomize ship starting position
-    //       //ship.startPos = getRandomPosition();
-    //       //ship.startPos = getShipStartPos(1, 4)
-    //       ship.startPos = getShipStartPos(randomDirection, ship.length)
-    //       takenCoordinates = [ship.startPos, ship.startPos + (1 * increment), ship.startPos + (2 * increment), ship.startPos + (3 * increment)] //start position + sytart positioon + antal
-          
-    //     } while (checkCoordinates(UsedCoordinates, takenCoordinates));
-    //   }
-
-    //   for (let i = ship.startPos; ship.coords.length < ship.length; i -= 1) {
-    //     ship.coords.push(i);
-    //     UsedCoordinates.push(i);
-    //   }
-    // }
-    // console.log('Used coordinates is now' + UsedCoordinates);
-
-    // //this is random position up
-    // if (randomDirection === 2) {
-    //   console.log('This is random direction 2');
-
-
-    //   if (ship.length === 2) {
-    //     do {
-    //       takenCoordinates= []
-    //       // Randomize ship starting position
-    //       //ship.startPos = getRandomPosition();
-    //       //ship.startPos = getShipStartPos(2, 2)
-    //       ship.startPos = getShipStartPos(randomDirection, ship.length)
-    //       takenCoordinates = [ship.startPos, ship.startPos + (1 * increment)] //start position + sytart positioon + antal
-          
-    //     } while (checkCoordinates(UsedCoordinates, takenCoordinates));
-    //   }
-
-    //   if (ship.length === 3) {
-    //     do {
-    //       takenCoordinates=[]
-    //       // Randomize ship starting position
-    //       //ship.startPos = getRandomPosition();
-    //       //ship.startPos = getShipStartPos(2, 3)
-    //       ship.startPos = getShipStartPos(randomDirection, ship.length)
-    //       takenCoordinates = [ship.startPos, ship.startPos + (1 * increment), ship.startPos + (2 * increment)] //start position + sytart positioon + antal
-          
-    //     } while (
-    //       checkCoordinates(UsedCoordinates, takenCoordinates)
-    //     );
-    //   }
-
-    //   if (ship.length === 4) {
-    //     do {
-    //       takenCoordinates=[]
-    //       // Randomize ship starting position
-    //       //ship.startPos = getRandomPosition();
-    //       //ship.startPos = getShipStartPos(2, 4)
-    //       ship.startPos = getShipStartPos(randomDirection, ship.length)
-    //       takenCoordinates = [ship.startPos, ship.startPos + (1 * increment), ship.startPos + (2 * increment), ship.startPos + (3 * increment)] //start position + sytart positioon + antal
-          
-    //     } while (checkCoordinates(UsedCoordinates, takenCoordinates));
-    //   }
-
-    //   for (let i = ship.startPos; ship.coords.length < ship.length; i -= 10) {
-    //     ship.coords.push(i);
-    //     UsedCoordinates.push(i);
-    //   }
-    // }
-
-    // console.log('Used coordinates is now' + UsedCoordinates);
-
-    // //this is random position down
-    // if (randomDirection === 3) {
-    //   console.log('This is random direction 3');
-
- 
-    //   if (ship.length === 2) {
-    //     do {
-    //       takenCoordinates=[]
-    //       // Randomize ship starting position
-    //       //ship.startPos = getRandomPosition();
-    //       //ship.startPos = getShipStartPos(3, 2)
-    //       ship.startPos = getShipStartPos(randomDirection, ship.length)
-    //       takenCoordinates = [ship.startPos, ship.startPos + (1 * increment)] //start position + sytart positioon + antal
-          
-    //     } while (checkCoordinates(UsedCoordinates, takenCoordinates));
-    //   }
-
-    //   if (ship.length === 3) {
-    //     do {
-    //       takenCoordinates=[]
-    //       // Randomize ship starting position
-    //       //ship.startPos = getRandomPosition();
-    //       //ship.startPos = getShipStartPos(3, 3)
-    //       ship.startPos = getShipStartPos(randomDirection, ship.length)
-    //       takenCoordinates = [ship.startPos, ship.startPos + (1 * increment), ship.startPos + (2 * increment)] //start position + sytart positioon + antal
-          
-    //     } while (
-    //       checkCoordinates(UsedCoordinates, takenCoordinates)
-    //     );
-    //   }
-
-    //   if (ship.length === 4) {
-    //     do {
-    //       takenCoordinates= []
-    //       // Randomize ship starting position
-    //       //ship.startPos = getRandomPosition();
-    //       //ship.startPos = getShipStartPos(3, 4)
-    //       ship.startPos = getShipStartPos(randomDirection, ship.length)
-    //       takenCoordinates = [ship.startPos, ship.startPos + (1 * increment), ship.startPos + (2 * increment), ship.startPos + (3 * increment)] //start position + sytart positioon + antal
-          
-    //     } while (checkCoordinates(UsedCoordinates, takenCoordinates));
-    //   }
-
-    //   for (let i = ship.startPos; ship.coords.length < ship.length; i += 10) {
-    //     ship.coords.push(i);
-    //     if (ship.coords.includes(i)) {
-    //       UsedCoordinates.push(i);
-    //     }
-    //   }
-    //   console.log('Used coordinates is now ' + UsedCoordinates);
-    // }
+    
   });
 };
-
-fillShipCoord();
-
-
-// Console log info about each ship to make sure it's correct
-ships.forEach((ship) => {
-  console.log('ship of length', ship.length, 'has coords', ship.coords);
-});
 
 //create an object for pixel containing index/number hit, miss and if the pixel has ships
 const createPixelArray = () => {
@@ -492,10 +286,13 @@ const GameScreen = ({ opponent, player, shouldStart, socket }) => {
   }, [socket, handleOppClick]);
 
   useEffect(() => {
+    // Cal the function that decides the coordinates for all ships
+    fillShipCoord();
     // Console log info about each ship to make sure it's correct
     ships.forEach((ship) => {
       console.log('ship of length', ship.length, 'has coords', ship.coords);
     });
+    setPixelArray(createPixelArray())
   }, []);
 
   return (
