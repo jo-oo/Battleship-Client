@@ -4,6 +4,7 @@ import GameScreen from '../pages/GameScreen';
 import Spinner from 'react-bootstrap/Spinner'
 import LoadingSpinner from '../components/LoadingSpinner';
 import StartScreen from '../components/LandingScreen/StartScreen';
+import GameOver from '../components/LandingScreen/GameOver';
 
 const Landing = ({ socket }) => {
 
@@ -76,11 +77,10 @@ const Landing = ({ socket }) => {
       }
 
       {
-        // Show waiting screen when loading state is true
+        // Show waiting screen when loading state is true. Shows component Loading Spinner inside waiting screen
         isLoading &&
         (
           <section className='waiting-screen mt-4"'>
-
             <p>Hello {nameInput}</p>
             <p>Waiting for opponent...</p>
             <LoadingSpinner
@@ -88,45 +88,32 @@ const Landing = ({ socket }) => {
               Spinner={Spinner}
             >
             </LoadingSpinner>
-
           </section>
         )
       }
-
       {
-        // Show gamescreen when a game is live
+        // Show gamescreen when a game is live. GameScreen is the Page thar renders out everything related to when the game is on
         isGameLive && 
         (
-          <GameScreen opponent= {opponentName} player={nameInput} shouldStart={shouldStart} socket={socket} onGameOver={handleGameOver} />
+          <GameScreen 
+            opponent= {opponentName} 
+            player={nameInput} 
+            shouldStart={shouldStart} 
+            socket={socket} 
+            onGameOver={handleGameOver} />
         )
       }
-
       {
-        // Show result screen when game is over
+        // Show result screen when game is over. GameOver is a component handling only what happens when Game is over
         isGameOver &&
         (
-          <section className='result-screen'>
-            <div className='result-screen-wrapper'>
-            {
-              resultData.won && (
-                <>
-                  <div>Congratulations, you won!</div>
-                </>
-              )
-            }
-            {
-              !resultData.won && (
-                <>
-                  <div>You lost the game :&#40;</div>
-                </>
-              )
-            }
-            <button className="btn btn-primary" onClick={handleSubmit}>Play again</button>
-            </div>
-          </section>  
+          <GameOver
+		        result = {resultData}
+            submit = {handleSubmit}
+            >
+            </GameOver>
         )
       }
-
     </>
   )
 }
