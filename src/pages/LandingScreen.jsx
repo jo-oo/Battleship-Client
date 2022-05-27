@@ -47,7 +47,7 @@ const Landing = ({ socket }) => {
     socket.emit('user:join-queue', nameInput, handleGameStart)
   }
 
-  const handleGameOver = (results = {won: false, playerShipsSunk: 2, oppShipsSunk: 4}) => {
+  const handleGameOver = (results = {won: false}) => {
     //setIsGameLive(false)
     setIsGameOver(true)
     setResultData(results)
@@ -112,7 +112,6 @@ const Landing = ({ socket }) => {
               resultData.won && (
                 <>
                   <div>Congratulations, you won!</div>
-                  <div>You sank all enemy ships while your opponent only sank {resultData.playerShipsSunk}</div>
                 </>
               )
             }
@@ -120,7 +119,6 @@ const Landing = ({ socket }) => {
               !resultData.won && (
                 <>
                   <div>You lost the game :&#40;</div>
-                  <div>The enemy sank all your ships while you only shot down {resultData.oppShipsSunk}</div>
                 </>
               )
             }
