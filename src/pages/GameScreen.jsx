@@ -3,6 +3,8 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 //import Container from 'react-bootstrap/Container';
 import ShipColours from '../components/ShipColours'
+import ScoreBoard from '../components/ScoreBoard'
+
 const arrayOppHits = [];
 let gameOver = false;
 let gameOverOpp = false;
@@ -648,22 +650,15 @@ const GameScreen = ({ opponent, player, shouldStart, socket, onGameOver }) => {
           <div id='gameOver'>{gameOver && <h3>Game Over, you lost!!</h3>}</div>
           <div id='gameOver'>{gameOverOpp && <h3>IT'S GAME OVER, you won!!!</h3>}</div>
 
-          <div id='scoreBoard'>
-            <div id='opponent-board'>
-              <h3>Player 2: {opponent}</h3>
-              <h4>Ships remaning: {oppShipsLeft}</h4>
-            </div>
+          <ScoreBoard
+            opponent = {opponent}
+            oppShipsLeft = {oppShipsLeft}
+            player = {player}
+            playerShipsLeft={playerShipsLeft}
+            isYourTurn = {isYourTurn}
+           >
+          </ScoreBoard>
 
-            <div id='currentPlayer-board'>
-              <h3>Player 1: {player}</h3>
-              <h4>Ships remaining: {playerShipsLeft}</h4>
-            </div>
-
-            <div id='turnToggle'>
-              {isYourTurn && <h3> It's your turn </h3>}
-              {!isYourTurn && <h3> Opponents turn </h3>}
-            </div>
-          </div>
         </Col>
       </Row>
     </>
