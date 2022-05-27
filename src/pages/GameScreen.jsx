@@ -2,9 +2,11 @@ import React, { useEffect, useState, useCallback } from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 //import Container from 'react-bootstrap/Container';
+import HitOrMiss from '../components/HitOrMiss'
 import ShipColours from '../components/ShipColours'
 import ScoreBoard from '../components/ScoreBoard'
 import GameOver from '../components/GameOver'
+
 
 const arrayOppHits = [];
 let gameOver = false;
@@ -569,6 +571,7 @@ const GameScreen = ({ opponent, player, shouldStart, socket, onGameOver }) => {
   useEffect(() => {
     // Function that handles what happens when a click made by player was a hit (not opponent)
     const handleClickResult = (result, index, shipSunk, gameOver) => {
+
       if (result) {
         console.log('You hit on this square', index);
         setArrayOfHits((arrayOfHits) => {
@@ -620,31 +623,16 @@ const GameScreen = ({ opponent, player, shouldStart, socket, onGameOver }) => {
             pixelArray={pixelArray}
           >
           </ShipColours>
- 
-          <div className='gameBoard'>
-            {pixelArray.map((pixel) => {
-              //render out the array containing hit coords for player (not opponent)
-              for (let i = 0; i < arrayOfHits.length; i++) {
-                if (arrayOfHits[i] === pixel.number) {
-                  return <div className='pixelHit'>{pixel.number}</div>;
-                }
-              }
 
-              //render out the array containing missed coords for player (not opponent)
-              for (let i = 0; i < arrayOfMissed.length; i++) {
-                if (arrayOfMissed[i] === pixel.number) {
-                  return <div className='pixelMiss'>{pixel.number}</div>;
-                }
-              }
-              //if it's not hit or miss render just a normal clickable pixel
-              return (
-                //when clicking on this pixel handleOppBoardClick is running
-                <div className='pixel' onClick={() => handleOppBoardClick(pixel.number)}>
-                  {pixel.number}
-                </div>
-              );
-            })}
-          </div>
+          <HitOrMiss
+            pixelArray={pixelArray}
+            arrayOfHits = {arrayOfHits}
+            arrayOfMissed = {arrayOfMissed}
+            handleOppBoardClick = {handleOppBoardClick}
+          >
+          </HitOrMiss>
+
+
         </Col>
 
         <Col>
