@@ -3,6 +3,7 @@ import { useRef, useEffect, useState, useCallback } from 'react'
 import GameScreen from '../pages/GameScreen';
 import Spinner from 'react-bootstrap/Spinner'
 import LoadingSpinner from '../components/LoadingSpinner';
+import StartScreen from '../components/LandingScreen/StartScreen';
 
 const Landing = ({ socket }) => {
 
@@ -10,11 +11,13 @@ const Landing = ({ socket }) => {
   const [isLoading, setIsLoading] = useState(false)
   // State for if a game has started
   const [isGameLive, setIsGameLive] = useState(false)
+  const [isGameOver, setIsGameOver] = useState(false)
   // State for name entered in form
   const [nameInput, setNameInput] = useState()
   const searchInputRef = useRef()
   const [opponentName, setOpponentName] = useState()
   const [shouldStart, setShouldStart] = useState(false)
+  const [resultData, setResultData] = useState()
 
   // Stuff to happen when game starts
   const handleGameStart = useCallback( (players, startingPlayer) => {
@@ -31,6 +34,7 @@ const Landing = ({ socket }) => {
 
     setIsGameLive(true)
     setIsLoading(false)
+    setIsGameOver(false)
 
   }, [nameInput] ) 
 
@@ -39,8 +43,15 @@ const Landing = ({ socket }) => {
     e.preventDefault()
     // Set loading state to true
     setIsLoading(true)
+    setIsGameOver(false)
 
     socket.emit('user:join-queue', nameInput, handleGameStart)
+  }
+
+  const handleGameOver = (results) => {
+    //setIsGameLive(false)
+    setIsGameOver(true)
+    setResultData(results)
   }
 
   useEffect( () => {
@@ -53,16 +64,14 @@ const Landing = ({ socket }) => {
     <>
       {
         // Show start screen form when loading state is false
-        !isLoading && !isGameLive &&
+        !isLoading && !isGameLive && !isGameOver &&
         (
-          <section className='start-screen'>
-            <h1>Battleship</h1>
-            <form className='form' onSubmit={handleSubmit}>
-              <input type="text" id="username" className="form-control form-control-lg" onChange={e => setNameInput(e.target.value)} ref={searchInputRef} placeholder="Your name" required autoFocus />
-              <br />
-              <button type="submit" className="btn btn-primary">Enter queue</button>
-            </form>
-          </section>
+          <StartScreen
+            handleSubmit = {handleSubmit}
+            setNameInput = {setNameInput}
+            searchInputRef = {searchInputRef}
+         >
+        </StartScreen>
         )
       }
 
@@ -88,7 +97,33 @@ const Landing = ({ socket }) => {
         // Show gamescreen when a game is live
         isGameLive && 
         (
-          <GameScreen opponent= {opponentName} player={nameInput} shouldStart={shouldStart} socket={socket} />
+          <GameScreen opponent= {opponentName} player={nameInput} shouldStart={shouldStart} socket={socket} onGameOver={handleGameOver} />
+        )
+      }
+
+      {
+        // Show result screen when game is over
+        isGameOver &&
+        (
+          <section className='result-screen'>
+            <div className='result-screen-wrapper'>
+            {
+              resultData.won && (
+                <>
+                  <div>Congratulations, you won!</div>
+                </>
+              )
+            }
+            {
+              !resultData.won && (
+                <>
+                  <div>You lost the game :&#40;</div>
+                </>
+              )
+            }
+            <button className="btn btn-primary" onClick={handleSubmit}>Play again</button>
+            </div>
+          </section>  
         )
       }
 

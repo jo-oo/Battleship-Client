@@ -1,10 +1,16 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import Container from 'react-bootstrap/Container';
-/* const arrayOfHits = [];
-const arrayOfMissed = []; */
+//import Container from 'react-bootstrap/Container';
+import HitOrMiss from '../components/GameScreen/HitOrMiss'
+import ShipColours from '../components/GameScreen/ShipColours'
+import ScoreBoard from '../components/GameScreen/ScoreBoard'
+import GameOver from '../components/GameScreen/GameOver'
+
+
 const arrayOppHits = [];
+let gameOver = false;
+let gameOverOpp = false;
 
 // Array of four ships to place
 const ships = [
@@ -33,7 +39,6 @@ const ships = [
     coords: [],
   },
 ];
-
 
 //Function for random number
 function getRandomNumber(min, max) {
@@ -96,15 +101,14 @@ const getShipPosIncrement = (randomDirection) => {
 //Function to check that coordinate does not already exist. takes the empty "UsedCoordinates"-array and checks the cordinate in it
 //If coordinate exists then true
 const checkCoordinates = (UsedCoordinates, coordinates) => {
-
-  let isTaken = false
+  let isTaken = false;
   console.log('TEST USED CORD IS' + UsedCoordinates, coordinates);
 
-  coordinates.forEach( (coordinate ) => {
-    if (UsedCoordinates.includes(coordinate)){
-    isTaken = true
+  coordinates.forEach((coordinate) => {
+    if (UsedCoordinates.includes(coordinate)) {
+      isTaken = true;
     }
-  })
+  });
   return isTaken;
 };
 
@@ -171,19 +175,21 @@ const createPixelArray = () => {
   return result;
 };
 
-const GameScreen = ({ opponent, player, shouldStart, socket }) => {
+const GameScreen = ({ opponent, player, shouldStart, socket, onGameOver }) => {
   // State for player to know if it is their turn
   const [isYourTurn, setIsYourTurn] = useState(shouldStart);
 
   //state so the pixelArray is updated
-  const [pixelArray, setPixelArray] = useState(createPixelArray());
+  const [pixelArray, setPixelArray] =  useState(createPixelArray());
 
   const [arrayOfMissed, setArrayOfMissed] = useState([]);
   const [arrayOfHits, setArrayOfHits] = useState([]);
 
   // States for how many ships the player/opponent still have
-  const [playerShipsLeft, setPlayerShipsLeft] = useState(ships.length)
-  const [oppShipsLeft, setOppShipsLeft] = useState(ships.length)
+  const [playerShipsLeft, setPlayerShipsLeft] = useState(ships.length);
+  const [oppShipsLeft, setOppShipsLeft] = useState(ships.length);
+
+  const [totShipsLeft, setTotShipsLeft] = useState(4);
 
   // Function that handles when opponent has clicked a sqaure
   const handleOppClick = useCallback(
@@ -201,9 +207,9 @@ const GameScreen = ({ opponent, player, shouldStart, socket }) => {
       });
       // Variable for if click was a hit
 
-      console.log('Your opponent clicked on square', index);
       let hasHit = false;
-      let shipSunk = false
+      let shipSunk = false;
+
       // Loop through coords of all ships
       ships.forEach((ship) => {
         ship.coords.forEach((coord) => {
@@ -212,33 +218,40 @@ const GameScreen = ({ opponent, player, shouldStart, socket }) => {
           // If coord is same as the square the opponent clicked on, set hasHit to true
           if (coord === index) {
             hasHit = true;
+
             console.log('its a hit');
 
             // Decrease parts left for the ship
-            ship.partsLeft--
-            console.log("PARTS LEFT::", ship.partsLeft)
+            ship.partsLeft--;
+            console.log('PARTS LEFT::', ship.partsLeft);
 
             // If all parts of ship is gone, update number of ships player still has
             if (ship.partsLeft === 0) {
-              console.log('OUR SHIP SUNK!!!')
-              shipSunk = true
-              setPlayerShipsLeft( (prevState) => prevState - 1 )
-            } 
+              console.log('OUR SHIP SUNK!!!');
+              shipSunk = true;
+              setPlayerShipsLeft((prevState) => prevState - 1);
+
+              //decrease total ships
+              setTotShipsLeft((prevState) => prevState - 1);
+              //if all ships are hit, set gameOver = true
+              if (totShipsLeft - 1 === 0) {
+                gameOver = true;
+                onGameOver({won: false})
+              }
+            }
 
             //add the index to an array
-
             arrayOppHits.push(index);
-
             console.log('this is the array of opp hits', arrayOppHits, 'and length', arrayOppHits.length);
           }
         });
       });
 
       // Inform server if click was a hit
-      socket.emit('game:click-result', hasHit, index, shipSunk);
+      socket.emit('game:click-result', hasHit, index, shipSunk, gameOver);
       setIsYourTurn(true);
     },
-    [socket]
+    [socket, totShipsLeft, onGameOver]
   );
 
   // Function that handles when player clicks opponent board
@@ -251,7 +264,7 @@ const GameScreen = ({ opponent, player, shouldStart, socket }) => {
 
   useEffect(() => {
     // Function that handles what happens when a click made by player was a hit (not opponent)
-    const handleClickResult = (result, index, shipSunk) => {
+    const handleClickResult = (result, index, shipSunk, gameOver) => {
 
       if (result) {
         console.log('You hit on this square', index);
@@ -259,19 +272,22 @@ const GameScreen = ({ opponent, player, shouldStart, socket }) => {
           return [index, ...arrayOfHits];
         });
 
-        // If a whole ship was sunk, decrease number of ships for opponent
         if (shipSunk) {
-          console.log("You sunk their ship!!!")
-          setOppShipsLeft( (prevState) => prevState - 1 )
+          console.log('You sunk their ship!!!');
+          setOppShipsLeft((prevState) => prevState - 1);
+          // If a whole ship was sunk, decrease number of ships for opponent
         }
-        
+
+        if (gameOver) {
+          gameOverOpp = true;
+          onGameOver({won: true})
+        }
       } else {
         console.log('You missed this square', index);
         setArrayOfMissed((arrayOfMissed) => {
           return [index, ...arrayOfMissed];
         });
       }
-
     };
 
     socket.on('game:click', handleOppClick);
@@ -283,7 +299,7 @@ const GameScreen = ({ opponent, player, shouldStart, socket }) => {
       socket.removeListener('game:click-result');
       handleClickResult();
     };
-  }, [socket, handleOppClick]);
+  }, [socket, handleOppClick, onGameOver]);
 
   useEffect(() => {
     // Cal the function that decides the coordinates for all ships
@@ -296,75 +312,44 @@ const GameScreen = ({ opponent, player, shouldStart, socket }) => {
   }, []);
 
   return (
-    <Container>
+    <> 
       <Row>
         <Col>
-          <div className='gameBoard'>
-            {pixelArray.map((pixel) => {
-              //if pixel not include miss, hit or ship render it as a pixel
-              if (!pixel.miss && !pixel.hit && !pixel.hasShip) {
-                return <div className='pixel'>{pixel.number}</div>;
-              }
-              //if pixel has ship and no hit
-              if (pixel.hasShip && !pixel.hit) {
-                return <div className='pixelShip'>{pixel.number}</div>;
-              }
-              //if pixel has ship and hit
-              if (pixel.hasShip && pixel.hit) {
-                return <div className='pixelHit'>{pixel.number}</div>;
-              }
 
-              //if pixel is a miss
-              return <div className='pixelMiss'>{pixel.number}</div>;
-            })}
-          </div>
+          <ShipColours
+            pixelArray={pixelArray}
+          >
+          </ShipColours>
 
-          <div className='gameBoard'>
-            {pixelArray.map((pixel) => {
-              //render out the array containing hit coords for player (not opponent)
-              for (let i = 0; i < arrayOfHits.length; i++) {
-                if (arrayOfHits[i] === pixel.number) {
-                  return <div className='pixelHit'>{pixel.number}</div>;
-                }
-              }
+          <HitOrMiss
+            pixelArray={pixelArray}
+            arrayOfHits = {arrayOfHits}
+            arrayOfMissed = {arrayOfMissed}
+            handleOppBoardClick = {handleOppBoardClick}
+          >
+          </HitOrMiss>
 
-              //render out the array containing missed coords for player (not opponent)
-              for (let i = 0; i < arrayOfMissed.length; i++) {
-                if (arrayOfMissed[i] === pixel.number) {
-                  return <div className='pixelMiss'>{pixel.number}</div>;
-                }
-              }
-              //if it's not hit or miss render just a normal clickable pixel
-              return (
-                //when clicking on this pixel handleOppBoardClick is running
-                <div className='pixel' onClick={() => handleOppBoardClick(pixel.number)}>
-                  {pixel.number}
-                </div>
-              );
-            })}
-          </div>
         </Col>
-
         <Col>
-          <div id='scoreBoard'>
-            <div id='opponent-board'>
-              <h3>Player 2: {opponent}</h3>
-              <h4>Ships remaning: {oppShipsLeft}</h4>
-            </div>
 
-            <div id='currentPlayer-board'>
-              <h3>Player 1: {player}</h3>
-              <h4>Ships remaining: {playerShipsLeft}</h4>
-            </div>
+          <GameOver
+            gameOver = {gameOver}
+            gameOverOpp = {gameOverOpp}
+           >
+          </GameOver>
 
-            <div id='turnToggle'>
-              {isYourTurn && <h3> It's your turn </h3>}
-              {!isYourTurn && <h3> Opponents turn </h3>}
-            </div>
-          </div>
+          <ScoreBoard
+            opponent = {opponent}
+            oppShipsLeft = {oppShipsLeft}
+            player = {player}
+            playerShipsLeft = {playerShipsLeft}
+            isYourTurn = {isYourTurn}
+           >
+          </ScoreBoard>
+
         </Col>
       </Row>
-    </Container>
+    </>
   );
 };
 
