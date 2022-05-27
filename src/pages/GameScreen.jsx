@@ -3,9 +3,9 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 //import Container from 'react-bootstrap/Container';
 import ShipColours from '../components/ShipColours'
-/* const arrayOfHits = [];
-const arrayOfMissed = []; */
 const arrayOppHits = [];
+let gameOver = false;
+let gameOverOpp = false;
 
 // Array of four ships to place
 const ships = [
@@ -35,7 +35,6 @@ const ships = [
   },
 ];
 
-
 //Function for random number
 function getRandomNumber(min, max) {
   return Math.floor(Math.random() * (max - min) + min);
@@ -43,31 +42,29 @@ function getRandomNumber(min, max) {
 
 //Function for random position x and a y position from 1 to 10
 function getRandomPosition() {
-  return getRandomNumber(1, 11) * getRandomNumber(1, 11); 
+  return getRandomNumber(1, 11) * getRandomNumber(1, 11);
 }
 
 //Function to check that coordinate does not already exist. takes the empty "UsedCoordinates"-array and checks the cordinate in it
 //If coordinate exists then true
 const checkCoordinates = (UsedCoordinates, coordinates) => {
-
-  let isTaken = false
+  let isTaken = false;
   console.log('TEST USED CORD IS' + UsedCoordinates, coordinates);
 
-  coordinates.forEach( (coordinate ) => {
-    if (UsedCoordinates.includes(coordinate)){
-    isTaken = true
+  coordinates.forEach((coordinate) => {
+    if (UsedCoordinates.includes(coordinate)) {
+      isTaken = true;
     }
-  })
+  });
   return isTaken;
 };
 
 // Function to set coordinates for all ships
 const fillShipCoord = () => {
-
   //empty arrays to be filled with coordinates as they are created
   const UsedCoordinates = [];
-  let takenCoordinates = []
-  
+  let takenCoordinates = [];
+
   ships.forEach((ship) => {
     //Get random direction
     const randomDirection = Math.floor(Math.random() * 3);
@@ -78,34 +75,93 @@ const fillShipCoord = () => {
 
       //arrays of shipcoordinates that can not be startPos for this direction
       const arrayNotIncludeTwoPixels = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
-      const arrayNotIncludeThreePixels = [9, 10, 19, 20, 29, 30, 39, 40, 49, 50, 59, 60, 69, 70, 79, 80, 89, 90, 99, 100,];
-      const arrayNotIncludeFourPixels = [8, 9, 10, 18, 19, 20, 28, 29, 30, 38, 39, 40, 48, 49, 50, 58, 59, 60, 68, 69, 70, 78, 79, 80, 88, 89, 90, 98, 99, 100];
+      const arrayNotIncludeThreePixels = [
+        9,
+        10,
+        19,
+        20,
+        29,
+        30,
+        39,
+        40,
+        49,
+        50,
+        59,
+        60,
+        69,
+        70,
+        79,
+        80,
+        89,
+        90,
+        99,
+        100,
+      ];
+      const arrayNotIncludeFourPixels = [
+        8,
+        9,
+        10,
+        18,
+        19,
+        20,
+        28,
+        29,
+        30,
+        38,
+        39,
+        40,
+        48,
+        49,
+        50,
+        58,
+        59,
+        60,
+        68,
+        69,
+        70,
+        78,
+        79,
+        80,
+        88,
+        89,
+        90,
+        98,
+        99,
+        100,
+      ];
 
       //Randomize ships starting position
       if (ship.length === 2) {
         do {
-          takenCoordinates = []
+          takenCoordinates = [];
           ship.startPos = getRandomPosition();
-          takenCoordinates = [ship.startPos, ship.startPos + 1] //fills array with index for start position + start position + antal pixlar (längd)
-        } while (checkCoordinates(UsedCoordinates, takenCoordinates) || arrayNotIncludeTwoPixels.includes(ship.startPos));
+          takenCoordinates = [ship.startPos, ship.startPos + 1]; //fills array with index for start position + start position + antal pixlar (längd)
+        } while (
+          checkCoordinates(UsedCoordinates, takenCoordinates) ||
+          arrayNotIncludeTwoPixels.includes(ship.startPos)
+        );
       } //uses function "checkCoordinates" to see if there is any coordinates in the array "Usedcoordinates" on the start position OR if the ship with 2 pixels does not start at the set coordinates of that array
 
       if (ship.length === 3) {
         do {
-          takenCoordinates = []
+          takenCoordinates = [];
           ship.startPos = getRandomPosition();
-          takenCoordinates = [ship.startPos, ship.startPos + 2] //start position + sytart positioon + antal
+          takenCoordinates = [ship.startPos, ship.startPos + 2]; //start position + sytart positioon + antal
         } while (
-          checkCoordinates(UsedCoordinates, takenCoordinates) || arrayNotIncludeThreePixels.includes(ship.startPos)
+          checkCoordinates(UsedCoordinates, takenCoordinates) ||
+          arrayNotIncludeThreePixels.includes(ship.startPos)
         );
       }
 
       if (ship.length === 4) {
         do {
-          takenCoordinates = []
+          takenCoordinates = [];
           ship.startPos = getRandomPosition();
-          takenCoordinates = [ship.startPos, ship.startPos + 3] //start position + sytart positioon + antal
-        } while (checkCoordinates(UsedCoordinates, takenCoordinates) || arrayNotIncludeFourPixels.includes(ship.startPos));
+          takenCoordinates = [ship.startPos, ship.startPos + 3]; //start position + sytart positioon + antal
+        } while (
+          checkCoordinates(UsedCoordinates, takenCoordinates) ||
+          arrayNotIncludeFourPixels.includes(ship.startPos)
+        );
       }
 
       for (let i = ship.startPos; ship.coords.length < ship.length; i++) {
@@ -123,36 +179,75 @@ const fillShipCoord = () => {
       //arrays of shipcoordinates that can not be startPos for this direction
       const arrayNotIncludeTwoPixels = [1, 11, 21, 31, 41, 51, 61, 71, 81, 91];
       const arrayNotIncludeThreePixels = [1, 2, 11, 12, 21, 22, 31, 32, 41, 42, 51, 52, 61, 62, 71, 72, 81, 82, 91, 92];
-      const arrayNotIncludeFourPixels = [1, 2, 3, 11, 12, 13, 21, 22, 23, 31, 32, 33, 41, 42, 43, 51, 52, 53, 61, 62, 63, 71, 72, 72, 81, 82, 83, 91, 92, 93,];
+      const arrayNotIncludeFourPixels = [
+        1,
+        2,
+        3,
+        11,
+        12,
+        13,
+        21,
+        22,
+        23,
+        31,
+        32,
+        33,
+        41,
+        42,
+        43,
+        51,
+        52,
+        53,
+        61,
+        62,
+        63,
+        71,
+        72,
+        72,
+        81,
+        82,
+        83,
+        91,
+        92,
+        93,
+      ];
 
       if (ship.length === 2) {
         do {
-          takenCoordinates = []
+          takenCoordinates = [];
           // Randomize ship starting position
           ship.startPos = getRandomPosition();
-          takenCoordinates = [ship.startPos, ship.startPos - 1] //start position + sytart positioon + antal
-        } while (checkCoordinates(UsedCoordinates, takenCoordinates) || UsedCoordinates.includes(ship.coords) ||arrayNotIncludeTwoPixels.includes(ship.startPos));
+          takenCoordinates = [ship.startPos, ship.startPos - 1]; //start position + sytart positioon + antal
+        } while (
+          checkCoordinates(UsedCoordinates, takenCoordinates) ||
+          UsedCoordinates.includes(ship.coords) ||
+          arrayNotIncludeTwoPixels.includes(ship.startPos)
+        );
       }
       console.log('Used coordinates is now' + UsedCoordinates);
 
       if (ship.length === 3) {
         do {
-          takenCoordinates=[]
+          takenCoordinates = [];
           // Randomize ship starting position
           ship.startPos = getRandomPosition();
-          takenCoordinates = [ship.startPos, ship.startPos - 2] //start position + sytart positioon + antal
+          takenCoordinates = [ship.startPos, ship.startPos - 2]; //start position + sytart positioon + antal
         } while (
-          checkCoordinates(UsedCoordinates, takenCoordinates)  ||arrayNotIncludeThreePixels.includes(ship.startPos)
+          checkCoordinates(UsedCoordinates, takenCoordinates) ||
+          arrayNotIncludeThreePixels.includes(ship.startPos)
         );
       }
 
       if (ship.length === 4) {
         do {
-          takenCoordinates = []
+          takenCoordinates = [];
           // Randomize ship starting position
           ship.startPos = getRandomPosition();
-          takenCoordinates = [ship.startPos, ship.startPos - 3] //start position + sytart positioon + antal
-        } while (checkCoordinates(UsedCoordinates, takenCoordinates) ||  arrayNotIncludeFourPixels.includes(ship.startPos));
+          takenCoordinates = [ship.startPos, ship.startPos - 3]; //start position + sytart positioon + antal
+        } while (
+          checkCoordinates(UsedCoordinates, takenCoordinates) ||
+          arrayNotIncludeFourPixels.includes(ship.startPos)
+        );
       }
 
       for (let i = ship.startPos; ship.coords.length < ship.length; i -= 1) {
@@ -168,35 +263,73 @@ const fillShipCoord = () => {
 
       const arrayNotIncludeTwoPixels = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
       const arrayNotIncludeThreePixels = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
-      const arrayNotIncludeFourPixels = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30]
+      const arrayNotIncludeFourPixels = [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+      ];
 
       if (ship.length === 2) {
         do {
-          takenCoordinates= []
+          takenCoordinates = [];
           // Randomize ship starting position
           ship.startPos = getRandomPosition();
-          takenCoordinates = [ship.startPos, ship.startPos - 10] //start position + sytart positioon + antal
-        } while (checkCoordinates(UsedCoordinates, takenCoordinates)  ||arrayNotIncludeTwoPixels.includes(ship.startPos));
+          takenCoordinates = [ship.startPos, ship.startPos - 10]; //start position + sytart positioon + antal
+        } while (
+          checkCoordinates(UsedCoordinates, takenCoordinates) ||
+          arrayNotIncludeTwoPixels.includes(ship.startPos)
+        );
       }
 
       if (ship.length === 3) {
         do {
-          takenCoordinates=[]
+          takenCoordinates = [];
           // Randomize ship starting position
           ship.startPos = getRandomPosition();
-          takenCoordinates = [ship.startPos, ship.startPos - 20] //start position + sytart positioon + antal
+          takenCoordinates = [ship.startPos, ship.startPos - 20]; //start position + sytart positioon + antal
         } while (
-          checkCoordinates(UsedCoordinates, takenCoordinates)  ||arrayNotIncludeThreePixels.includes(ship.startPos)
+          checkCoordinates(UsedCoordinates, takenCoordinates) ||
+          arrayNotIncludeThreePixels.includes(ship.startPos)
         );
       }
 
       if (ship.length === 4) {
         do {
-          takenCoordinates=[]
+          takenCoordinates = [];
           // Randomize ship starting position
           ship.startPos = getRandomPosition();
-          takenCoordinates = [ship.startPos, ship.startPos - 30] //start position + sytart positioon + antal
-        } while (checkCoordinates(UsedCoordinates, takenCoordinates)  ||arrayNotIncludeFourPixels.includes(ship.startPos));
+          takenCoordinates = [ship.startPos, ship.startPos - 30]; //start position + sytart positioon + antal
+        } while (
+          checkCoordinates(UsedCoordinates, takenCoordinates) ||
+          arrayNotIncludeFourPixels.includes(ship.startPos)
+        );
       }
 
       for (let i = ship.startPos; ship.coords.length < ship.length; i -= 10) {
@@ -212,36 +345,95 @@ const fillShipCoord = () => {
       console.log('This is random direction 3');
 
       const arrayNotIncludeTwoPixels = [91, 92, 93, 94, 95, 96, 97, 98, 99, 100];
-      const arrayNotIncludeThreePixels = [81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100,];
-      const arrayNotIncludeFourPixels = [71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100]
- 
+      const arrayNotIncludeThreePixels = [
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87,
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95,
+        96,
+        97,
+        98,
+        99,
+        100,
+      ];
+      const arrayNotIncludeFourPixels = [
+        71,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        80,
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87,
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95,
+        96,
+        97,
+        98,
+        99,
+        100,
+      ];
+
       if (ship.length === 2) {
         do {
-          takenCoordinates=[]
+          takenCoordinates = [];
           // Randomize ship starting position
           ship.startPos = getRandomPosition();
-          takenCoordinates = [ship.startPos, ship.startPos + 10] //start position + sytart positioon + antal
-        } while (checkCoordinates(UsedCoordinates, takenCoordinates)   ||arrayNotIncludeTwoPixels.includes(ship.startPos));
+          takenCoordinates = [ship.startPos, ship.startPos + 10]; //start position + sytart positioon + antal
+        } while (
+          checkCoordinates(UsedCoordinates, takenCoordinates) ||
+          arrayNotIncludeTwoPixels.includes(ship.startPos)
+        );
       }
 
       if (ship.length === 3) {
         do {
-          takenCoordinates=[]
+          takenCoordinates = [];
           // Randomize ship starting position
           ship.startPos = getRandomPosition();
-          takenCoordinates = [ship.startPos, ship.startPos + 20] //start position + sytart positioon + antal
+          takenCoordinates = [ship.startPos, ship.startPos + 20]; //start position + sytart positioon + antal
         } while (
-          checkCoordinates(UsedCoordinates, takenCoordinates)  ||arrayNotIncludeThreePixels.includes(ship.startPos)
+          checkCoordinates(UsedCoordinates, takenCoordinates) ||
+          arrayNotIncludeThreePixels.includes(ship.startPos)
         );
       }
 
       if (ship.length === 4) {
         do {
-          takenCoordinates= []
+          takenCoordinates = [];
           // Randomize ship starting position
           ship.startPos = getRandomPosition();
-          takenCoordinates = [ship.startPos, ship.startPos + 30] //start position + sytart positioon + antal
-        } while (checkCoordinates(UsedCoordinates, takenCoordinates)   ||arrayNotIncludeFourPixels.includes(ship.startPos));
+          takenCoordinates = [ship.startPos, ship.startPos + 30]; //start position + sytart positioon + antal
+        } while (
+          checkCoordinates(UsedCoordinates, takenCoordinates) ||
+          arrayNotIncludeFourPixels.includes(ship.startPos)
+        );
       }
 
       for (let i = ship.startPos; ship.coords.length < ship.length; i += 10) {
@@ -256,7 +448,6 @@ const fillShipCoord = () => {
 };
 
 fillShipCoord();
-
 
 // Console log info about each ship to make sure it's correct
 ships.forEach((ship) => {
@@ -285,9 +476,7 @@ const createPixelArray = () => {
   return result;
 };
 
-
-
-const GameScreen = ({ opponent, player, shouldStart, socket }) => {
+const GameScreen = ({ opponent, player, shouldStart, socket, onGameOver }) => {
   // State for player to know if it is their turn
   const [isYourTurn, setIsYourTurn] = useState(shouldStart);
 
@@ -298,8 +487,10 @@ const GameScreen = ({ opponent, player, shouldStart, socket }) => {
   const [arrayOfHits, setArrayOfHits] = useState([]);
 
   // States for how many ships the player/opponent still have
-  const [playerShipsLeft, setPlayerShipsLeft] = useState(ships.length)
-  const [oppShipsLeft, setOppShipsLeft] = useState(ships.length)
+  const [playerShipsLeft, setPlayerShipsLeft] = useState(ships.length);
+  const [oppShipsLeft, setOppShipsLeft] = useState(ships.length);
+
+  const [totShipsLeft, setTotShipsLeft] = useState(4);
 
   // Function that handles when opponent has clicked a sqaure
   const handleOppClick = useCallback(
@@ -317,9 +508,9 @@ const GameScreen = ({ opponent, player, shouldStart, socket }) => {
       });
       // Variable for if click was a hit
 
-      console.log('Your opponent clicked on square', index);
       let hasHit = false;
-      let shipSunk = false
+      let shipSunk = false;
+
       // Loop through coords of all ships
       ships.forEach((ship) => {
         ship.coords.forEach((coord) => {
@@ -328,33 +519,40 @@ const GameScreen = ({ opponent, player, shouldStart, socket }) => {
           // If coord is same as the square the opponent clicked on, set hasHit to true
           if (coord === index) {
             hasHit = true;
+
             console.log('its a hit');
 
             // Decrease parts left for the ship
-            ship.partsLeft--
-            console.log("PARTS LEFT::", ship.partsLeft)
+            ship.partsLeft--;
+            console.log('PARTS LEFT::', ship.partsLeft);
 
             // If all parts of ship is gone, update number of ships player still has
             if (ship.partsLeft === 0) {
-              console.log('OUR SHIP SUNK!!!')
-              shipSunk = true
-              setPlayerShipsLeft( (prevState) => prevState - 1 )
-            } 
+              console.log('OUR SHIP SUNK!!!');
+              shipSunk = true;
+              setPlayerShipsLeft((prevState) => prevState - 1);
+
+              //decrease total ships
+              setTotShipsLeft((prevState) => prevState - 1);
+              //if all ships are hit, set gameOver = true
+              if (totShipsLeft - 1 === 0) {
+                gameOver = true;
+                onGameOver({won: false})
+              }
+            }
 
             //add the index to an array
-
             arrayOppHits.push(index);
-
             console.log('this is the array of opp hits', arrayOppHits, 'and length', arrayOppHits.length);
           }
         });
       });
 
       // Inform server if click was a hit
-      socket.emit('game:click-result', hasHit, index, shipSunk);
+      socket.emit('game:click-result', hasHit, index, shipSunk, gameOver);
       setIsYourTurn(true);
     },
-    [socket]
+    [socket, totShipsLeft, onGameOver]
   );
 
   // Function that handles when player clicks opponent board
@@ -367,27 +565,29 @@ const GameScreen = ({ opponent, player, shouldStart, socket }) => {
 
   useEffect(() => {
     // Function that handles what happens when a click made by player was a hit (not opponent)
-    const handleClickResult = (result, index, shipSunk) => {
-
+    const handleClickResult = (result, index, shipSunk, gameOver) => {
       if (result) {
         console.log('You hit on this square', index);
         setArrayOfHits((arrayOfHits) => {
           return [index, ...arrayOfHits];
         });
 
-        // If a whole ship was sunk, decrease number of ships for opponent
         if (shipSunk) {
-          console.log("You sunk their ship!!!")
-          setOppShipsLeft( (prevState) => prevState - 1 )
+          console.log('You sunk their ship!!!');
+          setOppShipsLeft((prevState) => prevState - 1);
+          // If a whole ship was sunk, decrease number of ships for opponent
         }
-        
+
+        if (gameOver) {
+          gameOverOpp = true;
+          onGameOver({won: true})
+        }
       } else {
         console.log('You missed this square', index);
         setArrayOfMissed((arrayOfMissed) => {
           return [index, ...arrayOfMissed];
         });
       }
-
     };
 
     socket.on('game:click', handleOppClick);
@@ -399,14 +599,14 @@ const GameScreen = ({ opponent, player, shouldStart, socket }) => {
       socket.removeListener('game:click-result');
       handleClickResult();
     };
-  }, [socket, handleOppClick]);
+  }, [socket, handleOppClick, onGameOver]);
 
-  useEffect(() => {
+  /*   useEffect(() => {
     // Console log info about each ship to make sure it's correct
     ships.forEach((ship) => {
       console.log('ship of length', ship.length, 'has coords', ship.coords);
     });
-  }, []);
+  }, []); */
 
   return (
     <> 
@@ -445,6 +645,9 @@ const GameScreen = ({ opponent, player, shouldStart, socket }) => {
         </Col>
 
         <Col>
+          <div id='gameOver'>{gameOver && <h3>Game Over, you lost!!</h3>}</div>
+          <div id='gameOver'>{gameOverOpp && <h3>IT'S GAME OVER, you won!!!</h3>}</div>
+
           <div id='scoreBoard'>
             <div id='opponent-board'>
               <h3>Player 2: {opponent}</h3>
