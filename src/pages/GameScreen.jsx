@@ -41,8 +41,19 @@ function getRandomNumber(min, max) {
 }
 
 //Function for random position x and a y position from 1 to 10
-function getRandomPosition() {
-  return getRandomNumber(1, 11) * getRandomNumber(1, 11); 
+function getShipPosIncrement(randomDirection) {
+  switch(randomDirection) {
+    case 0:
+      return 1
+    case 1:
+      return -1
+    case 2:
+      return 10
+    case 3:
+      return -10
+    default:
+      return false
+  }
 }
 
 function getShipStartPos(shipDirection, shipLength) {
@@ -75,6 +86,11 @@ const checkCoordinates = (UsedCoordinates, coordinates) => {
   return isTaken;
 };
 
+
+// for (let h = ship.startPos; h < ship.startPos + (ship.length) * increment; h += h*increment) {
+//   takenCoordinates.push(h)
+// }
+
 // Function to set coordinates for all ships
 const fillShipCoord = () => {
 
@@ -82,9 +98,13 @@ const fillShipCoord = () => {
   const UsedCoordinates = [];
   let takenCoordinates = []
   
+  
+
   ships.forEach((ship) => {
+
     //Get random direction
     const randomDirection = Math.floor(Math.random() * 3);
+    const increment = getShipPosIncrement(randomDirection)
 
     //random direction to the right
     if (randomDirection === 0) {
@@ -96,8 +116,8 @@ const fillShipCoord = () => {
         do {
           takenCoordinates = []
           //ship.startPos = getRandomPosition();
-          ship.startPos = getShipStartPos(0, 2)
-          takenCoordinates = [ship.startPos, ship.startPos + 1] //fills array with index for start position + start position + antal pixlar (längd)
+          ship.startPos = getShipStartPos(randomDirection, ship.length)
+          takenCoordinates = [ship.startPos, ship.startPos + (1 * increment)] //fills array with index for start position + start position + antal pixlar (längd)
         } while (checkCoordinates(UsedCoordinates, takenCoordinates));
       } //uses function "checkCoordinates" to see if there is any coordinates in the array "Usedcoordinates" on the start position OR if the ship with 2 pixels does not start at the set coordinates of that array
 
@@ -106,7 +126,11 @@ const fillShipCoord = () => {
           takenCoordinates = []
           //ship.startPos = getRandomPosition();
           ship.startPos = getShipStartPos(0, 3)
-          takenCoordinates = [ship.startPos, ship.startPos + 1, ship.startPos + 2] //start position + sytart positioon + antal
+          ship.startPos = getShipStartPos(randomDirection, ship.length)
+          for (let h = ship.startPos; h < ship.startPos + (ship.length) * increment; h += h*increment) {
+            takenCoordinates.push(h)
+          }
+          //takenCoordinates = [ship.startPos, ship.startPos + 1, ship.startPos + 2] //start position + sytart positioon + antal
         } while (
           checkCoordinates(UsedCoordinates, takenCoordinates)
         );
@@ -117,7 +141,11 @@ const fillShipCoord = () => {
           takenCoordinates = []
           //ship.startPos = getRandomPosition();
           ship.startPos = getShipStartPos(0, 4)
-          takenCoordinates = [ship.startPos, ship.startPos + 1, ship.startPos + 2, ship.startPos + 3] //start position + sytart positioon + antal
+          ship.startPos = getShipStartPos(randomDirection, ship.length)
+          for (let h = ship.startPos; h < ship.startPos + (ship.length) * increment; h += h*increment) {
+            takenCoordinates.push(h)
+          }
+          //takenCoordinates = [ship.startPos, ship.startPos + 1, ship.startPos + 2, ship.startPos + 3] //start position + sytart positioon + antal
         } while (checkCoordinates(UsedCoordinates, takenCoordinates));
       }
 
@@ -140,7 +168,11 @@ const fillShipCoord = () => {
           // Randomize ship starting position
           //ship.startPos = getRandomPosition();
           ship.startPos = getShipStartPos(1, 2)
-          takenCoordinates = [ship.startPos, ship.startPos - 1] //start position + sytart positioon + antal
+          ship.startPos = getShipStartPos(randomDirection, ship.length)
+          for (let h = ship.startPos; h < ship.startPos + (ship.length) * increment; h += h*increment) {
+            takenCoordinates.push(h)
+          }
+          //takenCoordinates = [ship.startPos, ship.startPos - 1] //start position + sytart positioon + antal
         } while (checkCoordinates(UsedCoordinates, takenCoordinates) );
       }
       console.log('Used coordinates is now' + UsedCoordinates);
@@ -151,7 +183,11 @@ const fillShipCoord = () => {
           // Randomize ship starting position
           //ship.startPos = getRandomPosition();
           ship.startPos = getShipStartPos(1, 3)
-          takenCoordinates = [ship.startPos, ship.startPos - 1, ship.startPos - 2] //start position + sytart positioon + antal
+          ship.startPos = getShipStartPos(randomDirection, ship.length)
+          for (let h = ship.startPos; h < ship.startPos + (ship.length) * increment; h += h*increment) {
+            takenCoordinates.push(h)
+          }
+          //takenCoordinates = [ship.startPos, ship.startPos - 1, ship.startPos - 2] //start position + sytart positioon + antal
         } while (
           checkCoordinates(UsedCoordinates, takenCoordinates)
         );
@@ -163,7 +199,11 @@ const fillShipCoord = () => {
           // Randomize ship starting position
           //ship.startPos = getRandomPosition();
           ship.startPos = getShipStartPos(1, 4)
-          takenCoordinates = [ship.startPos, ship.startPos - 1, ship.startPos - 2, ship.startPos - 3] //start position + sytart positioon + antal
+          //takenCoordinates = [ship.startPos, ship.startPos - 1, ship.startPos - 2, ship.startPos - 3] //start position + sytart positioon + antal
+          ship.startPos = getShipStartPos(randomDirection, ship.length)
+          for (let h = ship.startPos; h < ship.startPos + (ship.length) * increment; h += h*increment) {
+            takenCoordinates.push(h)
+          }
         } while (checkCoordinates(UsedCoordinates, takenCoordinates));
       }
 
@@ -185,7 +225,11 @@ const fillShipCoord = () => {
           // Randomize ship starting position
           //ship.startPos = getRandomPosition();
           ship.startPos = getShipStartPos(2, 2)
-          takenCoordinates = [ship.startPos, ship.startPos - 10] //start position + sytart positioon + antal
+          //takenCoordinates = [ship.startPos, ship.startPos - 10] //start position + sytart positioon + antal
+          ship.startPos = getShipStartPos(randomDirection, ship.length)
+          for (let h = ship.startPos; h < ship.startPos + (ship.length) * increment; h += h*increment) {
+            takenCoordinates.push(h)
+          }
         } while (checkCoordinates(UsedCoordinates, takenCoordinates));
       }
 
@@ -195,7 +239,11 @@ const fillShipCoord = () => {
           // Randomize ship starting position
           //ship.startPos = getRandomPosition();
           ship.startPos = getShipStartPos(2, 3)
-          takenCoordinates = [ship.startPos, ship.startPos - 10, ship.startPos - 20] //start position + sytart positioon + antal
+          //takenCoordinates = [ship.startPos, ship.startPos - 10, ship.startPos - 20] //start position + sytart positioon + antal
+          ship.startPos = getShipStartPos(randomDirection, ship.length)
+          for (let h = ship.startPos; h < ship.startPos + (ship.length) * increment; h += h*increment) {
+            takenCoordinates.push(h)
+          }
         } while (
           checkCoordinates(UsedCoordinates, takenCoordinates)
         );
@@ -207,7 +255,11 @@ const fillShipCoord = () => {
           // Randomize ship starting position
           //ship.startPos = getRandomPosition();
           ship.startPos = getShipStartPos(2, 4)
-          takenCoordinates = [ship.startPos, ship.startPos - 10, ship.startPos - 20, ship.startPos - 30] //start position + sytart positioon + antal
+          //takenCoordinates = [ship.startPos, ship.startPos - 10, ship.startPos - 20, ship.startPos - 30] //start position + sytart positioon + antal
+          ship.startPos = getShipStartPos(randomDirection, ship.length)
+          for (let h = ship.startPos; h < ship.startPos + (ship.length) * increment; h += h*increment) {
+            takenCoordinates.push(h)
+          }
         } while (checkCoordinates(UsedCoordinates, takenCoordinates));
       }
 
@@ -230,7 +282,11 @@ const fillShipCoord = () => {
           // Randomize ship starting position
           //ship.startPos = getRandomPosition();
           ship.startPos = getShipStartPos(3, 2)
-          takenCoordinates = [ship.startPos, ship.startPos + 10] //start position + sytart positioon + antal
+          //takenCoordinates = [ship.startPos, ship.startPos + 10] //start position + sytart positioon + antal
+          ship.startPos = getShipStartPos(randomDirection, ship.length)
+          for (let h = ship.startPos; h < ship.startPos + (ship.length) * increment; h += h*increment) {
+            takenCoordinates.push(h)
+          }
         } while (checkCoordinates(UsedCoordinates, takenCoordinates));
       }
 
@@ -240,7 +296,11 @@ const fillShipCoord = () => {
           // Randomize ship starting position
           //ship.startPos = getRandomPosition();
           ship.startPos = getShipStartPos(3, 3)
-          takenCoordinates = [ship.startPos, ship.startPos + 10, ship.startPos + 20] //start position + sytart positioon + antal
+          //takenCoordinates = [ship.startPos, ship.startPos + 10, ship.startPos + 20] //start position + sytart positioon + antal
+          ship.startPos = getShipStartPos(randomDirection, ship.length)
+          for (let h = ship.startPos; h < ship.startPos + (ship.length) * increment; h += h*increment) {
+            takenCoordinates.push(h)
+          }
         } while (
           checkCoordinates(UsedCoordinates, takenCoordinates)
         );
@@ -252,7 +312,11 @@ const fillShipCoord = () => {
           // Randomize ship starting position
           //ship.startPos = getRandomPosition();
           ship.startPos = getShipStartPos(3, 4)
-          takenCoordinates = [ship.startPos, ship.startPos + 10, ship.startPos + 20, ship.startPos + 30] //start position + sytart positioon + antal
+          //takenCoordinates = [ship.startPos, ship.startPos + 10, ship.startPos + 20, ship.startPos + 30] //start position + sytart positioon + antal
+          ship.startPos = getShipStartPos(randomDirection, ship.length)
+          for (let h = ship.startPos; h < ship.startPos + (ship.length) * increment; h += h*increment) {
+            takenCoordinates.push(h)
+          }
         } while (checkCoordinates(UsedCoordinates, takenCoordinates));
       }
 
