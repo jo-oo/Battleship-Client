@@ -68,3 +68,7 @@
 #turnToggle {
   background-color: rgb(121, 102, 165);
 }
+
+#gameOver {
+  background-color: red;
+}
