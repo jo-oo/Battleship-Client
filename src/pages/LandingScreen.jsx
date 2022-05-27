@@ -18,7 +18,7 @@ const Landing = ({ socket }) => {
   const searchInputRef = useRef()
   const [opponentName, setOpponentName] = useState()
   const [shouldStart, setShouldStart] = useState(false)
-  const [resultData, setResultData] = useState({won: false, playerShipsSunk: 2, oppShipsSunk: 4})
+  const [resultData, setResultData] = useState()
 
   // Stuff to happen when game starts
   const handleGameStart = useCallback( (players, startingPlayer) => {
@@ -49,7 +49,7 @@ const Landing = ({ socket }) => {
     socket.emit('user:join-queue', nameInput, handleGameStart)
   }
 
-  const handleGameOver = (results = {won: false}) => {
+  const handleGameOver = (results) => {
     //setIsGameLive(false)
     setIsGameOver(true)
     setResultData(results)

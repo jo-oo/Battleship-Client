@@ -7,21 +7,21 @@ const ShipColours = ( { pixelArray } ) => {
 	return ( 
         <>
          <div className='gameBoard'>
-            {pixelArray.map((pixel) => {
+            {pixelArray.map((pixel, index) => {
               //if pixel not include miss, hit or ship render pixel as a plain pixel (pink)
               if (!pixel.miss && !pixel.hit && !pixel.hasShip) {
-                return <div className='pixel'>{pixel.number}</div>;
+                return <div className='pixel' key={index}>{pixel.number}</div>;
               }
               //if pixel has ship and no hit, render pixel as red
               if (pixel.hasShip && !pixel.hit) {
-                return <div className='pixelShip'>{pixel.number}</div>;
+                return <div className='pixelShip' key={index}>{pixel.number}</div>;
               }
               //if pixel has ship and hit, render pixel as green
               if (pixel.hasShip && pixel.hit) {
-                return <div className='pixelHit'>{pixel.number}</div>;
+                return <div className='pixelHit' key={index}>{pixel.number}</div>;
               }
               //if pixel is a miss, render pixel yellow
-              return <div className='pixelMiss'>{pixel.number}</div>;
+              return <div className='pixelMiss' key={index}>{pixel.number}</div>;
             })}
           </div>
         </> 
