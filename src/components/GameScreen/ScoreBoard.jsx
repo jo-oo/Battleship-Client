@@ -8,12 +8,12 @@ const ScoreBoard = ( { opponent, oppShipsLeft, player, playerShipsLeft, isYourTu
         <>
           <div id='scoreBoard'>
             <div id='opponent-board'>
-                <h3>Player 2: {opponent}</h3>
+                <h3>You: {player}</h3>
                 <h4>Ships remaning: {oppShipsLeft}</h4>
             </div>
 
             <div id='currentPlayer-board'>
-                <h3>Player 1: {player}</h3>
+                <h3>Opponent: {opponent}</h3>
                 <h4>Ships remaining: {playerShipsLeft}</h4>
             </div>
 
