@@ -4,6 +4,7 @@ import Col from 'react-bootstrap/Col';
 //import Container from 'react-bootstrap/Container';
 import ShipColours from '../components/ShipColours'
 import ScoreBoard from '../components/ScoreBoard'
+import GameOver from '../components/GameOver'
 
 const arrayOppHits = [];
 let gameOver = false;
@@ -647,14 +648,17 @@ const GameScreen = ({ opponent, player, shouldStart, socket, onGameOver }) => {
         </Col>
 
         <Col>
-          <div id='gameOver'>{gameOver && <h3>Game Over, you lost!!</h3>}</div>
-          <div id='gameOver'>{gameOverOpp && <h3>IT'S GAME OVER, you won!!!</h3>}</div>
+          <GameOver
+            gameOver = {gameOver}
+            gameOverOpp = {gameOverOpp}
+           >
+          </GameOver>
 
           <ScoreBoard
             opponent = {opponent}
             oppShipsLeft = {oppShipsLeft}
             player = {player}
-            playerShipsLeft={playerShipsLeft}
+            playerShipsLeft = {playerShipsLeft}
             isYourTurn = {isYourTurn}
            >
           </ScoreBoard>
