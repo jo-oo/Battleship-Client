@@ -3,6 +3,7 @@ import { useRef, useEffect, useState, useCallback } from 'react'
 import GameScreen from '../pages/GameScreen';
 import Spinner from 'react-bootstrap/Spinner'
 import LoadingSpinner from '../components/LoadingSpinner';
+import StartScreen from '../components/LandingScreen/StartScreen';
 
 const Landing = ({ socket }) => {
 
@@ -65,14 +66,12 @@ const Landing = ({ socket }) => {
         // Show start screen form when loading state is false
         !isLoading && !isGameLive && !isGameOver &&
         (
-          <section className='start-screen'>
-            <h1>Battleship</h1>
-            <form className='form' onSubmit={handleSubmit}>
-              <input type="text" id="username" className="form-control form-control-lg" onChange={e => setNameInput(e.target.value)} ref={searchInputRef} placeholder="Your name" required autoFocus />
-              <br />
-              <button type="submit" className="btn btn-primary">Enter queue</button>
-            </form>
-          </section>
+          <StartScreen
+            handleSubmit = {handleSubmit}
+            setNameInput = {setNameInput}
+            searchInputRef = {searchInputRef}
+         >
+        </StartScreen>
         )
       }
 

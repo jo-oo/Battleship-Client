@@ -1,8 +1,8 @@
 /*
-* Checks if the clicked pixel is a hit or miss, and renders the pixel colours based on that
+* Renders out different colours on pixels for each player.
 */
 
-//takes in pixelArray from GameScreen
+//takes in pixelArray, arrayOfHits et.c. from GameScreen
 const HitOrMiss = ( { pixelArray, arrayOfHits, arrayOfMissed, handleOppBoardClick } ) => {
 	return ( 
         <>
