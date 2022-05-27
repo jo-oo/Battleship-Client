@@ -2,10 +2,10 @@ import React, { useEffect, useState, useCallback } from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 //import Container from 'react-bootstrap/Container';
-import HitOrMiss from '../components/HitOrMiss'
-import ShipColours from '../components/ShipColours'
-import ScoreBoard from '../components/ScoreBoard'
-import GameOver from '../components/GameOver'
+import HitOrMiss from '../components/GameScreen/HitOrMiss'
+import ShipColours from '../components/GameScreen/ShipColours'
+import ScoreBoard from '../components/GameScreen/ScoreBoard'
+import GameOver from '../components/GameScreen/GameOver'
 
 
 const arrayOppHits = [];
@@ -632,10 +632,9 @@ const GameScreen = ({ opponent, player, shouldStart, socket, onGameOver }) => {
           >
           </HitOrMiss>
 
-
         </Col>
-
         <Col>
+
           <GameOver
             gameOver = {gameOver}
             gameOverOpp = {gameOverOpp}
