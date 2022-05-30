@@ -99,7 +99,6 @@ const getShipPosIncrement = (randomDirection) => {
 }
 
 //Function to check that coordinate does not already exist. takes the empty "UsedCoordinates"-array and checks the cordinate in it
-//If coordinate exists then true
 const checkCoordinates = (UsedCoordinates, coordinates) => {
   let isTaken = false;
   console.log('TEST USED CORD IS' + UsedCoordinates, coordinates);
@@ -149,7 +148,6 @@ const fillShipCoord = () => {
       // Push into array of all occupied values
       UsedCoordinates.push(takenCoordinates[coordPos]);
     }
-    
   });
 };
 
@@ -199,8 +197,9 @@ const GameScreen = ({ opponent, player, shouldStart, socket, onGameOver }) => {
         const clickedPixel = pixelArray.find((pixel) => pixel.number === index);
         //check if clickedPixel has ships
         if (clickedPixel.hasShip) {
-          clickedPixel.hit = true;
-        } else {
+          clickedPixel.hit = true;   
+        }
+         else {
           clickedPixel.miss = true;
         }
         return pixelArray;
