@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
+import AnimatedCursor from "react-animated-cursor"
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 //import Container from 'react-bootstrap/Container';
@@ -346,6 +347,9 @@ const GameScreen = ({ opponent, player, shouldStart, socket, onGameOver }) => {
            >
           </ScoreBoard>
 
+          <AnimatedCursor
+          />
+          
         </Col>
       </Row>
     </>
