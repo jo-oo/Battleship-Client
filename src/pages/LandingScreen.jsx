@@ -61,6 +61,8 @@ const Landing = ({ socket }) => {
 
   }, [socket, handleGameStart] )
 
+  
+  //here is what we output on our page
   return (
     <>
       {
