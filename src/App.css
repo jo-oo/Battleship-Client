@@ -90,6 +90,12 @@
   height: 3rem;
 }
 
+.shipFront {
+  background-color: rgb(247, 0, 247);
+  width: 3rem;
+  height: 3rem;
+}
+
 #scoreBoard {
   background-color: rgb(28, 21, 117);
   width: 15rem;

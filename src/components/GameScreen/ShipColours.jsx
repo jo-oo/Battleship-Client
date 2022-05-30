@@ -16,6 +16,10 @@ const ShipColours = ( { pixelArray } ) => {
               if (pixel.hasShip && !pixel.hit) {
                 return <div className='pixelShip' key={index}>{pixel.number}</div>;
               }
+              //if pixel has ship and hit, and pixel is the ships start position, render pixel as magenta
+              if (pixel.hasShip && pixel.hit && pixel.hasShipStartPos) {
+                 return <div className='shipFront' key={index}>{pixel.number}</div>;
+              }
               //if pixel has ship and hit, render pixel as green
               if (pixel.hasShip && pixel.hit) {
                 return <div className='pixelHit' key={index}>{pixel.number}</div>;

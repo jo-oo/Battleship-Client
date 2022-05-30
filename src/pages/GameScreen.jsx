@@ -148,6 +148,7 @@ const fillShipCoord = () => {
       // Push into array of all occupied values
       UsedCoordinates.push(takenCoordinates[coordPos]);
     }
+    console.log("STARTPOSITION " + ship.startPos);
   });
 };
 
@@ -168,6 +169,7 @@ const createPixelArray = () => {
       miss: false,
       //checking if the pixels.number is equal to ship coordinates
       hasShip: shipCoords.includes(i),
+      hasShipStartPos: false, //is false to begin with until clicked
     });
   }
   return result;
@@ -197,7 +199,16 @@ const GameScreen = ({ opponent, player, shouldStart, socket, onGameOver }) => {
         const clickedPixel = pixelArray.find((pixel) => pixel.number === index);
         //check if clickedPixel has ships
         if (clickedPixel.hasShip) {
-          clickedPixel.hit = true;   
+          clickedPixel.hit = true;  
+          //check for each start position if the clicked pixel matches the start position currently in the loop. Then set that pixel to hasshipStartPos is now true
+          ships.forEach((ship) => {
+            console.log(ship.startPos)
+            if (clickedPixel.hit && ship.startPos === clickedPixel.number) {
+              clickedPixel.hasShipStartPos = true;
+              console.log("You hit startposition")
+            }
+          })
+          
         }
          else {
           clickedPixel.miss = true;
