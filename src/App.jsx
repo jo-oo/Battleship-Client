@@ -4,7 +4,7 @@ import './App.css';
 import LandingScreen from './pages/LandingScreen';
 //import GameScreen from './pages/GameScreen';
 
-const socket = socketio.connect(REACT_APP_SOCKET_URL);
+const socket = socketio.connect(process.env.REACT_APP_SOCKET_URL);
 
 function App() {
   return (
