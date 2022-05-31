@@ -121,35 +121,12 @@ const checkCoordinates = (UsedCoordinates, coordinates) => {
   return isTaken;
 };
 
-
-
-const resetPixelArray = () => {
-
-  const result = [];
-
-  //creating pixels between 1-100
-  for (let i = 1; i < 101; i++) {
-    result.push({
-      number: i,
-      hit: false,
-      miss: false,
-      //checking if the pixels.number is equal to ship coordinates
-      hasShip: false,
-      isShipPlacable: true,
-    });
-  }
-  return result;
-
-}
-
-
-
 const GameScreen = ({ opponent, player, shouldStart, socket, onGameOver }) => {
   // State for player to know if it is their turn
   const [isYourTurn, setIsYourTurn] = useState(shouldStart);
 
   //state so the pixelArray is updated
-  const [pixelArray, setPixelArray] =  useState(resetPixelArray());
+  const [pixelArray, setPixelArray] =  useState(null);
 
   const [arrayOfMissed, setArrayOfMissed] = useState([]);
   const [arrayOfHits, setArrayOfHits] = useState([]);
@@ -214,8 +191,10 @@ const GameScreen = ({ opponent, player, shouldStart, socket, onGameOver }) => {
   };
 
   const isShipStartPosValid = (startPosTest, direction, length) => {
+
     let isValid = true
     let testCoords = []
+
     switch(direction) {
       case 0:
         if (startPosTest%10 > (11 - length) || startPosTest%10 === 0) {
@@ -241,16 +220,19 @@ const GameScreen = ({ opponent, player, shouldStart, socket, onGameOver }) => {
         // Default return value if no other case matches
         isValid = false
     }
-    testCoords = []
-        for (let coordPos = 0; coordPos < length; coordPos++) {
-          testCoords.push(startPosTest + (coordPos * getShipPosIncrement(direction)))
-        }
-        ships.forEach( (ship) => {
-          if (checkCoordinates(testCoords, ship.coords)) {
-            isValid = false
-          }
-        } )
+
+    for (let coordPos = 0; coordPos < length; coordPos++) {
+      testCoords.push(startPosTest + (coordPos * getShipPosIncrement(direction)))
+    }
+
+    ships.forEach( (ship) => {
+      if (checkCoordinates(testCoords, ship.coords)) {
+        isValid = false
+      }
+    } )
+
     return isValid
+
   }
 
   //create an object for pixel containing index/number hit, miss and if the pixel has ships
@@ -351,12 +333,15 @@ const GameScreen = ({ opponent, player, shouldStart, socket, onGameOver }) => {
 
     if (!selectedShip.isPlaced) {
       selectedShip.startPos = startPos
+
       for (let coordPos = 0; coordPos < selectedShip.length; coordPos++) {
         selectedShip.coords.push(startPos + (coordPos * getShipPosIncrement(currentDirection)))
       }
+
       selectedShip.isPlaced = true
       console.log(ships)
       setPixelArray(createPixelArray())
+      
       if(--nrOfShipsLeftToPlace === 0) {
         console.log('ALL SHIPS PLACED, game should start')
         socket.emit('game:player-ready')
@@ -404,7 +389,7 @@ const GameScreen = ({ opponent, player, shouldStart, socket, onGameOver }) => {
 
     socket.on('game:click', handleOppClick);
     socket.on('game:click-result', handleClickResult);
-    socket.on('game:player-ready', ()=>{setIsOpponentReady(true)})
+    socket.on('game:player-ready', () => { setIsOpponentReady(true) })
 
     return () => {
       //needed to remove the socket otherwise it was running four times
@@ -418,16 +403,6 @@ const GameScreen = ({ opponent, player, shouldStart, socket, onGameOver }) => {
     setPixelArray(createPixelArray())
   }, [currentDirection, selectedShip, createPixelArray] )
 
-  useEffect(() => {
-    // Cal the function that decides the coordinates for all ships
-    //fillShipCoord();
-    // Console log info about each ship to make sure it's correct
-    ships.forEach((ship) => {
-      console.log('ship of length', ship.length, 'has coords', ship.coords);
-    });
-    setPixelArray(resetPixelArray())
-  }, []);
-
   return (
     <> 
       <Row>
@@ -435,7 +410,7 @@ const GameScreen = ({ opponent, player, shouldStart, socket, onGameOver }) => {
           {nrOfShipsLeftToPlace !== 0 && (
             <div>
               <h2>Place your ships</h2>
-              <div className='btn-group'>
+              <div className=''>
                 <button 
                   className={selectedShip.id === 0 ? 'btn btn-info active' : 'btn btn-info'}
                   onClick={() => {setSelectedShip(ships[0])}}
@@ -471,7 +446,7 @@ const GameScreen = ({ opponent, player, shouldStart, socket, onGameOver }) => {
                   }}
                 >Randomise
               </button>
-          </div>
+            </div>
           )}
           
           <ShipColours
@@ -513,11 +488,3 @@ const GameScreen = ({ opponent, player, shouldStart, socket, onGameOver }) => {
 };
 
 export default GameScreen;
-
-// Stuff to fix
-// Clean up ship data
-// Buttons to pick each ship - x
-// Button to rotate direction - x
-// Click on board to place ship coords and startpos - x
-// Function to check if placement is valid - x
-// Ready up when all ships placed - x
