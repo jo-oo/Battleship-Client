@@ -66,6 +66,7 @@
   background-color: pink;
   width: 3rem;
   height: 3rem;
+  cursor: pointer;
 }
 /* 
   .pixel:hover {
@@ -104,4 +105,8 @@
 
 #gameOver {
   background-color: red;
+}
+
+.cant-place-ship {
+  cursor: not-allowed;
 }

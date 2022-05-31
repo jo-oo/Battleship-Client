@@ -3,19 +3,23 @@
 */
 
 //takes in pixelArray from GameScreen
-const ShipColours = ( { pixelArray } ) => {
+const ShipColours = ( { pixelArray, placeCoords } ) => {
 	return ( 
         <>
          <div className='gameBoard'>
             {pixelArray.map((pixel, index) => {
-              //if pixel not include miss, hit or ship render pixel as a plain pixel (pink)
-              if (!pixel.miss && !pixel.hit && !pixel.hasShip) {
-                return <div className='pixel' key={index}>{pixel.number}</div>;
-              }
               //if pixel has ship and no hit, render pixel as red
               if (pixel.hasShip && !pixel.hit) {
                 return <div className='pixelShip' key={index}>{pixel.number}</div>;
               }
+              if (!pixel.isShipPlacable && !pixel.hit && !pixel.miss) {
+                return <div className='pixel cant-place-ship' key={index}>{pixel.number}</div>;
+              }
+              //if pixel not include miss, hit or ship render pixel as a plain pixel (pink)
+              if (!pixel.miss && !pixel.hit && !pixel.hasShip) {
+                return <div className='pixel' key={index} onClick={() => {placeCoords(pixel.number)}}>{pixel.number}</div>;
+              }
+              
               //if pixel has ship and hit, render pixel as green
               if (pixel.hasShip && pixel.hit) {
                 return <div className='pixelHit' key={index}>{pixel.number}</div>;
