@@ -6,7 +6,8 @@
 const ShipColours = ( { pixelArray, placeCoords } ) => {
 	return ( 
         <>
-         <div className='gameBoard'>
+        {pixelArray !== null && (
+          <div className='gameBoard'>
             {pixelArray.map((pixel, index) => {
               //if pixel has ship and no hit, render pixel as red
               if (pixel.hasShip && !pixel.hit) {
@@ -28,6 +29,8 @@ const ShipColours = ( { pixelArray, placeCoords } ) => {
               return <div className='pixelMiss' key={index}>{pixel.number}</div>;
             })}
           </div>
+        )}
+         
         </> 
 	)
 }
