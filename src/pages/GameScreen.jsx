@@ -16,6 +16,7 @@ let nrOfShipsLeftToPlace = 4
 // Array of four ships to place
 const ships = [
   {
+    id: 0,
     length: 2,
     partsLeft: 2,
     startPos: null,
@@ -23,6 +24,7 @@ const ships = [
     isPlaced: false,
   },
   {
+    id: 1,
     length: 2,
     partsLeft: 2,
     startPos: null,
@@ -30,6 +32,7 @@ const ships = [
     isPlaced: false,
   },
   {
+    id: 2,
     length: 3,
     partsLeft: 3,
     startPos: null,
@@ -37,6 +40,7 @@ const ships = [
     isPlaced: false,
   },
   {
+    id: 3,
     length: 4,
     partsLeft: 4,
     startPos: null,
@@ -156,57 +160,58 @@ const GameScreen = ({ opponent, player, shouldStart, socket, onGameOver }) => {
 
   const [totShipsLeft, setTotShipsLeft] = useState(4);
 
-  const [selectedShip, setSelectedShip] = useState(0)
+  const [selectedShip, setSelectedShip] = useState(ships[0])
   const [currentDirection, setCurrentDirection] = useState(0)
   const [isOpponentReady, setIsOpponentReady] = useState(false)
 
   // Function to set coordinates for all ships
-const fillShipCoord = () => {
+  const fillShipCoord = () => {
 
-  ships.forEach( (ship) => {
-    ship.startPos = null
-    ship.coords = []
-  } )
+    ships.forEach( (ship) => {
+      ship.startPos = null
+      ship.coords = []
+    } )
 
-  // Array with coordinates for all ships whos coordinates has been decided
-  const UsedCoordinates = [];
-  // Array with test coordinates that will be compared with UsedCoordinates array
-  let takenCoordinates = []
+    // Array with coordinates for all ships whos coordinates has been decided
+    const UsedCoordinates = [];
+    // Array with test coordinates that will be compared with UsedCoordinates array
+    let takenCoordinates = []
 
-  ships.forEach((ship) => {
+    ships.forEach((ship) => {
 
-    //Get random number to represent direction of the ship
-    const randomDirection = Math.floor(Math.random() * 4);
-    console.log("YOU HAVE RANDOM DIRECTION: ", randomDirection)
-    // Get increment value for each coord within a ship
-    const increment = getShipPosIncrement(randomDirection)
-    console.log("YOU HAVE INCREMENT: ", increment)
-    
-    // A do-while loop that calculates possible coordinates for the ship until all coordinates are valid
-    do {
-      // Empty test coordinates at the start of each loop iteration
-      takenCoordinates = []
-      // Give ship a random start position
-      ship.startPos = getShipStartPos(randomDirection, ship.length)
-      // For every position in ship, push in the coordinates thats gonna be checked if valid
+      //Get random number to represent direction of the ship
+      const randomDirection = Math.floor(Math.random() * 4);
+      console.log("YOU HAVE RANDOM DIRECTION: ", randomDirection)
+      // Get increment value for each coord within a ship
+      const increment = getShipPosIncrement(randomDirection)
+      console.log("YOU HAVE INCREMENT: ", increment)
+      
+      // A do-while loop that calculates possible coordinates for the ship until all coordinates are valid
+      do {
+        // Empty test coordinates at the start of each loop iteration
+        takenCoordinates = []
+        // Give ship a random start position
+        ship.startPos = getShipStartPos(randomDirection, ship.length)
+        // For every position in ship, push in the coordinates thats gonna be checked if valid
+        for (let coordPos = 0; coordPos < ship.length; coordPos++) {
+          takenCoordinates.push(ship.startPos + (coordPos * increment))
+        }
+        // If any of the coordinates is already occupied, redo the loop
+      } while (checkCoordinates(UsedCoordinates, takenCoordinates));
+
+      // For each position in ship, push in the (now valid) coordinates from takenCoordinates
       for (let coordPos = 0; coordPos < ship.length; coordPos++) {
-        takenCoordinates.push(ship.startPos + (coordPos * increment))
+        // Push in to current ship coords
+        ship.coords.push(takenCoordinates[coordPos]);
+        // Push into array of all occupied values
+        UsedCoordinates.push(takenCoordinates[coordPos]);
       }
-      // If any of the coordinates is already occupied, redo the loop
-    } while (checkCoordinates(UsedCoordinates, takenCoordinates));
+      ship.isPlaced = true
+      nrOfShipsLeftToPlace = 0
+    });
 
-    // For each position in ship, push in the (now valid) coordinates from takenCoordinates
-    for (let coordPos = 0; coordPos < ship.length; coordPos++) {
-      // Push in to current ship coords
-      ship.coords.push(takenCoordinates[coordPos]);
-      // Push into array of all occupied values
-      UsedCoordinates.push(takenCoordinates[coordPos]);
-    }
-    ship.isPlaced = true
-  });
-
-  socket.emit('game:player-ready')
-};
+    socket.emit('game:player-ready')
+  };
 
   const isShipStartPosValid = (startPosTest, direction, length) => {
     let isValid = true
@@ -216,49 +221,27 @@ const fillShipCoord = () => {
         if (startPosTest%10 > (11 - length) || startPosTest%10 === 0) {
           isValid = false
         }
-        testCoords = []
-        for (let coordPos = 0; coordPos < length; coordPos++) {
-          testCoords.push(startPosTest + (coordPos * getShipPosIncrement(direction)))
-        }
-        ships.forEach( (ship) => {
-          if (checkCoordinates(testCoords, ship.coords)) {
-            isValid = false
-          }
-        } )
         break
-       case 1:
+      case 1:
         if (startPosTest%10 < (0 + length) && startPosTest%10 !== 0) {
           isValid = false
         }
-        testCoords = []
-        for (let coordPos = 0; coordPos < length; coordPos++) {
-          testCoords.push(startPosTest + (coordPos * getShipPosIncrement(direction)))
-        }
-        ships.forEach( (ship) => {
-          if (checkCoordinates(testCoords, ship.coords)) {
-            isValid = false
-          }
-        } )
         break
       case 2:
         if (startPosTest > 110 - (length * 10)) {
           isValid = false
         }
-        testCoords = []
-        for (let coordPos = 0; coordPos < length; coordPos++) {
-          testCoords.push(startPosTest + (coordPos * getShipPosIncrement(direction)))
-        }
-        ships.forEach( (ship) => {
-          if (checkCoordinates(testCoords, ship.coords)) {
-            isValid = false
-          }
-        } )
         break
       case 3:
         if (startPosTest < 1 + (length * 10 - 10)) {
           isValid = false
         }
-        testCoords = []
+        break
+      default:
+        // Default return value if no other case matches
+        isValid = false
+    }
+    testCoords = []
         for (let coordPos = 0; coordPos < length; coordPos++) {
           testCoords.push(startPosTest + (coordPos * getShipPosIncrement(direction)))
         }
@@ -267,11 +250,6 @@ const fillShipCoord = () => {
             isValid = false
           }
         } )
-        break
-      default:
-        // Default return value if no other case matches
-        isValid = false
-    }
     return isValid
   }
 
@@ -454,16 +432,48 @@ const fillShipCoord = () => {
     <> 
       <Row>
         <Col>
-
-          <div>
-            <button onClick={() => {setSelectedShip(ships[0])}} disabled={ships[0].isPlaced}>2 ship</button>
-            <button onClick={() => {setSelectedShip(ships[1])}} disabled={ships[1].isPlaced}>2 ship</button>
-            <button onClick={() => {setSelectedShip(ships[2])}} disabled={ships[2].isPlaced}>3 ship</button>
-            <button onClick={() => {setSelectedShip(ships[3])}} disabled={ships[3].isPlaced}>4 ship</button>
+          {nrOfShipsLeftToPlace !== 0 && (
+            <div>
+              <h2>Place your ships</h2>
+              <div className='btn-group'>
+                <button 
+                  className={selectedShip.id === 0 ? 'btn btn-info active' : 'btn btn-info'}
+                  onClick={() => {setSelectedShip(ships[0])}}
+                  disabled={ships[0].isPlaced}
+                  >2 ship
+                </button>
+                <button 
+                  className={selectedShip.id === 1 ? 'btn btn-info active' : 'btn btn-info'}
+                  onClick={() => {setSelectedShip(ships[1])}}
+                  disabled={ships[1].isPlaced}
+                  >2 ship
+                </button>
+                <button 
+                  className={selectedShip.id === 2 ? 'btn btn-info active' : 'btn btn-info'}
+                  onClick={() => {setSelectedShip(ships[2])}}
+                  disabled={ships[2].isPlaced}
+                  >3 ship
+                </button>
+                <button 
+                  className={selectedShip.id === 3 ? 'btn btn-info active' : 'btn btn-info'}
+                  onClick={() => {setSelectedShip(ships[3])}}
+                  disabled={ships[3].isPlaced}
+                  >4 ship
+                </button>
+              </div>
+              <br />
+              <button onClick={() => {updateCurrentDirection()}}>Switch direction</button>
+              <p>Current direction: <img src={`arrow${currentDirection}.png`} alt='arrow showing ship direction'/></p>
+              <button onClick={
+                  () => {
+                    fillShipCoord()
+                    setPixelArray(createPixelArray())
+                  }}
+                >Randomise
+              </button>
           </div>
-          <button onClick={() => {updateCurrentDirection()}}>Switch direction</button>
-          <p>Current direction: {currentDirection}</p>
-          <button onClick={() => {fillShipCoord(); setPixelArray(createPixelArray())}}>Randomise</button>
+          )}
+          
           <ShipColours
             pixelArray={pixelArray}
             placeCoords={placeShipCoords}

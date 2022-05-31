@@ -110,3 +110,7 @@
 .cant-place-ship {
   cursor: not-allowed;
 }
+
+.btn.active {
+  border: 1px solid black;
+}
