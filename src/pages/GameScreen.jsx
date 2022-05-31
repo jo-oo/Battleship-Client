@@ -230,10 +230,19 @@ const GameScreen = ({ opponent, player, shouldStart, socket, onGameOver }) => {
 
               //decrease total ships
               setTotShipsLeft((prevState) => prevState - 1);
-              //if all ships are hit, set gameOver = true
-              if (totShipsLeft - 1 === 0) {
+
+              if (totShipsLeft - 1 === 2) {
                 gameOver = true;
                 onGameOver({ won: false });
+                setTotShipsLeft((totShipsLeft) => {
+                  return (totShipsLeft = 4);
+                });
+
+                setPlayerShipsLeft((playerShipsLeft) => {
+                  return (playerShipsLeft = ships.length);
+                });
+
+                setPixelArray(createPixelArray());
 
                 setArrayOfMissed((arrayOfMissed) => {
                   return (arrayOfMissed = []);
@@ -246,7 +255,7 @@ const GameScreen = ({ opponent, player, shouldStart, socket, onGameOver }) => {
 
             //add the index to an array
             arrayOppHits.push(index);
-            console.log('this is the array of opp hits', arrayOppHits, 'and length', arrayOppHits.length);
+            /*  console.log('this is the array of opp hits', arrayOppHits, 'and length', arrayOppHits.length); */
           }
         });
       });
@@ -283,7 +292,11 @@ const GameScreen = ({ opponent, player, shouldStart, socket, onGameOver }) => {
 
         if (gameOver) {
           gameOverOpp = true;
+          setOppShipsLeft((oppShipsLeft) => {
+            return (oppShipsLeft = ships.length);
+          });
           onGameOver({ won: true });
+          setPixelArray(createPixelArray());
           setArrayOfMissed((arrayOfMissed) => {
             return (arrayOfMissed = []);
           });
