@@ -2,11 +2,11 @@ import React, { useEffect, useState, useCallback } from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 //import Container from 'react-bootstrap/Container';
-import HitOrMiss from '../components/GameScreen/HitOrMiss'
-import ShipColours from '../components/GameScreen/ShipColours'
-import ScoreBoard from '../components/GameScreen/ScoreBoard'
-import GameOver from '../components/GameScreen/GameOver'
-
+import HitOrMiss from '../components/GameScreen/HitOrMiss';
+import ShipColours from '../components/GameScreen/ShipColours';
+import ScoreBoard from '../components/GameScreen/ScoreBoard';
+import GameOver from '../components/GameScreen/GameOver';
+import Waves from '../components/GameScreen/Waves';
 
 const arrayOppHits = [];
 let gameOver = false;
@@ -46,57 +46,57 @@ function getRandomNumber(min, max) {
 }
 
 /**
- * 
+ *
  * Function that returns a randomized start position that's within a valid range depending on the direction of the ship
- * 
+ *
  */
 const getShipStartPos = (shipDirection, shipLength) => {
   // A switch case block that performs a different calculation depending on the case value
-  switch(shipDirection) {
+  switch (shipDirection) {
     case 0:
       // Calculate a valid start position for ships going right
       //     Random horizontal placemant         + Random vertical placement
-      return getRandomNumber(1, 12 - shipLength) + getRandomNumber(0, 10) * 10
+      return getRandomNumber(1, 12 - shipLength) + getRandomNumber(0, 10) * 10;
     case 1:
       // Calculate a valid start position for ships going left
-      return getRandomNumber(0 + shipLength, 11) + (getRandomNumber(0, 10) * 10)
+      return getRandomNumber(0 + shipLength, 11) + getRandomNumber(0, 10) * 10;
     case 2:
       // Calculate a valid start position for ships going down
-      return getRandomNumber(1, 11) + getRandomNumber(0, 10 - shipLength + 1) * 10
+      return getRandomNumber(1, 11) + getRandomNumber(0, 10 - shipLength + 1) * 10;
     case 3:
       // Calculate a valid start position for ships going up
-      return getRandomNumber(1, 11) + getRandomNumber(0 + shipLength - 1, 10) * 10
+      return getRandomNumber(1, 11) + getRandomNumber(0 + shipLength - 1, 10) * 10;
     default:
       // Default return value if no other case matches
-      return false
+      return false;
   }
-}
+};
 
 /**
- * 
+ *
  * Function that returns how much every coordinate in a ship should increase/decrease depending on the direction of the ship
- * 
+ *
  */
 const getShipPosIncrement = (randomDirection) => {
   // A switch case block that calculates a different increment value depending on the case value
-  switch(randomDirection) {
+  switch (randomDirection) {
     case 0:
       // For ships going right, increment should be +1 for every new coord in the ship
-      return 1
+      return 1;
     case 1:
       // For ships going left, increment should be -1 for every new coord in the ship
-      return -1
+      return -1;
     case 2:
       // For ships going down, increment should be +10 for every new coord in the ship
-      return 10
+      return 10;
     case 3:
       // For ships going up, increment should be -10 for every new coord in the ship
-      return -10
+      return -10;
     default:
       // Default return value if no other case matches
-      return false
+      return false;
   }
-}
+};
 
 //Function to check that coordinate does not already exist. takes the empty "UsedCoordinates"-array and checks the cordinate in it
 //If coordinate exists then true
@@ -114,30 +114,28 @@ const checkCoordinates = (UsedCoordinates, coordinates) => {
 
 // Function to set coordinates for all ships
 const fillShipCoord = () => {
-
   // Array with coordinates for all ships whos coordinates has been decided
   const UsedCoordinates = [];
   // Array with test coordinates that will be compared with UsedCoordinates array
-  let takenCoordinates = []
+  let takenCoordinates = [];
 
   ships.forEach((ship) => {
-
     //Get random number to represent direction of the ship
     const randomDirection = Math.floor(Math.random() * 4);
-    console.log("YOU HAVE RANDOM DIRECTION: ", randomDirection)
+    console.log('YOU HAVE RANDOM DIRECTION: ', randomDirection);
     // Get increment value for each coord within a ship
-    const increment = getShipPosIncrement(randomDirection)
-    console.log("YOU HAVE INCREMENT: ", increment)
-    
+    const increment = getShipPosIncrement(randomDirection);
+    console.log('YOU HAVE INCREMENT: ', increment);
+
     // A do-while loop that calculates possible coordinates for the ship until all coordinates are valid
     do {
       // Empty test coordinates at the start of each loop iteration
-      takenCoordinates = []
+      takenCoordinates = [];
       // Give ship a random start position
-      ship.startPos = getShipStartPos(randomDirection, ship.length)
+      ship.startPos = getShipStartPos(randomDirection, ship.length);
       // For every position in ship, push in the coordinates thats gonna be checked if valid
       for (let coordPos = 0; coordPos < ship.length; coordPos++) {
-        takenCoordinates.push(ship.startPos + (coordPos * increment))
+        takenCoordinates.push(ship.startPos + coordPos * increment);
       }
       // If any of the coordinates is already occupied, redo the loop
     } while (checkCoordinates(UsedCoordinates, takenCoordinates));
@@ -149,7 +147,6 @@ const fillShipCoord = () => {
       // Push into array of all occupied values
       UsedCoordinates.push(takenCoordinates[coordPos]);
     }
-    
   });
 };
 
@@ -180,7 +177,7 @@ const GameScreen = ({ opponent, player, shouldStart, socket, onGameOver }) => {
   const [isYourTurn, setIsYourTurn] = useState(shouldStart);
 
   //state so the pixelArray is updated
-  const [pixelArray, setPixelArray] =  useState(createPixelArray());
+  const [pixelArray, setPixelArray] = useState(createPixelArray());
 
   const [arrayOfMissed, setArrayOfMissed] = useState([]);
   const [arrayOfHits, setArrayOfHits] = useState([]);
@@ -236,7 +233,14 @@ const GameScreen = ({ opponent, player, shouldStart, socket, onGameOver }) => {
               //if all ships are hit, set gameOver = true
               if (totShipsLeft - 1 === 0) {
                 gameOver = true;
-                onGameOver({won: false})
+                onGameOver({ won: false });
+
+                setArrayOfMissed((arrayOfMissed) => {
+                  return (arrayOfMissed = []);
+                });
+                setArrayOfHits((arrayOfHits) => {
+                  return (arrayOfHits = []);
+                });
               }
             }
 
@@ -265,7 +269,6 @@ const GameScreen = ({ opponent, player, shouldStart, socket, onGameOver }) => {
   useEffect(() => {
     // Function that handles what happens when a click made by player was a hit (not opponent)
     const handleClickResult = (result, index, shipSunk, gameOver) => {
-
       if (result) {
         console.log('You hit on this square', index);
         setArrayOfHits((arrayOfHits) => {
@@ -280,7 +283,13 @@ const GameScreen = ({ opponent, player, shouldStart, socket, onGameOver }) => {
 
         if (gameOver) {
           gameOverOpp = true;
-          onGameOver({won: true})
+          onGameOver({ won: true });
+          setArrayOfMissed((arrayOfMissed) => {
+            return (arrayOfMissed = []);
+          });
+          setArrayOfHits((arrayOfHits) => {
+            return (arrayOfHits = []);
+          });
         }
       } else {
         console.log('You missed this square', index);
@@ -308,46 +317,35 @@ const GameScreen = ({ opponent, player, shouldStart, socket, onGameOver }) => {
     ships.forEach((ship) => {
       console.log('ship of length', ship.length, 'has coords', ship.coords);
     });
-    setPixelArray(createPixelArray())
+    setPixelArray(createPixelArray());
   }, []);
 
   return (
-    <> 
+    <>
       <Row>
         <Col>
-
-          <ShipColours
-            pixelArray={pixelArray}
-          >
-          </ShipColours>
+          <ShipColours pixelArray={pixelArray}></ShipColours>
 
           <HitOrMiss
             pixelArray={pixelArray}
-            arrayOfHits = {arrayOfHits}
-            arrayOfMissed = {arrayOfMissed}
-            handleOppBoardClick = {handleOppBoardClick}
-          >
-          </HitOrMiss>
-
+            arrayOfHits={arrayOfHits}
+            arrayOfMissed={arrayOfMissed}
+            handleOppBoardClick={handleOppBoardClick}
+          ></HitOrMiss>
         </Col>
         <Col>
-
-          <GameOver
-            gameOver = {gameOver}
-            gameOverOpp = {gameOverOpp}
-           >
-          </GameOver>
+          <GameOver gameOver={gameOver} gameOverOpp={gameOverOpp}></GameOver>
 
           <ScoreBoard
-            opponent = {opponent}
-            oppShipsLeft = {oppShipsLeft}
-            player = {player}
-            playerShipsLeft = {playerShipsLeft}
-            isYourTurn = {isYourTurn}
-           >
-          </ScoreBoard>
-
+            opponent={opponent}
+            oppShipsLeft={oppShipsLeft}
+            player={player}
+            playerShipsLeft={playerShipsLeft}
+            isYourTurn={isYourTurn}
+          ></ScoreBoard>
         </Col>
+
+        <Waves />
       </Row>
     </>
   );

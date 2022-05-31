@@ -57,15 +57,27 @@
 
 .gameBoard {
   display: grid;
-  grid-template-columns: 3rem 3rem 3rem 3rem 3rem 3rem 3rem 3rem 3rem 3rem;
-  grid-gap: 0.1rem;
+  grid-template-columns: 4rem 4rem 4rem 4rem 4rem 4rem 4rem 4rem 4rem 4rem;
+  grid-gap: 0.2rem;
   margin: 2rem;
 }
 
+.waves-container {
+  z-index: -100;
+  background-color: #1c5d72;
+  height: 100%;
+}
+
+.wave-1 {
+  height: 30rem;
+  opacity: 0.5;
+}
+
 .pixel {
-  background-color: pink;
-  width: 3rem;
-  height: 3rem;
+  border: 1px solid #ffbef9;
+  background-color: #ffbef9;
+  width: 4rem;
+  height: 4rem;
 }
 /* 
   .pixel:hover {
@@ -73,21 +85,21 @@
   } */
 
 .pixelShip {
-  background-color: rgb(192, 40, 65);
-  width: 3rem;
-  height: 3rem;
+  background-color: #fe71f0;
+  width: 4rem;
+  height: 4rem;
 }
 
 .pixelHit {
-  background-color: green;
-  width: 3rem;
-  height: 3rem;
+  background-color: #7dbe84;
+  width: 4rem;
+  height: 4rem;
 }
 
 .pixelMiss {
-  background-color: yellow;
-  width: 3rem;
-  height: 3rem;
+  background-color: #f5f075;
+  width: 4rem;
+  height: 4rem;
 }
 
 #scoreBoard {
