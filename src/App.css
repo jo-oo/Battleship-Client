@@ -114,3 +114,34 @@
 .btn.active {
   border: 1px solid black;
 }
+
+.placement-container {
+  background-color: #FFBEF9;
+  padding: 1rem 1rem 2rem 1rem;
+  margin: 1rem;
+  border-radius: 5px;
+}
+
+.btn-ship-selection {
+  margin: 1rem 0;
+}
+
+.btn-ship-selection .btn {
+  margin: 0 0.5rem;
+  background-color: #8ABDCD;
+  border-color: black;
+}
+
+.btn-direction-selection .btn, .btn-direction-selection .btn:active {
+  margin: 0 1rem;
+  background-color: #7DBE84;
+  border-color: black;
+  box-shadow: none;
+}
+
+.btn.btn-randomise {
+  margin-top: 1rem;
+  margin-right: 1.5rem;
+  background-color: #BADFEC;
+  border-color: black;
+}

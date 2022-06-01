@@ -432,43 +432,51 @@ const GameScreen = ({ opponent, player, shouldStart, socket, onGameOver }) => {
       <Row>
         <Col>
           {nrOfShipsLeftToPlace !== 0 && (
-            <div>
+            <div className='placement-container'>
               <h2>Place your ships</h2>
-              <div className=''>
+              <div className='btn-ship-selection'>
                 <button 
                   className={selectedShip.id === 0 ? 'btn btn-info active' : 'btn btn-info'}
                   onClick={() => {setSelectedShip(ships[0])}}
                   disabled={ships[0].isPlaced}
-                  >2 ship
+                  >2x ship
                 </button>
                 <button 
                   className={selectedShip.id === 1 ? 'btn btn-info active' : 'btn btn-info'}
                   onClick={() => {setSelectedShip(ships[1])}}
                   disabled={ships[1].isPlaced}
-                  >2 ship
+                  >2x ship
                 </button>
                 <button 
                   className={selectedShip.id === 2 ? 'btn btn-info active' : 'btn btn-info'}
                   onClick={() => {setSelectedShip(ships[2])}}
                   disabled={ships[2].isPlaced}
-                  >3 ship
+                  >3x ship
                 </button>
                 <button 
                   className={selectedShip.id === 3 ? 'btn btn-info active' : 'btn btn-info'}
                   onClick={() => {setSelectedShip(ships[3])}}
                   disabled={ships[3].isPlaced}
-                  >4 ship
+                  >4x ship
                 </button>
               </div>
-              <br />
-              <button onClick={() => {updateCurrentDirection()}}>Switch direction</button>
-              <p>Current direction: <img src={`arrow${currentDirection}.png`} alt='arrow showing ship direction'/></p>
-              <button onClick={
+              <div className='btn-direction-selection'>
+                <button 
+                  className='btn btn-info'
+                  onClick={() => {updateCurrentDirection()}}
+                  >Change direction
+                </button>
+                <img src={`arrow${currentDirection}.png`} alt='arrow showing ship direction'/>
+              </div>
+              
+              <button 
+                className='btn btn-info btn-randomise'
+                onClick={
                   () => {
                     fillShipCoord()
                     setPixelArray(createPixelArray())
                   }}
-                >Randomise
+                >Randomise positions
               </button>
             </div>
           )}
