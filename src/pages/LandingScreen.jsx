@@ -66,7 +66,7 @@ const Landing = ({ socket }) => {
     //setIsGameLive(false)
     setIsGameOver(true);
     setResultData(results);
-    handleGameStart();
+    //handleGameStart();
   };
 
   const handlePlayAgain = (e) => {
