@@ -137,13 +137,16 @@ const GameScreen = ({ opponent, player, shouldStart, socket, onGameOver }) => {
 
   const [totShipsLeft, setTotShipsLeft] = useState(4);
 
+  // States for which ship to place and in what direction 
   const [selectedShip, setSelectedShip] = useState(ships[0])
   const [currentDirection, setCurrentDirection] = useState(0)
+  // State to know if both players have placed their ships
   const [isOpponentReady, setIsOpponentReady] = useState(false)
 
   // Function to set coordinates for all ships
   const fillShipCoord = () => {
 
+    // Clean up info about each ship
     ships.forEach( (ship) => {
       ship.startPos = null
       ship.coords = []
@@ -183,35 +186,49 @@ const GameScreen = ({ opponent, player, shouldStart, socket, onGameOver }) => {
         // Push into array of all occupied values
         UsedCoordinates.push(takenCoordinates[coordPos]);
       }
+      // Mark ship as placed
       ship.isPlaced = true
-      nrOfShipsLeftToPlace = 0
+      
     });
+    // Decrease variable for unplaced ships to zero
+    nrOfShipsLeftToPlace = 0
 
+    // Inform server that player is done placing their ships
     socket.emit('game:player-ready')
   };
 
+  // Function to determine if ship can be placed on given start position
   const isShipStartPosValid = (startPosTest, direction, length) => {
 
     let isValid = true
     let testCoords = []
 
+    // Switch case that sets isValid variable to false if ship would go to far on the edge of the board
     switch(direction) {
+      // Case for direction right
       case 0:
+        // If single digit in startPosTest is to big OR zero
         if (startPosTest%10 > (11 - length) || startPosTest%10 === 0) {
           isValid = false
         }
         break
+      // Case for direction left
       case 1:
+        // If single digit in startPosTest is to small AND not zero
         if (startPosTest%10 < (0 + length) && startPosTest%10 !== 0) {
           isValid = false
         }
         break
+      // Case for direction down
       case 2:
+        // If startPosTest is to large
         if (startPosTest > 110 - (length * 10)) {
           isValid = false
         }
         break
+      // Case for direction up
       case 3:
+        // If starPosTest is to small
         if (startPosTest < 1 + (length * 10 - 10)) {
           isValid = false
         }
@@ -221,10 +238,12 @@ const GameScreen = ({ opponent, player, shouldStart, socket, onGameOver }) => {
         isValid = false
     }
 
+    // Put coordinates to test in a temporary array
     for (let coordPos = 0; coordPos < length; coordPos++) {
       testCoords.push(startPosTest + (coordPos * getShipPosIncrement(direction)))
     }
 
+    // Check if any of test coordinates is already taken by another ship
     ships.forEach( (ship) => {
       if (checkCoordinates(testCoords, ship.coords)) {
         isValid = false
@@ -252,6 +271,7 @@ const GameScreen = ({ opponent, player, shouldStart, socket, onGameOver }) => {
         miss: false,
         //checking if the pixels.number is equal to ship coordinates
         hasShip: shipCoords.includes(i),
+        // Check if a ship can start on this square, considering chosen direction and length of chosen ship
         isShipPlacable: isShipStartPosValid(i, currentDirection, selectedShip.length),
       });
     }
@@ -329,29 +349,33 @@ const GameScreen = ({ opponent, player, shouldStart, socket, onGameOver }) => {
     }
   };
 
+  // Function to place a single ship
   const placeShipCoords = (startPos) => {
 
+    // Continue only if ship has not already been placed
     if (!selectedShip.isPlaced) {
-      selectedShip.startPos = startPos
 
+      // Set coordinates for ship
+      selectedShip.startPos = startPos
       for (let coordPos = 0; coordPos < selectedShip.length; coordPos++) {
         selectedShip.coords.push(startPos + (coordPos * getShipPosIncrement(currentDirection)))
       }
 
       selectedShip.isPlaced = true
       console.log(ships)
+      // Update pixelarray
       setPixelArray(createPixelArray())
-      
+
+      // If all ships has been placed, inform server
       if(--nrOfShipsLeftToPlace === 0) {
-        console.log('ALL SHIPS PLACED, game should start')
         socket.emit('game:player-ready')
       }
     }
     
   }
 
+  // Function to change selected direction
   const updateCurrentDirection = () => {
-    console.log("in function")
     if (currentDirection === 3) {
       setCurrentDirection(0)
     } else {
