@@ -233,3 +233,10 @@ h2 {
   background-color: #badfec;
   border-color: black;
 }
+
+.username-taken {
+  background-color: #BC0303;
+  font-weight: bold;
+  color: black;
+  border: 1px solid black;
+}

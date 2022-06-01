@@ -3,12 +3,21 @@
  */
 
 //takes in setNameInput from GameScreen
-const StartScreen = ({ handleSubmit, setNameInput, searchInputRef  }) => {
+const StartScreen = ({ handleSubmit, setNameInput, searchInputRef, isNameOccupied }) => {
     return (
       <>
         <div className='start-screen' >
           <section  id='input-field'>
-              <h1>Battleship</h1>
+            <h1>Battleship</h1>
+
+            {
+              isNameOccupied && (
+                <div className="alert alert-danger username-taken">
+                  This name is already taken, pick another one
+                </div>
+              )
+            }
+
             <form className='form' onSubmit={handleSubmit}>
               <input type="text" id="username" className="form-control form-control-lg" onChange={e => setNameInput(e.target.value)} ref={searchInputRef} placeholder="Your name" required autoFocus />
               <br />
