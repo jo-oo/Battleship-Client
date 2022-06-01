@@ -53,7 +53,6 @@ const Landing = ({ socket }) => {
 
   const handleExit = (e) => {
     e.preventDefault();
-
     setIsGameOver(false);
     setIsGameLive(false);
   };
@@ -62,13 +61,22 @@ const Landing = ({ socket }) => {
     //setIsGameLive(false)
     setIsGameOver(true);
     setResultData(results);
+    handleGameStart();
+  };
+
+  const handlePlayAgain = (e) => {
+    e.preventDefault();
+    // Set loading state to true
+    setIsLoading(true);
+    setIsGameOver(false);
+
+    socket.emit('user:join-queue', nameInput, handleGameStart);
   };
 
   useEffect(() => {
     socket.on('game:start', handleGameStart);
   }, [socket, handleGameStart]);
 
-  
   //here is what we output on our page
   return (
     <>
@@ -107,7 +115,7 @@ const Landing = ({ socket }) => {
       }
       {
         // Show result screen when game is over. GameOver is a component handling only what happens when Game is over
-        isGameOver && <GameOver result={resultData} submit={handleSubmit} exit={handleExit}></GameOver>
+        isGameOver && <GameOver result={resultData} submit={handlePlayAgain} exit={handleExit}></GameOver>
       }
     </>
   );

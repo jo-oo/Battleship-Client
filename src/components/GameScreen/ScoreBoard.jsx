@@ -9,12 +9,12 @@ const ScoreBoard = ({ opponent, oppShipsLeft, player, playerShipsLeft, isYourTur
       <div id='scoreBoard'>
         <div id='opponent-board'>
           <h3>You: {player}</h3>
-          <h4>Ships remaning: {oppShipsLeft}</h4>
+          <h4>Ships remaining: {playerShipsLeft}</h4>
         </div>
 
         <div id='currentPlayer-board'>
           <h3>Opponent: {opponent}</h3>
-          <h4>Ships remaining: {playerShipsLeft}</h4>
+          <h4>Ships remaning: {oppShipsLeft}</h4>
         </div>
 
         <div id='turnToggle'>

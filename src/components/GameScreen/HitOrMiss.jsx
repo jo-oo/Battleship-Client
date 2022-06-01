@@ -3,9 +3,12 @@
  */
 
 //takes in pixelArray, arrayOfHits et.c. from GameScreen
-const HitOrMiss = ({ pixelArray, arrayOfHits, arrayOfMissed, handleOppBoardClick }) => {
+const HitOrMiss = ({ pixelArray, arrayOfHits, arrayOfMissed, handleOppBoardClick, opponent }) => {
   return (
     <>
+      <div className='float-left'>
+        <h2> ⚓️{opponent} board</h2>
+      </div>
       <div className='gameBoard'>
         {pixelArray.map((pixel, index) => {
           //render out the array containing hit coords for player (not opponent)

@@ -187,6 +187,15 @@ const GameScreen = ({ opponent, player, shouldStart, socket, onGameOver }) => {
 
   const [totShipsLeft, setTotShipsLeft] = useState(4);
 
+  /*   const handleReset = () => {
+    setTotShipsLeft(4);
+    setPlayerShipsLeft(4);
+    setOppShipsLeft(4);
+    setPixelArray(createPixelArray());
+    setArrayOfMissed([]);
+    setArrayOfHits([]);
+  };
+ */
   // Function that handles when opponent has clicked a sqaure
   const handleOppClick = useCallback(
     (index) => {
@@ -195,9 +204,8 @@ const GameScreen = ({ opponent, player, shouldStart, socket, onGameOver }) => {
         const clickedPixel = pixelArray.find((pixel) => pixel.number === index);
         //check if clickedPixel has ships
         if (clickedPixel.hasShip) {
-          clickedPixel.hit = true;   
-        }
-         else {
+          clickedPixel.hit = true;
+        } else {
           clickedPixel.miss = true;
         }
         return pixelArray;
@@ -216,11 +224,11 @@ const GameScreen = ({ opponent, player, shouldStart, socket, onGameOver }) => {
           if (coord === index) {
             hasHit = true;
 
-            console.log('its a hit');
+            // Functiononsole.log('its a hit');
 
             // Decrease parts left for the ship
             ship.partsLeft--;
-            console.log('PARTS LEFT::', ship.partsLeft);
+            //console.log('PARTS LEFT::', ship.partsLeft);
 
             // If all parts of ship is gone, update number of ships player still has
             if (ship.partsLeft === 0) {
@@ -231,25 +239,9 @@ const GameScreen = ({ opponent, player, shouldStart, socket, onGameOver }) => {
               //decrease total ships
               setTotShipsLeft((prevState) => prevState - 1);
 
-              if (totShipsLeft - 1 === 2) {
+              if (totShipsLeft - 1 === 0) {
                 gameOver = true;
                 onGameOver({ won: false });
-                setTotShipsLeft((totShipsLeft) => {
-                  return (totShipsLeft = 4);
-                });
-
-                setPlayerShipsLeft((playerShipsLeft) => {
-                  return (playerShipsLeft = ships.length);
-                });
-
-                setPixelArray(createPixelArray());
-
-                setArrayOfMissed((arrayOfMissed) => {
-                  return (arrayOfMissed = []);
-                });
-                setArrayOfHits((arrayOfHits) => {
-                  return (arrayOfHits = []);
-                });
               }
             }
 
@@ -279,7 +271,7 @@ const GameScreen = ({ opponent, player, shouldStart, socket, onGameOver }) => {
     // Function that handles what happens when a click made by player was a hit (not opponent)
     const handleClickResult = (result, index, shipSunk, gameOver) => {
       if (result) {
-        console.log('You hit on this square', index);
+        /*      console.log('You hit on this square', index); */
         setArrayOfHits((arrayOfHits) => {
           return [index, ...arrayOfHits];
         });
@@ -290,19 +282,11 @@ const GameScreen = ({ opponent, player, shouldStart, socket, onGameOver }) => {
           // If a whole ship was sunk, decrease number of ships for opponent
         }
 
+        console.log(gameOver);
+
         if (gameOver) {
-          gameOverOpp = true;
-          setOppShipsLeft((oppShipsLeft) => {
-            return (oppShipsLeft = ships.length);
-          });
           onGameOver({ won: true });
-          setPixelArray(createPixelArray());
-          setArrayOfMissed((arrayOfMissed) => {
-            return (arrayOfMissed = []);
-          });
-          setArrayOfHits((arrayOfHits) => {
-            return (arrayOfHits = []);
-          });
+          gameOverOpp = true;
         }
       } else {
         console.log('You missed this square', index);
@@ -333,21 +317,31 @@ const GameScreen = ({ opponent, player, shouldStart, socket, onGameOver }) => {
     setPixelArray(createPixelArray());
   }, []);
 
+  console.log('TOTSHIPSLEFT', totShipsLeft);
+  console.log('PLAYERSHIPSLEFT', playerShipsLeft);
+  console.log('oppShipsLeft', oppShipsLeft);
+
   return (
     <>
       <Row>
         <Col>
-          <ShipColours pixelArray={pixelArray}></ShipColours>
+          <ShipColours pixelArray={pixelArray} player={player}></ShipColours>
 
           <HitOrMiss
             pixelArray={pixelArray}
             arrayOfHits={arrayOfHits}
             arrayOfMissed={arrayOfMissed}
             handleOppBoardClick={handleOppBoardClick}
+            opponent={opponent}
           ></HitOrMiss>
         </Col>
         <Col>
-          <GameOver gameOver={gameOver} gameOverOpp={gameOverOpp}></GameOver>
+          <GameOver
+            gameOver={gameOver}
+            gameOverOpp={gameOverOpp}
+            oppShipsLeft={oppShipsLeft}
+            playerShipsLeft={playerShipsLeft}
+          ></GameOver>
 
           <ScoreBoard
             opponent={opponent}

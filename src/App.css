@@ -1,6 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100&family=Roboto+Mono:wght@200&display=swap');
+
+body {
+  font-family: 'Montserrat', sans-serif;
+}
+
 .App {
   text-align: center;
   position: relative;
+}
+
+/* all headings */
+
+h2 {
+  font-size: 4rem;
+  color: #ffbef9;
 }
 
 .start-screen {
@@ -55,29 +68,57 @@
   margin-top: 1rem;
 }
 
+.gameBoard-wrapper {
+  padding: 1rem;
+}
+
 .gameBoard {
   display: grid;
-  grid-template-columns: 4rem 4rem 4rem 4rem 4rem 4rem 4rem 4rem 4rem 4rem;
+  grid-template-columns: 5rem 5rem 5rem 5rem 5rem 5rem 5rem 5rem 5rem 5rem;
   grid-gap: 0.2rem;
   margin: 2rem;
+  justify-content: center;
 }
 
 .waves-container {
   z-index: -100;
-  background-color: #1c5d72;
-  height: 100%;
+  background-color: rgb(230, 117, 205);
+  height: 100rem;
+}
+
+.waves {
+  margin-top: 30rem;
+  height: 80rem;
 }
 
 .wave-1 {
-  height: 30rem;
+  height: 3rem;
   opacity: 0.5;
+}
+
+.wave-2 {
+  z-index: -900;
+  height: 3rem;
+  opacity: 0.9;
+}
+
+.wave-3 {
+  z-index: -90;
+  height: 3rem;
+  opacity: 0.6;
+}
+
+.wave-4 {
+  z-index: -90;
+  height: 3rem;
+  opacity: 0.6;
 }
 
 .pixel {
   border: 1px solid #ffbef9;
   background-color: #ffbef9;
-  width: 4rem;
-  height: 4rem;
+  width: 5rem;
+  height: 5rem;
 }
 /* 
   .pixel:hover {
@@ -86,14 +127,14 @@
 
 .pixelShip {
   background-color: #fe71f0;
-  width: 4rem;
-  height: 4rem;
+  width: 5rem;
+  height: 5rem;
 }
 
 .pixelHit {
   background-color: #7dbe84;
-  width: 4rem;
-  height: 4rem;
+  width: 5rem;
+  height: 5rem;
 }
 
 .pixelMiss {
