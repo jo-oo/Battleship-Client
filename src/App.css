@@ -1,33 +1,3 @@
-/*
-* {
-  cursor: none;
-}
-
-.cursor
-.cursorOutline {
-  pointer-events: none;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  border-radius: 50%;
-  opacity: 1;
-  transition: opaqcity 0.3s ease-in-out, transform 0,3s ease-in-out;
-}
-
-.cursor {
-  width: 8px;
-  height: 8px;
-  background-color: rgb(255, 238, 0);
-}
-
-.cursorOutline {
-  width: 40px;
-  height: 40px;
-  background-color: rgb(84, 252, 92);
-}
-*/
-
 .App {
   text-align: center;
   position: relative;
