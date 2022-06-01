@@ -121,7 +121,7 @@ const checkCoordinates = (UsedCoordinates, coordinates) => {
   return isTaken;
 };
 
-const GameScreen = ({ opponent, player, shouldStart, socket, onGameOver }) => {
+const GameScreen = ({room_id ,opponent, player, shouldStart, socket, onGameOver }) => {
   // State for player to know if it is their turn
   const [isYourTurn, setIsYourTurn] = useState(shouldStart);
 
@@ -193,8 +193,9 @@ const GameScreen = ({ opponent, player, shouldStart, socket, onGameOver }) => {
     // Decrease variable for unplaced ships to zero
     nrOfShipsLeftToPlace = 0
 
+    console.log('trying to emit that i am ready')
     // Inform server that player is done placing their ships
-    socket.emit('game:player-ready')
+    socket.emit('game:player-ready', room_id)
   };
 
   // Function to determine if ship can be placed on given start position
@@ -335,16 +336,16 @@ const GameScreen = ({ opponent, player, shouldStart, socket, onGameOver }) => {
       });
 
       // Inform server if click was a hit
-      socket.emit('game:click-result', hasHit, index, shipSunk, gameOver);
+      socket.emit('game:click-result', room_id ,hasHit, index, shipSunk, gameOver);
       setIsYourTurn(true);
     },
-    [socket, totShipsLeft, onGameOver]
+    [socket, totShipsLeft, onGameOver, room_id]
   );
 
   // Function that handles when player clicks opponent board
   const handleOppBoardClick = (index) => {
     if (isYourTurn && isOpponentReady) {
-      socket.emit('game:click', index);
+      socket.emit('game:click', room_id, index);
       setIsYourTurn(false);
     }
   };
@@ -368,7 +369,8 @@ const GameScreen = ({ opponent, player, shouldStart, socket, onGameOver }) => {
 
       // If all ships has been placed, inform server
       if(--nrOfShipsLeftToPlace === 0) {
-        socket.emit('game:player-ready')
+        console.log('trying to emit that i am ready')
+        socket.emit('game:player-ready', room_id)
       }
     }
     
@@ -419,6 +421,7 @@ const GameScreen = ({ opponent, player, shouldStart, socket, onGameOver }) => {
       //needed to remove the socket otherwise it was running four times
       socket.removeListener('game:click');
       socket.removeListener('game:click-result');
+      socket.removeListener('game:player-ready')
       handleClickResult();
     };
   }, [socket, handleOppClick, onGameOver]);

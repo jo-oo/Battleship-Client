@@ -19,10 +19,14 @@ const Landing = ({ socket }) => {
   const [opponentName, setOpponentName] = useState()
   const [shouldStart, setShouldStart] = useState(false)
   const [resultData, setResultData] = useState()
+  const [room_id, setRoom_id] = useState(null)
 
   // Stuff to happen when game starts
-  const handleGameStart = useCallback( (players, startingPlayer) => {
+  const handleGameStart = useCallback( (roomId, players, startingPlayer) => {
     
+    console.log('You have been placed in room ', roomId)
+    setRoom_id(roomId)
+
     // Find name of opponent
     setOpponentName( players.find( (player) => {
       return player !== nameInput
@@ -58,6 +62,10 @@ const Landing = ({ socket }) => {
   useEffect( () => {
 
     socket.on('game:start', handleGameStart)
+
+    return () => {
+      socket.removeListener('game:start')
+    }
 
   }, [socket, handleGameStart] )
 
@@ -98,6 +106,7 @@ const Landing = ({ socket }) => {
         isGameLive && 
         (
           <GameScreen 
+            room_id= {room_id}
             opponent= {opponentName} 
             player={nameInput} 
             shouldStart={shouldStart} 
