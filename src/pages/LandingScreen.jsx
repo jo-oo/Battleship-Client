@@ -25,6 +25,7 @@ const Landing = ({ socket }) => {
   const handleGameStart = useCallback( (roomId, players, startingPlayer) => {
     
     console.log('You have been placed in room ', roomId)
+    // Set room state to the id of the room that player is in
     setRoom_id(roomId)
 
     // Find name of opponent
