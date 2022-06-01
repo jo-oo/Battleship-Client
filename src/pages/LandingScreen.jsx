@@ -1,104 +1,108 @@
 // Import hooks from react
-import { useRef, useEffect, useState, useCallback } from 'react'
+import { useRef, useEffect, useState, useCallback } from 'react';
 import GameScreen from '../pages/GameScreen';
-import Spinner from 'react-bootstrap/Spinner'
+import Spinner from 'react-bootstrap/Spinner';
 import LoadingSpinner from '../components/LoadingSpinner';
 import StartScreen from '../components/LandingScreen/StartScreen';
 import GameOver from '../components/LandingScreen/GameOver';
 
 const Landing = ({ socket }) => {
-
   // State for if user is waiting for opponent
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false);
   // State for if a game has started
-  const [isGameLive, setIsGameLive] = useState(false)
-  const [isGameOver, setIsGameOver] = useState(false)
+  const [isGameLive, setIsGameLive] = useState(false);
+  const [isGameOver, setIsGameOver] = useState(false);
   // State for name entered in form
-  const [nameInput, setNameInput] = useState()
-  const searchInputRef = useRef()
-  const [opponentName, setOpponentName] = useState()
-  const [shouldStart, setShouldStart] = useState(false)
-  const [resultData, setResultData] = useState()
-  const [room_id, setRoom_id] = useState(null)
+  const [nameInput, setNameInput] = useState();
+  const searchInputRef = useRef();
+  const [opponentName, setOpponentName] = useState();
+  const [shouldStart, setShouldStart] = useState(false);
+  const [resultData, setResultData] = useState();
+  const [room_id, setRoom_id] = useState()
 
   // Stuff to happen when game starts
-  const handleGameStart = useCallback( (roomId, players, startingPlayer) => {
-    
-    console.log('You have been placed in room ', roomId)
-    // Set room state to the id of the room that player is in
-    setRoom_id(roomId)
+  const handleGameStart = useCallback(
+    (roomId, players, startingPlayer) => {
 
-    // Find name of opponent
-    setOpponentName( players.find( (player) => {
-      return player !== nameInput
-    } ) )
+      // Get room id from server and asign it to state
+      setRoom_id(roomId)
 
-    // Change state if this players name is the one to start game
-    if (startingPlayer === nameInput) {
-      setShouldStart(true)
-    }
+      // Find name of opponent
+      setOpponentName(
+        players.find((player) => {
+          return player !== nameInput;
+        })
+      );
 
-    setIsGameLive(true)
-    setIsLoading(false)
-    setIsGameOver(false)
+      // Change state if this players name is the one to start game
+      if (startingPlayer === nameInput) {
+        setShouldStart(true);
+      }
 
-  }, [nameInput] ) 
+      setIsGameLive(true);
+      setIsLoading(false);
+      setIsGameOver(false);
+    },
+    [nameInput]
+  );
 
   // When form is submitted
   const handleSubmit = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     // Set loading state to true
-    setIsLoading(true)
-    setIsGameOver(false)
+    setIsLoading(true);
+    setIsGameOver(false);
 
-    socket.emit('user:join-queue', nameInput, handleGameStart)
-  }
+    socket.emit('user:join-queue', nameInput, handleGameStart);
+  };
+
+  const handleExit = (e) => {
+    e.preventDefault();
+    setIsGameOver(false);
+    setIsGameLive(false);
+  };
 
   const handleGameOver = (results) => {
     //setIsGameLive(false)
-    setIsGameOver(true)
-    setResultData(results)
-  }
+    setIsGameOver(true);
+    setResultData(results);
+    handleGameStart();
+  };
 
-  useEffect( () => {
+  const handlePlayAgain = (e) => {
+    e.preventDefault();
+    // Set loading state to true
+    setIsLoading(true);
+    setIsGameOver(false);
 
-    socket.on('game:start', handleGameStart)
+    socket.emit('user:join-queue', nameInput, handleGameStart);
+  };
 
-    return () => {
-      socket.removeListener('game:start')
-    }
+  useEffect(() => {
+    socket.on('game:start', handleGameStart);
+  }, [socket, handleGameStart]);
 
-  }, [socket, handleGameStart] )
-
-  
   //here is what we output on our page
   return (
     <>
       {
         // Show start screen form when loading state is false
-        !isLoading && !isGameLive && !isGameOver &&
-        (
+        !isLoading && !isGameLive && !isGameOver && (
           <StartScreen
-            handleSubmit = {handleSubmit}
-            setNameInput = {setNameInput}
-            searchInputRef = {searchInputRef}
-         >
-        </StartScreen>
+            handleSubmit={handleSubmit}
+            setNameInput={setNameInput}
+            searchInputRef={searchInputRef}
+          ></StartScreen>
         )
       }
 
       {
         // Show waiting screen when loading state is true. Shows component Loading Spinner inside waiting screen
-        isLoading &&
-        (
+        isLoading && (
           <section className='waiting-screen mt-4"'>
             <p>Hello {nameInput}</p>
             <p>Waiting for opponent...</p>
-            <LoadingSpinner
-		          loading={isLoading}
-              Spinner={Spinner}
-            >
-            </LoadingSpinner>
+            <LoadingSpinner loading={isLoading} Spinner={Spinner}></LoadingSpinner>
           </section>
         )
       }
@@ -117,17 +121,10 @@ const Landing = ({ socket }) => {
       }
       {
         // Show result screen when game is over. GameOver is a component handling only what happens when Game is over
-        isGameOver &&
-        (
-          <GameOver
-		        result = {resultData}
-            submit = {handleSubmit}
-            >
-            </GameOver>
-        )
+        isGameOver && <GameOver result={resultData} submit={handlePlayAgain} exit={handleExit}></GameOver>
       }
     </>
-  )
-}
+  );
+};
 
-export default Landing
+export default Landing;
