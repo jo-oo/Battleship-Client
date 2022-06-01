@@ -7,6 +7,7 @@ const ScoreBoard = ({ opponent, oppShipsLeft, player, playerShipsLeft, isYourTur
   return (
     <>
       <div id='scoreBoard'>
+        <h3>Scoreboard</h3>
         <div id='opponent-board'>
           <h3>You: {player}</h3>
           <h4>Ships remaining: {playerShipsLeft}</h4>

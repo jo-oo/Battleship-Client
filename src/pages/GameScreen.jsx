@@ -2,12 +2,11 @@ import React, { useEffect, useState, useCallback } from 'react';
 import AnimatedCursor from 'react-animated-cursor';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-//import Container from 'react-bootstrap/Container';
 import HitOrMiss from '../components/GameScreen/HitOrMiss';
 import ShipColours from '../components/GameScreen/ShipColours';
 import ScoreBoard from '../components/GameScreen/ScoreBoard';
 import GameOver from '../components/GameScreen/GameOver';
-import Waves from '../components/GameScreen/Waves';
+import Gif from '../components/GameScreen/Gif';
 
 const arrayOppHits = [];
 let gameOver = false;
@@ -431,10 +430,23 @@ const GameScreen = ({ opponent, player, shouldStart, socket, onGameOver }) => {
     <>
       <Row>
         <Col>
+          <h1>BATTLESHIP 2-player game </h1>
+        </Col>
+      </Row>
+
+      <Row>
+        <Col>
+          <div className='pixelHit'></div> <p>Hit</p>
+          <div className='pixelMiss'></div> Miss
+        </Col>
+      </Row>
+
+      <Row>
+        <Col>
           {nrOfShipsLeftToPlace !== 0 && (
             <div className='placement-container'>
-              <h2>Place your ships</h2>
-              <div className='btn-ship-selection'>
+              <h3>Place your ships</h3>
+              <div className='btn-ship-selection p-2 d-flex flex-column'>
                 <button
                   className={selectedShip.id === 0 ? 'btn btn-info active' : 'btn btn-info'}
                   onClick={() => {
@@ -472,7 +484,7 @@ const GameScreen = ({ opponent, player, shouldStart, socket, onGameOver }) => {
                   4x ship
                 </button>
               </div>
-              <div className='btn-direction-selection'>
+              <div className='btn-direction-selection d-flex flex-row'>
                 <button
                   className='btn btn-info'
                   onClick={() => {
@@ -495,8 +507,25 @@ const GameScreen = ({ opponent, player, shouldStart, socket, onGameOver }) => {
               </button>
             </div>
           )}
+        </Col>
 
-          <ShipColours pixelArray={pixelArray} placeCoords={placeShipCoords}></ShipColours>
+        <Col>
+          <h2>{player}s board: </h2>
+          <ShipColours pixelArray={pixelArray} placeCoords={placeShipCoords} player={player}></ShipColours>
+        </Col>
+
+        <Col>
+          <ScoreBoard
+            opponent={opponent}
+            oppShipsLeft={oppShipsLeft}
+            player={player}
+            playerShipsLeft={playerShipsLeft}
+            isYourTurn={isYourTurn}
+          ></ScoreBoard>
+        </Col>
+
+        <Col>
+          <h2>{opponent}s board: </h2>
 
           <HitOrMiss
             pixelArray={pixelArray}
@@ -505,8 +534,7 @@ const GameScreen = ({ opponent, player, shouldStart, socket, onGameOver }) => {
             handleOppBoardClick={handleOppBoardClick}
             opponent={opponent}
           ></HitOrMiss>
-        </Col>
-        <Col>
+
           <GameOver
             gameOver={gameOver}
             gameOverOpp={gameOverOpp}
@@ -514,18 +542,10 @@ const GameScreen = ({ opponent, player, shouldStart, socket, onGameOver }) => {
             playerShipsLeft={playerShipsLeft}
           ></GameOver>
 
-          <ScoreBoard
-            opponent={opponent}
-            oppShipsLeft={oppShipsLeft}
-            player={player}
-            playerShipsLeft={playerShipsLeft}
-            isYourTurn={isYourTurn}
-          ></ScoreBoard>
+          <Gif />
 
           <AnimatedCursor />
         </Col>
-
-        <Waves />
       </Row>
     </>
   );
