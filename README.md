@@ -10,7 +10,7 @@ If you like to view and run this yourself: In the project directory, you can run
 
 ### `npm start`
 
-Note that you also need the battle-ship-server repo. In that project directory, you can run:
+Note that you also need the Battleship-Server repo. In that project directory, you can run:
 
 ### `npm run dev`
 
