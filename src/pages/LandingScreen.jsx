@@ -5,6 +5,7 @@ import Spinner from 'react-bootstrap/Spinner';
 import LoadingSpinner from '../components/LoadingSpinner';
 import StartScreen from '../components/LandingScreen/StartScreen';
 import GameOver from '../components/LandingScreen/GameOver';
+import WaitingScreen from '../components/LandingScreen/WaitingScreen';
 
 const Landing = ({ socket }) => {
   // State for if user is waiting for opponent
@@ -94,11 +95,11 @@ const Landing = ({ socket }) => {
       {
         // Show waiting screen when loading state is true. Shows component Loading Spinner inside waiting screen
         isLoading && (
-          <section className='waiting-screen mt-4"'>
-            <p>Hello {nameInput}</p>
-            <p>Waiting for opponent...</p>
-            <LoadingSpinner loading={isLoading} Spinner={Spinner}></LoadingSpinner>
-          </section>
+          <>
+          <WaitingScreen name = {nameInput} 
+          /><LoadingSpinner loading={isLoading} Spinner={Spinner}> {/* detta skickas med till komponenten Loading Spinner*/}
+          </LoadingSpinner>
+          </>
         )
       }
       {
