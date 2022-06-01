@@ -1,70 +1,57 @@
-# Getting Started with Create React App
+# Battleship 2 player game using React and Socket.io
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Visit this page to check it out! [https://battleship4ever.netlify.app/](https://battleship4ever.netlify.app/)
+
+Built with React using Socket.io
 
 ## Available Scripts
 
-In the project directory, you can run:
+If you like to view and run this yourself: In the project directory, you can run:
 
 ### `npm start`
+
+Note that you also need the battle-ship-server repo. In that project directory, you can run:
+
+### `npm run dev`
 
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Languages used:
 
-### `npm test`
+- JSX
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Table of contents
 
-### `npm run build`
+- [Assignment](#assignment)
+- [Requirement](#requirement)
+- [Time Limit](#timelimit)
+- [Tools](#tools)
+- [Printscreen](#printscreen)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Assignment
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+A Battleship game for two players. 
+A game board of 10*10 squares. 
+4 ships for each player and board consisting of two ships which are two squares long, one ship of 3 squares of length and one ship of four squares of length.  
+Each plyaer takes turn clicking on the opponents board. If there is a hidden ship underneath it, it is a hit.
+When all of a ships squares is clicked and hit, the ship will sink. 
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+#### Requirement
 
-### `npm run eject`
+- Use React
+- Use components
+- Use Socket.io
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+#### Time limit
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- 2,5 weeks
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## Tools
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+- VS Code
+- React
 
-## Learn More
+## Printscreen
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+<img src="https://github.com/jo-oo/battleship-client/blob/main/src/assets/screenprint.png" width=100%>
