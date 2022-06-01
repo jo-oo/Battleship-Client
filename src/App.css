@@ -1,9 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100&family=Roboto+Mono:wght@200&display=swap');
 
-body {
+/* body {
   font-family: 'Montserrat', sans-serif;
 }
-
+ */
 .App {
   text-align: center;
   position: relative;
@@ -139,8 +139,8 @@ h2 {
 
 .pixelMiss {
   background-color: #f5f075;
-  width: 4rem;
-  height: 4rem;
+  width: 5rem;
+  height: 5rem;
 }
 
 #scoreBoard {
