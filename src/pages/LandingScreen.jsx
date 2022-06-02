@@ -19,6 +19,8 @@ const Landing = ({ socket }) => {
   const [shouldStart, setShouldStart] = useState(false);
   const [resultData, setResultData] = useState();
   const [room_id, setRoom_id] = useState()
+  // State for if username is already used by another player in the same room
+  const [isNameTaken, setIsNameTaken] = useState(false)
 
   // Stuff to happen when game starts
   const handleGameStart = useCallback(
@@ -46,14 +48,22 @@ const Landing = ({ socket }) => {
     [nameInput]
   );
 
+  // When a username is already taken
+  const handleTakenUsername = () => {
+    console.log('this username is taken already, try another one')
+    setIsLoading(false)
+    setIsNameTaken(true)
+  }
+
   // When form is submitted
   const handleSubmit = (e) => {
     e.preventDefault();
     // Set loading state to true
     setIsLoading(true);
     setIsGameOver(false);
+    setIsNameTaken(false)
 
-    socket.emit('user:join-queue', nameInput, handleGameStart);
+    socket.emit('user:join-queue', nameInput, handleTakenUsername);
   };
 
   const handleExit = (e) => {
@@ -74,8 +84,9 @@ const Landing = ({ socket }) => {
     // Set loading state to true
     setIsLoading(true);
     setIsGameOver(false);
+    setIsGameLive(false)
 
-    socket.emit('user:join-queue', nameInput, handleGameStart);
+    socket.emit('user:join-queue', nameInput, handleTakenUsername);
   };
 
   useEffect(() => {
@@ -92,6 +103,7 @@ const Landing = ({ socket }) => {
             handleSubmit={handleSubmit}
             setNameInput={setNameInput}
             searchInputRef={searchInputRef}
+            isNameOccupied={isNameTaken}
           ></StartScreen>
         )
       }
