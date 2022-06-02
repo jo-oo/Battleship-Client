@@ -444,75 +444,79 @@ const GameScreen = ({ room_id, opponent, player, shouldStart, socket, onGameOver
   console.log('oppShipsLeft', oppShipsLeft);
 
   return (
-    <Container className='gamescreen'>
-      <Row>
-        <Col className='d-flex justify-content-center'>
-          <h1>BATTLESHIP 2-player game </h1>
-        </Col>
-      </Row>
-      <Row>
-        <Col lg={4}>
-          <PlaceShips
-            nrOfShipsLeftToPlace={nrOfShipsLeftToPlace}
-            setSelectedShip={setSelectedShip}
-            selectedShip={selectedShip}
-            ships={ships}
-            currentDirection={currentDirection}
-            updateCurrentDirection={updateCurrentDirection}
-            fillShipCoord={fillShipCoord}
-            setPixelArray={setPixelArray}
-            createPixelArray={createPixelArray}
-          ></PlaceShips>
-        </Col>
-      </Row>
-      <Row className='center-gameBoards'>
-        <Col lg={4} className='gameboard-wrapper'>
-          {' '}
-          {/* vit ruta runt gameboard */}
-          <h2>{player}s board: </h2>
-          <ShipColours pixelArray={pixelArray} placeCoords={placeShipCoords} player={player}></ShipColours>
-        </Col>
-
-        <Col lg={4} className='gameboard-wrapper'>
-          <div className='d-flex flex-row justify-content-between'>
+    <div className='gamescreen'>
+      <Container>
+        <Row>
+          <Col className='d-flex justify-content-center'>
+            <h1>BATTLESHIP 2-player game </h1>
+          </Col>
+        </Row>
+        <Row>
+          <div className='center-ships'>
+            <Col lg={4} className='mx-4'>
+              <PlaceShips
+                nrOfShipsLeftToPlace={nrOfShipsLeftToPlace}
+                setSelectedShip={setSelectedShip}
+                selectedShip={selectedShip}
+                ships={ships}
+                currentDirection={currentDirection}
+                updateCurrentDirection={updateCurrentDirection}
+                fillShipCoord={fillShipCoord}
+                setPixelArray={setPixelArray}
+                createPixelArray={createPixelArray}
+              ></PlaceShips>
+            </Col>
+          </div>
+        </Row>
+        <Row className='center-gameBoards'>
+          <Col lg={4} className='gameboard-wrapper'>
             {' '}
-            <h2>{opponent}s board: </h2>
-            <div className='d-flex flex-row'>
-              <div className='pixelMiss'></div> <p>Miss</p>
-              <div className='pixelHit'></div> <p>Hit</p>
+            {/* vit ruta runt gameboard */}
+            <h2>{player}s board: </h2>
+            <ShipColours pixelArray={pixelArray} placeCoords={placeShipCoords} player={player}></ShipColours>
+          </Col>
+
+          <Col lg={4} className='gameboard-wrapper'>
+            <div className='d-flex flex-row justify-content-between'>
+              {' '}
+              <h2>{opponent}s board: </h2>
+              <div className='d-flex flex-row'>
+                <div className='pixelMiss'></div> <p>Miss</p>
+                <div className='pixelHit'></div> <p>Hit</p>
+              </div>
             </div>
-          </div>
 
-          <div>
-            <HitOrMiss
-              pixelArray={pixelArray}
-              arrayOfHits={arrayOfHits}
-              arrayOfMissed={arrayOfMissed}
-              handleOppBoardClick={handleOppBoardClick}
+            <div>
+              <HitOrMiss
+                pixelArray={pixelArray}
+                arrayOfHits={arrayOfHits}
+                arrayOfMissed={arrayOfMissed}
+                handleOppBoardClick={handleOppBoardClick}
+                opponent={opponent}
+              ></HitOrMiss>
+            </div>
+
+            <GameOver
+              gameOver={gameOver}
+              gameOverOpp={gameOverOpp}
+              oppShipsLeft={oppShipsLeft}
+              playerShipsLeft={playerShipsLeft}
+            ></GameOver>
+          </Col>
+          <Col lg={2}>
+            <ScoreBoard
               opponent={opponent}
-            ></HitOrMiss>
-          </div>
-
-          <GameOver
-            gameOver={gameOver}
-            gameOverOpp={gameOverOpp}
-            oppShipsLeft={oppShipsLeft}
-            playerShipsLeft={playerShipsLeft}
-          ></GameOver>
-        </Col>
-        <Col lg={2}>
-          <ScoreBoard
-            opponent={opponent}
-            oppShipsLeft={oppShipsLeft}
-            player={player}
-            playerShipsLeft={playerShipsLeft}
-            isYourTurn={isYourTurn}
-            isOpponentReady={isOpponentReady}
-          ></ScoreBoard>
-          <AnimatedCursor />
-        </Col>
-      </Row>
-    </Container>
+              oppShipsLeft={oppShipsLeft}
+              player={player}
+              playerShipsLeft={playerShipsLeft}
+              isYourTurn={isYourTurn}
+              isOpponentReady={isOpponentReady}
+            ></ScoreBoard>
+            <AnimatedCursor />
+          </Col>
+        </Row>
+      </Container>
+    </div>
   );
 };
 
