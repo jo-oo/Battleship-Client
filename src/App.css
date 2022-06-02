@@ -128,8 +128,7 @@ p {
 .gameboard-wrapper {
   background-color: rgb(255, 255, 255);
   border-radius: 10px;
-  margin: 0.2rem;
-  padding: 0.2rem;
+  padding: 1.4rem;
 }
 
 .center-gameBoards {
@@ -176,7 +175,7 @@ p {
   border-radius: 10px;
   color: black;
   font-size: 2rem;
-  padding: 0.5rem;
+  padding: 1.4rem;
 }
 
 #opponent-board {

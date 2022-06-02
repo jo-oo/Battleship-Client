@@ -466,18 +466,17 @@ const GameScreen = ({ room_id, opponent, player, shouldStart, socket, onGameOver
         </Col>
       </Row>
       <Row className='center-gameBoards'>
-        <Col lg={4} className='gameboard-wrapper'>
+        <Col lg={4} className='gameboard-wrapper'>{/* vit ruta runt gameboard */}
           {' '}
-          {/* vit ruta runt gameboard */}
           <h2>{player}s board: </h2>
           <ShipColours pixelArray={pixelArray} placeCoords={placeShipCoords} player={player}></ShipColours>
         </Col>
 
         <Col lg={4} className='gameboard-wrapper'>
-          <div className='d-flex flex-row justify-content-between'>
+          <div className='d-flex flex-row'>
             {' '}
             <h2>{opponent}s board: </h2>
-            <div className='d-flex flex-row'>
+            <div className='d-flex flex-row mx-5'>
               <div className='pixelMiss'></div> <p>Miss</p>
               <div className='pixelHit'></div> <p>Hit</p>
             </div>
