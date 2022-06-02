@@ -43,11 +43,7 @@ h4 {
 
 h5 {
   font-size: 3rem;
-
   color: rgb(255, 255, 255);
-}
-p {
-  padding: 0.5rem;
 }
 
 .start-screen {
@@ -172,15 +168,19 @@ p {
 }
 
 .pixelHit {
-  background-color: #7dbe84;
-  width: 2rem;
-  height: 2rem;
+  background-color: #1ba829;
+  width: 1.8rem;
+  height: 1.8rem;
+  margin-right: 0.5rem;
+  margin-left: 1rem;
 }
 
 .pixelMiss {
   background-color: #f5f075;
-  width: 2rem;
-  height: 2rem;
+  width: 1.8rem;
+  height: 1.8rem;
+  margin-right: 0.5rem;
+  margin-left: 0.5rem;
 }
 
 #scoreBoard {
@@ -193,27 +193,29 @@ p {
 }
 
 #opponent-board {
-  font-size: 1rem;
-  margin: 0.3rem 0.7rem 0.7rem 0;
+  font-size: 1.1rem;
   background-color: #74ebf3;
   border-radius: 10px;
   padding: 0.6rem;
+  border: 1px solid  #4ce8f3;
 }
 
 #currentPlayer-board {
-  font-size: 1rem;
-  margin: 0.3rem 0.7rem 0.7rem 0;
+  font-size: 1.1rem;
   background-color: #74ebf3;
   border-radius: 10px;
   padding: 0.6rem;
-}
+  border: 1px solid  #4ce8f3;
+  margin-top: 1rem;
+} 
 
 #turnToggle {
   background-color: rgb(255, 216, 43);
-  font-size: 1rem;
-  margin: 0.3rem 0.7rem 0.7rem 0;
+  font-size: 1.1rem;
   border-radius: 10px;
   padding: 0.6rem;
+  border: 1px solid rgb(231, 189, 0);
+  margin-top: 1.3rem;
 }
 
 .cant-place-ship {
@@ -222,12 +224,13 @@ p {
 
 #turnToggle-your-turn {
   background-color: #62cc6c;
-  border-color: #1ba829;
-  font-size: 1rem;
-  margin: 0.3rem 0.7rem 0.7rem 0;
+  font-size: 1.1rem;
   border-radius: 10px;
   padding: 0.6rem;
+  border: 1px solid #1ba829;
+  margin-top: 1.3rem;
 }
+
 
 .btn.active {
   border: 2px solid rgb(0, 0, 0);
@@ -251,6 +254,12 @@ p {
 
 .x4 {
   width: 9rem;
+}
+
+.btn {
+  padding: 0.8rem;
+  font-size: larger;
+  margin-top: 1.6rem;
 }
 
 .btn-ship-selection .btn {
@@ -281,10 +290,15 @@ p {
   margin: 1rem;
 }
 
+#form-control {
+ font-size: larger;
+}
+
 .username-taken {
   background-color: #eb4029;
-  font-weight: bold;
-  color: rgb(60, 64, 109);
+  font-weight: lighter;
+  font-size: larger;
+  color: rgb(124, 219, 248);
   border-color: #badfec;
   border-radius: 10px;
 }
