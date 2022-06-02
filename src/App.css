@@ -273,8 +273,9 @@ p {
 }
 
 .username-taken {
-  background-color: #BC0303;
+  background-color: #eb4029;
   font-weight: bold;
-  color: black;
-  border: 1px solid black;
+  color: rgb(60, 64, 109);
+  border-color: #badfec;
+  border-radius: 10px;
 }
