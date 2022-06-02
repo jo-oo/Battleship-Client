@@ -121,7 +121,7 @@ const checkCoordinates = (UsedCoordinates, coordinates) => {
   return isTaken;
 };
 
-const GameScreen = ({room_id ,opponent, player, shouldStart, socket, onGameOver }) => {
+const GameScreen = ({ room_id, opponent, player, shouldStart, socket, onGameOver }) => {
   // State for player to know if it is their turn
   const [isYourTurn, setIsYourTurn] = useState(shouldStart);
 
@@ -190,9 +190,9 @@ const GameScreen = ({room_id ,opponent, player, shouldStart, socket, onGameOver 
     // Decrease variable for unplaced ships to zero
     nrOfShipsLeftToPlace = 0;
 
-    console.log('trying to emit that i am ready')
+    console.log('trying to emit that i am ready');
     // Inform server that player is done placing their ships
-    socket.emit('game:player-ready', room_id)
+    socket.emit('game:player-ready', room_id);
   };
 
   // Function to determine if ship can be placed on given start position
@@ -275,16 +275,16 @@ const GameScreen = ({room_id ,opponent, player, shouldStart, socket, onGameOver 
   }, [currentDirection, selectedShip]);
 
   const cleanUpData = () => {
-    setIsOpponentReady(false)
-    nrOfShipsLeftToPlace = 4
+    setIsOpponentReady(false);
+    nrOfShipsLeftToPlace = 4;
 
-    ships.forEach( (ship) => {
-      ship.partsLeft = ship.length
-      ship.startPos = null
-      ship.coords = []
-      ship.isPlaced = false
-    } )
-  }
+    ships.forEach((ship) => {
+      ship.partsLeft = ship.length;
+      ship.startPos = null;
+      ship.coords = [];
+      ship.isPlaced = false;
+    });
+  };
 
   // Function that handles when opponent has clicked a sqaure
   const handleOppClick = useCallback(
@@ -332,7 +332,7 @@ const GameScreen = ({room_id ,opponent, player, shouldStart, socket, onGameOver 
               if (totShipsLeft - 1 === 0) {
                 gameOver = true;
                 onGameOver({ won: false });
-                cleanUpData()
+                cleanUpData();
               }
             }
 
@@ -344,7 +344,7 @@ const GameScreen = ({room_id ,opponent, player, shouldStart, socket, onGameOver 
       });
 
       // Inform server if click was a hit
-      socket.emit('game:click-result', room_id ,hasHit, index, shipSunk, gameOver);
+      socket.emit('game:click-result', room_id, hasHit, index, shipSunk, gameOver);
       setIsYourTurn(true);
     },
     [socket, totShipsLeft, onGameOver, room_id]
@@ -374,8 +374,8 @@ const GameScreen = ({room_id ,opponent, player, shouldStart, socket, onGameOver 
       setPixelArray(createPixelArray());
 
       // If all ships has been placed, inform server
-      if(--nrOfShipsLeftToPlace === 0) {
-        socket.emit('game:player-ready', room_id)
+      if (--nrOfShipsLeftToPlace === 0) {
+        socket.emit('game:player-ready', room_id);
       }
     }
   };
@@ -408,7 +408,7 @@ const GameScreen = ({room_id ,opponent, player, shouldStart, socket, onGameOver 
 
         if (gameOver) {
           onGameOver({ won: true });
-          cleanUpData()
+          cleanUpData();
           gameOverOpp = true;
         }
       } else {
@@ -429,7 +429,7 @@ const GameScreen = ({room_id ,opponent, player, shouldStart, socket, onGameOver 
       //needed to remove the socket otherwise it was running four times
       socket.removeListener('game:click');
       socket.removeListener('game:click-result');
-      socket.removeListener('game:player-ready')
+      socket.removeListener('game:player-ready');
       handleClickResult();
     };
   }, [socket, handleOppClick, onGameOver]);
@@ -451,7 +451,7 @@ const GameScreen = ({room_id ,opponent, player, shouldStart, socket, onGameOver 
       </Row>
 
       <Row>
-        <Col className='d-flex justify-content-end'>
+        <Col lg={11} className='justify-content-end'>
           {nrOfShipsLeftToPlace !== 0 && (
             <div className='placement-container'>
               <h3>Place your ships</h3>
