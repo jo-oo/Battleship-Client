@@ -2,6 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import AnimatedCursor from 'react-animated-cursor';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import Container from 'react-bootstrap/Container';
 import HitOrMiss from '../components/GameScreen/HitOrMiss';
 import ShipColours from '../components/GameScreen/ShipColours';
 import ScoreBoard from '../components/GameScreen/ScoreBoard';
@@ -443,7 +444,7 @@ const GameScreen = ({ room_id, opponent, player, shouldStart, socket, onGameOver
   console.log('oppShipsLeft', oppShipsLeft);
 
   return (
-    <>
+    <Container className='m-1'>
       <Row>
         <Col className='d-flex justify-content-center'>
           <h1>BATTLESHIP 2-player game </h1>
@@ -451,7 +452,7 @@ const GameScreen = ({ room_id, opponent, player, shouldStart, socket, onGameOver
       </Row>
 
       <Row>
-        <Col lg={11} className='justify-content-end'>
+        <Col md={1}>
           {nrOfShipsLeftToPlace !== 0 && (
             <div className='placement-container'>
               <h3>Place your ships</h3>
@@ -516,16 +517,15 @@ const GameScreen = ({ room_id, opponent, player, shouldStart, socket, onGameOver
             </div>
           )}
         </Col>
-        <Col className='d-flex flex-column justify-content-end gameboard-wrapper'>
+        <Col lg={4} className='gameboard-wrapper'>
           <h2>{player}s board: </h2>
           <ShipColours pixelArray={pixelArray} placeCoords={placeShipCoords} player={player}></ShipColours>
         </Col>
-        <Col className='d-flex flex-column justify-content-start gameboard-wrapper'>
+        <Col lg={4} className='gameboard-wrapper'>
           <div className='d-flex flex-row justify-content-between'>
             {' '}
             <h2>{opponent}s board: </h2>
             <div className='d-flex flex-row'>
-              {' '}
               <div className='pixelMiss'></div> <p>Miss</p>
               <div className='pixelHit'></div> <p>Hit</p>
             </div>
@@ -548,7 +548,7 @@ const GameScreen = ({ room_id, opponent, player, shouldStart, socket, onGameOver
             playerShipsLeft={playerShipsLeft}
           ></GameOver>
         </Col>
-        <Col lg={2} className='d-flex justify-content-center'>
+        <Col lg={2}>
           <ScoreBoard
             opponent={opponent}
             oppShipsLeft={oppShipsLeft}
@@ -556,11 +556,11 @@ const GameScreen = ({ room_id, opponent, player, shouldStart, socket, onGameOver
             playerShipsLeft={playerShipsLeft}
             isYourTurn={isYourTurn}
           ></ScoreBoard>
-        </Col>{' '}
-        <Gif />
-        <AnimatedCursor />
+          <Gif />
+          <AnimatedCursor />
+        </Col>
       </Row>
-    </>
+    </Container>
   );
 };
 
