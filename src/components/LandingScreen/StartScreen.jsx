@@ -6,10 +6,14 @@
 const StartScreen = ({ handleSubmit, setNameInput, searchInputRef, isNameOccupied }) => {
     return (
       <>
-        <div className='start-screen' >
+        <div xs={1} md={3} l={8} className='start-screen g-4' >
           <section  id='input-field'>
-            <h1>Battleship</h1>
-
+              <h1>Battleship </h1>
+                <form className='form' onSubmit={handleSubmit}>
+                  <input type="text" id="username" className="form-control form-control-lg" onChange={e => setNameInput(e.target.value)} ref={searchInputRef} placeholder="Your name" required autoFocus />
+                  <br />
+                  <button type="submit" className="btn btn-primary">Enter queue</button>
+                </form>
             {
               isNameOccupied && (
                 <div className="alert alert-danger username-taken">
@@ -17,12 +21,6 @@ const StartScreen = ({ handleSubmit, setNameInput, searchInputRef, isNameOccupie
                 </div>
               )
             }
-
-            <form className='form' onSubmit={handleSubmit}>
-              <input type="text" id="username" className="form-control form-control-lg" onChange={e => setNameInput(e.target.value)} ref={searchInputRef} placeholder="Your name" required autoFocus />
-              <br />
-              <button type="submit" className="btn btn-primary">Enter queue</button>
-            </form>
           </section>
         </div>
       </>

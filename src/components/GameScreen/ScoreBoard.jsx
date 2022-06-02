@@ -3,7 +3,7 @@
  */
 
 //takes in opponent, oppShiftLeft etc from GameScreen
-const ScoreBoard = ({ opponent, oppShipsLeft, player, playerShipsLeft, isYourTurn }) => {
+const ScoreBoard = ({ opponent, oppShipsLeft, player, playerShipsLeft, isYourTurn, isOpponentReady }) => {
   return (
     <>
       <div id='scoreBoard'>
@@ -18,7 +18,7 @@ const ScoreBoard = ({ opponent, oppShipsLeft, player, playerShipsLeft, isYourTur
           <h4>Ships remaning: {oppShipsLeft}</h4>
         </div>
 
-        <div id='turnToggle'>
+        <div id={isYourTurn ? "turnToggle-your-turn" : "turnToggle"} className={isYourTurn && isOpponentReady ? "vibrate-1" : ""}>
           {isYourTurn && <h3> It's your turn </h3>}
           {!isYourTurn && <h3> Opponents turn </h3>}
         </div>
