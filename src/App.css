@@ -7,44 +7,45 @@ body {
 }
 
 .App {
-  /*margin: 2rem;*/
   text-align: center;
-  /*position: relative;*/
 }
 
 body {
-  padding: 0;
-  margin: 0;
   font-family: 'Bebas Neue', cursive;
   font-size: 1rem;
-  width: 100%;
 }
 
 /* all headings */
 
 h1 {
+  padding: 2rem;
   font-size: 5rem;
+  padding: 3rem;
 }
 
 h2 {
   font-size: 2rem;
-  color: #000000;
+  color: #d6318c;
   font-family: 'Bebas Neue', cursive;
   text-align: start;
 }
 
 h3 {
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   text-align: start;
-  padding: 1rem;
 }
 
 h4 {
-  font-size: 1.5rem;
+  font-size: 1.1rem;
   color: rgb(54, 122, 150);
   text-align: start;
 }
 
+h5 {
+  font-size: 3rem;
+
+  color: rgb(255, 255, 255);
+}
 p {
   padding: 0.5rem;
 }
@@ -58,10 +59,7 @@ p {
 }
 
 .waiting-screen {
-  background-color: aquamarine;
-}
-.waiting-screen {
-  background-image: url('https://media.giphy.com/media/1iolyDnRDa4IZNCKAY/giphy.gif');
+  background-image: url('https://media.giphy.com/media/idFJpr0JFGFEEsJXSG/giphy.gif');
   background-size: cover;
   height: 100vh;
   padding: 0;
@@ -80,7 +78,7 @@ p {
 .gamescreen {
   background-image: url('https://media.giphy.com/media/2uI6DhDIWY9iBT2sB8/giphy.gif');
   background-size: cover;
-  height: 100vh;
+  height: 150vh;
   padding: 0;
   margin: 0;
 }
@@ -94,7 +92,7 @@ p {
   align-items: center;
 }
 
- .waiting-screen {
+.waiting-screen {
   background-color: bisque;
   min-height: 100vh;
   display: flex;
@@ -137,9 +135,20 @@ p {
 }
 
 .gameboard-wrapper {
-  background-color: rgb(255, 255, 255);
+  background-color: rgba(201, 253, 253, 0.685);
   border-radius: 10px;
-  margin: 0.2rem;
+  padding: 1.4rem;
+  margin-right: 2rem;
+}
+
+.center-gameBoards {
+  display: flex;
+  justify-content: center;
+}
+
+.center-ship {
+  display: flex;
+  justify-content: center;
 }
 
 .gameBoard {
@@ -148,23 +157,13 @@ p {
   grid-gap: 0.2em;
 }
 
-.gif-container {
-  z-index: -100;
-  /*  background-image: url(https://media.giphy.com/media/2uI6DhDIWY9iBT2sB8/giphy.gif); */
-  background-repeat: no-repeat;
-}
-
 .pixel {
   /*   border: 1px solid rgb(241, 162, 241); */
   background: linear-gradient(90deg, rgb(238, 179, 237) 0%, rgb(243, 155, 234) 35%, rgb(225, 172, 250) 100%);
   width: 2rem;
   height: 2rem;
-  border-radius: 10px;
+  border-radius: 4px;
 }
-/* 
-  .pixel:hover {
-    background-color: rgb(175, 114, 124); 
-  } */
 
 .pixelShip {
   background-color: #ff3c00;
@@ -185,28 +184,36 @@ p {
 }
 
 #scoreBoard {
-  border: 1px solid rgb(241, 162, 241);
   background-color: white;
-  /*  background: linear-gradient(90deg, rgb(238, 179, 237) 0%, rgb(211, 128, 203) 35%, rgb(225, 172, 250) 100%); */
+  background-color: rgba(201, 253, 253, 0.685);
   border-radius: 10px;
   color: black;
   font-size: 2rem;
-  padding: 0.5rem;
+  padding: 1.4rem;
 }
 
 #opponent-board {
-  background-color: rgb(219, 219, 219);
+  font-size: 1rem;
+  margin: 0.3rem 0.7rem 0.7rem 0;
+  background-color: #74ebf3;
   border-radius: 10px;
+  padding: 0.6rem;
 }
 
 #currentPlayer-board {
-  background-color: rgb(219, 219, 219);
+  font-size: 1rem;
+  margin: 0.3rem 0.7rem 0.7rem 0;
+  background-color: #74ebf3;
   border-radius: 10px;
+  padding: 0.6rem;
 }
 
 #turnToggle {
   background-color: rgb(255, 216, 43);
+  font-size: 1rem;
+  margin: 0.3rem 0.7rem 0.7rem 0;
   border-radius: 10px;
+  padding: 0.6rem;
 }
 
 .cant-place-ship {
@@ -214,9 +221,12 @@ p {
 }
 
 #turnToggle-your-turn {
-  background-color: #7dbe84;
-  margin: 1rem 0 3rem 0;
+  background-color: #62cc6c;
+  border-color: #1ba829;
+  font-size: 1rem;
+  margin: 0.3rem 0.7rem 0.7rem 0;
   border-radius: 10px;
+  padding: 0.6rem;
 }
 
 .btn.active {
@@ -225,9 +235,10 @@ p {
 }
 
 .placement-container {
-  /*   background-color: #ffbef9; */
-  background-color: white;
+  background-color: rgba(201, 253, 253, 0.685);
   border-radius: 10px;
+  padding: 1.4rem;
+  margin: 0  0 2rem 4rem;
 }
 
 .x2 {
@@ -243,29 +254,31 @@ p {
 }
 
 .btn-ship-selection .btn {
-  font-size: 0.8rem;
-  margin: 0.3rem 0 0 0;
-  background-color: #8abdcd;
+  font-size: 1rem;
+  margin: 0.3rem 0.7rem 0.7rem 0;
+  background-color: #74ebf3;
   border-radius: 10px;
+  padding: 0.6rem;
 }
 
 .btn-direction-selection .btn,
 .btn-direction-selection .btn:active {
-  background-color: #7dbe84;
-  border-color: #7dbe84;
-  font-size: 1rem;
+  background-color: #62cc6c;
+  border-color: #1ba829;
+  font-size: 1.1rem;
   border-radius: 10px;
-  padding: 0.4rem;
-  margin: 2rem;
+  padding: 0.6rem;
+  margin: 1, 6rem;
   border-radius: 10px;
 }
 
 .btn.btn-randomise {
-  background-color: #badfec;
-  border-color: #badfec;
-  font-size: 1rem;
+  background-color: #74ebf3;
+  border-color: #4ce8f3;
+  font-size: 1.2rem;
   padding: 0.6rem;
   border-radius: 10px;
+  margin: 1rem;
 }
 
 .username-taken {
@@ -318,7 +331,4 @@ p {
     -webkit-transform: translate(0);
     transform: translate(0);
   }
-
 }
-
-
