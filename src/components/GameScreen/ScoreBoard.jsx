@@ -7,7 +7,7 @@ const ScoreBoard = ({ opponent, oppShipsLeft, player, playerShipsLeft, isYourTur
   return (
     <>
       <div id='scoreBoard'>
-        <h3>Scoreboard</h3>
+        <h2>Scoreboard</h2>
 
         <div id='opponent-board'>
           <h3>You: {player}</h3>
@@ -18,7 +18,10 @@ const ScoreBoard = ({ opponent, oppShipsLeft, player, playerShipsLeft, isYourTur
           <h4>Ships remaning: {oppShipsLeft}</h4>
         </div>
 
-        <div id={isYourTurn ? "turnToggle-your-turn" : "turnToggle"} className={isYourTurn && isOpponentReady ? "vibrate-1" : ""}>
+        <div
+          id={isYourTurn ? 'turnToggle-your-turn' : 'turnToggle'}
+          className={isYourTurn && isOpponentReady ? 'vibrate-1' : ''}
+        >
           {isYourTurn && <h3> It's your turn </h3>}
           {!isYourTurn && <h3> Opponents turn </h3>}
         </div>
