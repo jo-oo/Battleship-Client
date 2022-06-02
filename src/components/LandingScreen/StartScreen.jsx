@@ -14,9 +14,6 @@ const StartScreen = ({ handleSubmit, setNameInput, searchInputRef, isNameOccupie
                   <br />
                   <button type="submit" className="btn btn-primary">Enter queue</button>
                 </form>
-
-            <h1>Battleship</h1>
-
             {
               isNameOccupied && (
                 <div className="alert alert-danger username-taken">
@@ -24,12 +21,6 @@ const StartScreen = ({ handleSubmit, setNameInput, searchInputRef, isNameOccupie
                 </div>
               )
             }
-
-            <form className='form' onSubmit={handleSubmit}>
-              <input type="text" id="username" className="form-control form-control-lg" onChange={e => setNameInput(e.target.value)} ref={searchInputRef} placeholder="Your name" required autoFocus />
-              <br />
-              <button type="submit" className="btn btn-primary">Enter queue</button>
-            </form>
           </section>
         </div>
       </>
