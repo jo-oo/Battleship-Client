@@ -39,6 +39,8 @@ const Landing = ({ socket }) => {
       // Change state if this players name is the one to start game
       if (startingPlayer === nameInput) {
         setShouldStart(true);
+      } else {
+        setShouldStart(false)
       }
 
       setIsGameLive(true);
