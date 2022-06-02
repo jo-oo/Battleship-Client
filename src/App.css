@@ -18,6 +18,7 @@ body {
 /* all headings */
 
 h1 {
+  padding: 2rem;
   font-size: 5rem;
 }
 
@@ -34,9 +35,15 @@ h3 {
 }
 
 h4 {
-  font-size: 1rem;
+  font-size: 1.1rem;
   color: rgb(54, 122, 150);
   text-align: start;
+}
+
+h5 {
+  font-size: 3rem;
+
+  color: rgb(255, 255, 255);
 }
 p {
   padding: 0.5rem;
@@ -51,7 +58,7 @@ p {
 }
 
 .waiting-screen {
-  background-image: url('https://media.giphy.com/media/1iolyDnRDa4IZNCKAY/giphy.gif');
+  background-image: url('https://media.giphy.com/media/idFJpr0JFGFEEsJXSG/giphy.gif');
   background-size: cover;
   height: 100vh;
   padding: 0;
