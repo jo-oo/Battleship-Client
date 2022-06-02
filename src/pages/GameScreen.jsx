@@ -429,26 +429,19 @@ const GameScreen = ({ opponent, player, shouldStart, socket, onGameOver }) => {
   return (
     <>
       <Row>
-        <Col>
+        <Col className='d-flex justify-content-center'>
           <h1>BATTLESHIP 2-player game </h1>
         </Col>
       </Row>
 
       <Row>
-        <Col>
-          <div className='pixelHit'></div> <p>Hit</p>
-          <div className='pixelMiss'></div> Miss
-        </Col>
-      </Row>
-
-      <Row>
-        <Col>
+        <Col className='d-flex justify-content-end'>
           {nrOfShipsLeftToPlace !== 0 && (
             <div className='placement-container'>
               <h3>Place your ships</h3>
               <div className='btn-ship-selection p-2 d-flex flex-column'>
                 <button
-                  className={selectedShip.id === 0 ? 'btn btn-info active' : 'btn btn-info'}
+                  className={selectedShip.id === 0 ? 'btn btn-info active x2' : 'btn btn-info x2'}
                   onClick={() => {
                     setSelectedShip(ships[0]);
                   }}
@@ -457,7 +450,7 @@ const GameScreen = ({ opponent, player, shouldStart, socket, onGameOver }) => {
                   2x ship
                 </button>
                 <button
-                  className={selectedShip.id === 1 ? 'btn btn-info active' : 'btn btn-info'}
+                  className={selectedShip.id === 1 ? 'btn btn-info active x2' : 'btn btn-info x2'}
                   onClick={() => {
                     setSelectedShip(ships[1]);
                   }}
@@ -466,7 +459,7 @@ const GameScreen = ({ opponent, player, shouldStart, socket, onGameOver }) => {
                   2x ship
                 </button>
                 <button
-                  className={selectedShip.id === 2 ? 'btn btn-info active' : 'btn btn-info'}
+                  className={selectedShip.id === 2 ? 'btn btn-info active x3' : 'btn btn-info x3'}
                   onClick={() => {
                     setSelectedShip(ships[2]);
                   }}
@@ -475,7 +468,7 @@ const GameScreen = ({ opponent, player, shouldStart, socket, onGameOver }) => {
                   3x ship
                 </button>
                 <button
-                  className={selectedShip.id === 3 ? 'btn btn-info active' : 'btn btn-info'}
+                  className={selectedShip.id === 3 ? 'btn btn-info active x4' : 'btn btn-info x4'}
                   onClick={() => {
                     setSelectedShip(ships[3]);
                   }}
@@ -484,16 +477,15 @@ const GameScreen = ({ opponent, player, shouldStart, socket, onGameOver }) => {
                   4x ship
                 </button>
               </div>
-              <div className='btn-direction-selection d-flex flex-row'>
+              <div className='btn-direction-selection d-flex flex-row justify-content-center'>
                 <button
                   className='btn btn-info'
                   onClick={() => {
                     updateCurrentDirection();
                   }}
                 >
-                  Change direction
+                  Change direction <img src={`arrow${currentDirection}.png`} alt='arrow showing ship direction' />
                 </button>
-                <img src={`arrow${currentDirection}.png`} alt='arrow showing ship direction' />
               </div>
 
               <button
@@ -508,32 +500,30 @@ const GameScreen = ({ opponent, player, shouldStart, socket, onGameOver }) => {
             </div>
           )}
         </Col>
-
-        <Col>
+        <Col className='d-flex flex-column justify-content-end gameboard-wrapper'>
           <h2>{player}s board: </h2>
           <ShipColours pixelArray={pixelArray} placeCoords={placeShipCoords} player={player}></ShipColours>
         </Col>
+        <Col className='d-flex flex-column justify-content-start gameboard-wrapper'>
+          <div className='d-flex flex-row justify-content-between'>
+            {' '}
+            <h2>{opponent}s board: </h2>
+            <div className='d-flex flex-row'>
+              {' '}
+              <div className='pixelMiss'></div> <p>Miss</p>
+              <div className='pixelHit'></div> <p>Hit</p>
+            </div>
+          </div>
 
-        <Col>
-          <ScoreBoard
-            opponent={opponent}
-            oppShipsLeft={oppShipsLeft}
-            player={player}
-            playerShipsLeft={playerShipsLeft}
-            isYourTurn={isYourTurn}
-          ></ScoreBoard>
-        </Col>
-
-        <Col>
-          <h2>{opponent}s board: </h2>
-
-          <HitOrMiss
-            pixelArray={pixelArray}
-            arrayOfHits={arrayOfHits}
-            arrayOfMissed={arrayOfMissed}
-            handleOppBoardClick={handleOppBoardClick}
-            opponent={opponent}
-          ></HitOrMiss>
+          <div>
+            <HitOrMiss
+              pixelArray={pixelArray}
+              arrayOfHits={arrayOfHits}
+              arrayOfMissed={arrayOfMissed}
+              handleOppBoardClick={handleOppBoardClick}
+              opponent={opponent}
+            ></HitOrMiss>
+          </div>
 
           <GameOver
             gameOver={gameOver}
@@ -541,11 +531,18 @@ const GameScreen = ({ opponent, player, shouldStart, socket, onGameOver }) => {
             oppShipsLeft={oppShipsLeft}
             playerShipsLeft={playerShipsLeft}
           ></GameOver>
-
-          <Gif />
-
-          <AnimatedCursor />
         </Col>
+        <Col lg={2} className='d-flex justify-content-center'>
+          <ScoreBoard
+            opponent={opponent}
+            oppShipsLeft={oppShipsLeft}
+            player={player}
+            playerShipsLeft={playerShipsLeft}
+            isYourTurn={isYourTurn}
+          ></ScoreBoard>
+        </Col>{' '}
+        <Gif />
+        <AnimatedCursor />
       </Row>
     </>
   );
