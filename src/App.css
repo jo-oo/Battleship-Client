@@ -19,6 +19,7 @@ body {
 
 h1 {
   font-size: 5rem;
+  padding: 3rem;
 }
 
 h2 {
@@ -130,6 +131,7 @@ p {
   background-color: rgba(201, 253, 253, 0.685);
   border-radius: 10px;
   padding: 1.4rem;
+  margin-right: 2rem;
 }
 
 .center-gameBoards {
@@ -229,7 +231,7 @@ p {
   background-color: rgba(201, 253, 253, 0.685);
   border-radius: 10px;
   padding: 1.4rem;
-  margin: 0 0 2rem 3rem;
+  margin: 0  0 2rem 4rem;
 }
 
 .x2 {
