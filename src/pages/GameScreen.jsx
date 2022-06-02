@@ -555,6 +555,7 @@ const GameScreen = ({room_id ,opponent, player, shouldStart, socket, onGameOver 
             player={player}
             playerShipsLeft={playerShipsLeft}
             isYourTurn={isYourTurn}
+            isOpponentReady={isOpponentReady}
           ></ScoreBoard>
         </Col>{' '}
         <Gif />
