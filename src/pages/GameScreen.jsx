@@ -454,24 +454,26 @@ const GameScreen = ({ room_id, opponent, player, shouldStart, socket, onGameOver
       <Row>
         <Col lg={4}>
           <PlaceShips
-              nrOfShipsLeftToPlace = {nrOfShipsLeftToPlace}
-              setSelectedShip = {setSelectedShip}
-              selectedShip= {selectedShip}
-              ships = {ships}
-              currentDirection= {currentDirection}
-              updateCurrentDirection = {updateCurrentDirection} 
-              fillShipCoord = {fillShipCoord}
-              setPixelArray = {setPixelArray}
-              createPixelArray = {createPixelArray}
-            ></PlaceShips>
-          </Col>
+            nrOfShipsLeftToPlace={nrOfShipsLeftToPlace}
+            setSelectedShip={setSelectedShip}
+            selectedShip={selectedShip}
+            ships={ships}
+            currentDirection={currentDirection}
+            updateCurrentDirection={updateCurrentDirection}
+            fillShipCoord={fillShipCoord}
+            setPixelArray={setPixelArray}
+            createPixelArray={createPixelArray}
+          ></PlaceShips>
+        </Col>
       </Row>
-      <Row>
- 
-        <Col lg={4} className='gameboard-wrapper'> {/* vit ruta runt gameboard */}
+      <Row className='center-gameBoards'>
+        <Col lg={4} className='gameboard-wrapper'>
+          {' '}
+          {/* vit ruta runt gameboard */}
           <h2>{player}s board: </h2>
           <ShipColours pixelArray={pixelArray} placeCoords={placeShipCoords} player={player}></ShipColours>
         </Col>
+
         <Col lg={4} className='gameboard-wrapper'>
           <div className='d-flex flex-row justify-content-between'>
             {' '}
@@ -508,6 +510,7 @@ const GameScreen = ({ room_id, opponent, player, shouldStart, socket, onGameOver
             isYourTurn={isYourTurn}
             isOpponentReady={isOpponentReady}
           ></ScoreBoard>
+
           <Gif />
           <AnimatedCursor />
         </Col>

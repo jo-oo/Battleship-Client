@@ -6,7 +6,6 @@ body {
   font-family: 'Montserrat', sans-serif;
 }
 
-
 .App {
   /*margin: 2rem;*/
   text-align: center;
@@ -77,8 +76,6 @@ p {
   background-image: url('https://media.giphy.com/media/2uI6DhDIWY9iBT2sB8/giphy.gif');
   background-size: cover;
   height: 100vh;
-  padding: 0;
-  margin: 0;
 }
 
 #input-field {
@@ -137,6 +134,12 @@ p {
   border-radius: 10px;
   margin: 0.2rem;
   padding: 0.2rem;
+}
+
+.center-gameBoards {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .gameBoard {
