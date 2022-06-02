@@ -23,7 +23,7 @@ h1 {
 
 h2 {
   font-size: 2rem;
-  color: #000000;
+  color: #d6318c;
   font-family: 'Bebas Neue', cursive;
   text-align: start;
 }
@@ -70,7 +70,7 @@ p {
 .gamescreen {
   background-image: url('https://media.giphy.com/media/2uI6DhDIWY9iBT2sB8/giphy.gif');
   background-size: cover;
-  height: 100vh;
+  height: 150vh;
   padding: 0;
   margin: 0;
 }
@@ -127,7 +127,7 @@ p {
 }
 
 .gameboard-wrapper {
-  background-color: rgb(255, 255, 255);
+  background-color: rgba(201, 253, 253, 0.685);
   border-radius: 10px;
   padding: 1.4rem;
 }
@@ -176,7 +176,7 @@ p {
 
 #scoreBoard {
   background-color: white;
-  /*  background: linear-gradient(90deg, rgb(238, 179, 237) 0%, rgb(211, 128, 203) 35%, rgb(225, 172, 250) 100%); */
+  background-color: rgba(201, 253, 253, 0.685);
   border-radius: 10px;
   color: black;
   font-size: 2rem;
@@ -184,21 +184,27 @@ p {
 }
 
 #opponent-board {
-  background-color: rgb(219, 219, 219);
-  border-radius: 8px;
-  padding: 0.3rem;
-  margin: 0 0 0.3rem 0;
+  font-size: 1rem;
+  margin: 0.3rem 0.7rem 0.7rem 0;
+  background-color: #74ebf3;
+  border-radius: 10px;
+  padding: 0.6rem;
 }
 
 #currentPlayer-board {
-  background-color: rgb(219, 219, 219);
-  border-radius: 8px;
+  font-size: 1rem;
+  margin: 0.3rem 0.7rem 0.7rem 0;
+  background-color: #74ebf3;
+  border-radius: 10px;
+  padding: 0.6rem;
 }
 
 #turnToggle {
   background-color: rgb(255, 216, 43);
-  padding: 0.3rem;
-  border-radius: 8px;
+  font-size: 1rem;
+  margin: 0.3rem 0.7rem 0.7rem 0;
+  border-radius: 10px;
+  padding: 0.6rem;
 }
 
 .cant-place-ship {
@@ -206,9 +212,12 @@ p {
 }
 
 #turnToggle-your-turn {
-  background-color: #7dbe84;
-  margin: 1rem 0 3rem 0;
+  background-color: #62cc6c;
+  border-color: #1ba829;
+  font-size: 1rem;
+  margin: 0.3rem 0.7rem 0.7rem 0;
   border-radius: 10px;
+  padding: 0.6rem;
 }
 
 .btn.active {
@@ -217,8 +226,10 @@ p {
 }
 
 .placement-container {
-  background-color: white;
+  background-color: rgba(201, 253, 253, 0.685);
   border-radius: 10px;
+  padding: 1.4rem;
+  margin: 0 0 2rem 3rem;
 }
 
 .x2 {
