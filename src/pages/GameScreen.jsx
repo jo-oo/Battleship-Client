@@ -7,7 +7,6 @@ import HitOrMiss from '../components/GameScreen/HitOrMiss';
 import ShipColours from '../components/GameScreen/ShipColours';
 import ScoreBoard from '../components/GameScreen/ScoreBoard';
 import GameOver from '../components/GameScreen/GameOver';
-import Gif from '../components/GameScreen/Gif';
 import PlaceShips from '../components/GameScreen/PlaceShips';
 
 const arrayOppHits = [];
@@ -510,8 +509,6 @@ const GameScreen = ({ room_id, opponent, player, shouldStart, socket, onGameOver
             isYourTurn={isYourTurn}
             isOpponentReady={isOpponentReady}
           ></ScoreBoard>
-
-          <Gif />
           <AnimatedCursor />
         </Col>
       </Row>
