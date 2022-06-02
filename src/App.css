@@ -269,21 +269,8 @@ p {
 }
 
 .username-taken {
-<<<<<<< HEAD
-  background-color: #BC0303;
-  font-weight: bold;
-  color: black;
-  border: 1px solid black;
-}
-
-.username-taken {
   background-color: #eb4029;
-=======
-
-  background-color: #bc0303;
->>>>>>> 2905f36e6c1e7ec527934a1ba76280f1309600f3
   font-weight: bold;
-  start-screen
   color: rgb(60, 64, 109);
   border-color: #badfec;
   border-radius: 10px;
@@ -331,13 +318,7 @@ p {
     -webkit-transform: translate(0);
     transform: translate(0);
   }
-<<<<<<< HEAD
-}
-=======
 
 }
 
 
-}
-
->>>>>>> 2905f36e6c1e7ec527934a1ba76280f1309600f3
