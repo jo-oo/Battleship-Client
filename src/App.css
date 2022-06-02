@@ -268,10 +268,13 @@ p {
 }
 
 .username-taken {
+
   background-color: #bc0303;
   font-weight: bold;
-  color: black;
-  border: 1px solid black;
+  start-screen
+  color: rgb(60, 64, 109);
+  border-color: #badfec;
+  border-radius: 10px;
 }
 
 .vibrate-1 {
@@ -316,4 +319,9 @@ p {
     -webkit-transform: translate(0);
     transform: translate(0);
   }
+
 }
+
+
+}
+
