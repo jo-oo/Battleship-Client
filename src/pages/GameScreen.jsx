@@ -481,8 +481,8 @@ const GameScreen = ({ room_id, opponent, player, shouldStart, socket, onGameOver
               {' '}
               <h2>{opponent}s board: </h2>
               <div className='d-flex flex-row'>
-                <div className='pixelMiss'></div> <p>Miss</p>
-                <div className='pixelHit'></div> <p>Hit</p>
+                <div className='MissInfo'></div> <p>Miss</p>
+                <div className='HitInfo'></div> <p>Hit</p>
               </div>
             </div>
 
