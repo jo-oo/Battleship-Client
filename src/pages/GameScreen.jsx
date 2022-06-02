@@ -275,6 +275,18 @@ const GameScreen = ({room_id ,opponent, player, shouldStart, socket, onGameOver 
     return result;
   }, [currentDirection, selectedShip]);
 
+  const cleanUpData = () => {
+    setIsOpponentReady(false)
+    nrOfShipsLeftToPlace = 4
+
+    ships.forEach( (ship) => {
+      ship.partsLeft = ship.length
+      ship.startPos = null
+      ship.coords = []
+      ship.isPlaced = false
+    } )
+  }
+
   // Function that handles when opponent has clicked a sqaure
   const handleOppClick = useCallback(
     (index) => {
@@ -321,6 +333,7 @@ const GameScreen = ({room_id ,opponent, player, shouldStart, socket, onGameOver 
               if (totShipsLeft - 1 === 0) {
                 gameOver = true;
                 onGameOver({ won: false });
+                cleanUpData()
               }
             }
 
@@ -396,6 +409,7 @@ const GameScreen = ({room_id ,opponent, player, shouldStart, socket, onGameOver 
 
         if (gameOver) {
           onGameOver({ won: true });
+          cleanUpData()
           gameOverOpp = true;
         }
       } else {

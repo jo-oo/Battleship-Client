@@ -84,6 +84,7 @@ const Landing = ({ socket }) => {
     // Set loading state to true
     setIsLoading(true);
     setIsGameOver(false);
+    setIsGameLive(false)
 
     socket.emit('user:join-queue', nameInput, handleTakenUsername);
   };
