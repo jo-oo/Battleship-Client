@@ -444,7 +444,7 @@ const GameScreen = ({ room_id, opponent, player, shouldStart, socket, onGameOver
   console.log('oppShipsLeft', oppShipsLeft);
 
   return (
-    <Container className='m-1'>
+    <Container className='gamescreen'>
       <Row>
         <Col className='d-flex justify-content-center'>
           <h1>BATTLESHIP 2-player game </h1>
