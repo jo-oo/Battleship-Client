@@ -54,8 +54,6 @@ p {
   padding: 0.5rem;
 }
 
-
-
 .start-screen {
   background-image: url('https://media.giphy.com/media/2uI6DhDIWY9iBT2sB8/giphy.gif');
   background-size: cover;
@@ -93,7 +91,8 @@ p {
   justify-content: center;
   align-items: center;
 }
-*/ .waiting-screen {
+
+ .waiting-screen {
   background-color: bisque;
   min-height: 100vh;
   display: flex;
@@ -215,14 +214,14 @@ p {
   border-radius: 10px;
 }
 
+.cant-place-ship {
+  cursor: not-allowed;
+}
+
 #turnToggle-your-turn {
   background-color: #7dbe84;
   margin: 1rem 0 3rem 0;
   border-radius: 10px;
-}
-
-.cant-place-ship {
-  cursor: not-allowed;
 }
 
 .btn.active {
@@ -279,6 +278,13 @@ p {
 }
 
 .username-taken {
+  background-color: #BC0303;
+  font-weight: bold;
+  color: black;
+  border: 1px solid black;
+}
+
+.username-taken {
   background-color: #eb4029;
   font-weight: bold;
   start-screen
@@ -329,5 +335,4 @@ p {
     -webkit-transform: translate(0);
             transform: translate(0);
   }
-
 }
