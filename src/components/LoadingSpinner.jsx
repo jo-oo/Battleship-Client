@@ -1,4 +1,4 @@
-//takes loading and Spinner into component
+//takes loading and Spinner into component (from LandingScreen page)
 const LoadingSpinner = ( { loading, Spinner } ) => {
 	return ( 
         <>
@@ -7,7 +7,7 @@ const LoadingSpinner = ( { loading, Spinner } ) => {
 				{loading &&
                     (
                         <div className="mt-4">
-				            <Spinner animation="border" role="status" variant="light"></Spinner>
+				            <Spinner animation="border" role="status" variant="dark"></Spinner>
                         </div>
                     )
                 }
