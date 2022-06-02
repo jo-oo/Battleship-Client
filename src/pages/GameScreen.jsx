@@ -453,7 +453,7 @@ const GameScreen = ({ room_id, opponent, player, shouldStart, socket, onGameOver
         </Row>
         <Row>
           <div className='center-ships'>
-            <Col lg={4} className='mx-4'>
+            <Col lg={4}>
               <PlaceShips
                 nrOfShipsLeftToPlace={nrOfShipsLeftToPlace}
                 setSelectedShip={setSelectedShip}
