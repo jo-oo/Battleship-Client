@@ -2,15 +2,14 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
 
+
 body {
   font-family: 'Montserrat', sans-serif;
 }
 
 
 .App {
-  /*margin: 2rem;*/
   text-align: center;
-  /*position: relative;*/
 }
 
 body {
@@ -55,9 +54,6 @@ p {
   margin: 0;
 }
 
-.waiting-screen {
-  background-color: aquamarine;
-}
 .waiting-screen {
   background-image: url('https://media.giphy.com/media/1iolyDnRDa4IZNCKAY/giphy.gif');
   background-size: cover;
@@ -146,12 +142,6 @@ p {
   grid-gap: 0.2em;
 }
 
-.gif-container {
-  z-index: -100;
-  /*  background-image: url(https://media.giphy.com/media/2uI6DhDIWY9iBT2sB8/giphy.gif); */
-  background-repeat: no-repeat;
-}
-
 .pixel {
   /*   border: 1px solid rgb(241, 162, 241); */
   background: linear-gradient(90deg, rgb(238, 179, 237) 0%, rgb(243, 155, 234) 35%, rgb(225, 172, 250) 100%);
@@ -223,9 +213,10 @@ p {
 }
 
 .placement-container {
-  /*   background-color: #ffbef9; */
   background-color: white;
   border-radius: 10px;
+  padding: 1.4rem;
+
 }
 
 .x2 {
@@ -241,29 +232,31 @@ p {
 }
 
 .btn-ship-selection .btn {
-  font-size: 0.8rem;
-  margin: 0.3rem 0 0 0;
-  background-color: #8abdcd;
+  font-size: 1rem;
+  margin: 0.3rem 0.7rem 0.7rem 0;
+  background-color: #74ebf3;
   border-radius: 10px;
+  padding: 0.6rem;
 }
 
 .btn-direction-selection .btn,
 .btn-direction-selection .btn:active {
-  background-color: #7dbe84;
-  border-color: #7dbe84;
-  font-size: 1rem;
+  background-color: #62cc6c;
+  border-color: #1ba829;
+  font-size: 1.1rem;
   border-radius: 10px;
-  padding: 0.4rem;
-  margin: 2rem;
+  padding: 0.6rem;
+  margin: 1,6rem;
   border-radius: 10px;
 }
 
 .btn.btn-randomise {
-  background-color: #badfec;
-  border-color: #badfec;
-  font-size: 1rem;
+  background-color: #74ebf3;
+  border-color: #4ce8f3;
+  font-size: 1.2rem;
   padding: 0.6rem;
   border-radius: 10px;
+  margin: 1rem;
 }
 
 .username-taken {

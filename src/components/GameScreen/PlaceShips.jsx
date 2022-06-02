@@ -8,7 +8,7 @@ const PlaceShips = ({ nrOfShipsLeftToPlace, setSelectedShip, selectedShip, ships
       <>
          {nrOfShipsLeftToPlace !== 0 && (
             <div className='placement-container'>
-              <h3>Place your ships</h3>
+              <h2>Place your ships</h2>
               <div className='btn-ship-selection'>
                 <button
                   className={selectedShip.id === 0 ? 'btn btn-info active x2' : 'btn btn-info x2'}
