@@ -9,7 +9,7 @@ const PlaceShips = ({ nrOfShipsLeftToPlace, setSelectedShip, selectedShip, ships
          {nrOfShipsLeftToPlace !== 0 && (
             <div className='placement-container'>
               <h3>Place your ships</h3>
-              <div className='btn-ship-selection p-2 d-flex flex-column'>
+              <div className='btn-ship-selection'>
                 <button
                   className={selectedShip.id === 0 ? 'btn btn-info active x2' : 'btn btn-info x2'}
                   onClick={() => {
@@ -47,7 +47,7 @@ const PlaceShips = ({ nrOfShipsLeftToPlace, setSelectedShip, selectedShip, ships
                   4x ship
                 </button>
               </div>
-              <div className='btn-direction-selection d-flex flex-row justify-content-center'>
+              <div className='btn-direction-selection'>
                 <button
                   className='btn btn-info'
                   onClick={() => {
@@ -56,17 +56,16 @@ const PlaceShips = ({ nrOfShipsLeftToPlace, setSelectedShip, selectedShip, ships
                 >
                   Change direction <img src={`arrow${currentDirection}.png`} alt='arrow showing ship direction' />
                 </button>
-              </div>
-
-              <button
+                <button
                 className='btn btn-info btn-randomise'
                 onClick={() => {
                   fillShipCoord();
                   setPixelArray(createPixelArray());
                 }}
-              >
+                >
                 Randomise positions
-              </button>
+                </button>
+               </div>
             </div>
           )}
       </>

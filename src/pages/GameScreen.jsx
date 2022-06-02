@@ -451,21 +451,23 @@ const GameScreen = ({ room_id, opponent, player, shouldStart, socket, onGameOver
           <h1>BATTLESHIP 2-player game </h1>
         </Col>
       </Row>
-
       <Row>
-        <Col md={1}>
-        <PlaceShips
-            nrOfShipsLeftToPlace = {nrOfShipsLeftToPlace}
-            setSelectedShip = {setSelectedShip}
-            selectedShip= {selectedShip}
-            ships = {ships}
-            currentDirection= {currentDirection}
-            updateCurrentDirection = {updateCurrentDirection} 
-            fillShipCoord = {fillShipCoord}
-            setPixelArray = {setPixelArray}
-            createPixelArray = {createPixelArray}
-          ></PlaceShips>
-        </Col>
+        <Col lg={4}>
+          <PlaceShips
+              nrOfShipsLeftToPlace = {nrOfShipsLeftToPlace}
+              setSelectedShip = {setSelectedShip}
+              selectedShip= {selectedShip}
+              ships = {ships}
+              currentDirection= {currentDirection}
+              updateCurrentDirection = {updateCurrentDirection} 
+              fillShipCoord = {fillShipCoord}
+              setPixelArray = {setPixelArray}
+              createPixelArray = {createPixelArray}
+            ></PlaceShips>
+          </Col>
+      </Row>
+      <Row>
+ 
         <Col lg={4} className='gameboard-wrapper'> {/* vit ruta runt gameboard */}
           <h2>{player}s board: </h2>
           <ShipColours pixelArray={pixelArray} placeCoords={placeShipCoords} player={player}></ShipColours>
