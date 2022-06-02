@@ -10,12 +10,12 @@ const GameOver = ({ result, submit, exit }) => {
         <div className='result-screen-wrapper'>
           {result.won && (
             <>
-              <div>Congratulations, you won!</div>
+              <div><h2>Congratulations, you won!</h2></div>
             </>
           )}
           {!result.won && (
             <>
-              <div>You lost the game :&#40;</div>
+              <div><h2>You lost the game :&#40;</h2></div>
             </>
           )}
           <button className='btn btn-primary' onClick={submit}>

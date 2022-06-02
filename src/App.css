@@ -1,10 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@100&family=Roboto+Mono:wght@200&display=swap');
 
-@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
-
-body {
-  font-family: 'Montserrat', sans-serif;
-}
 
 .App {
   text-align: center;
@@ -118,7 +113,7 @@ h5 {
   font-size: 1.5rem;
   height: 50%;
   width: 50%;
-  background-color: rgb(231, 255, 255);
+  background-color: rgba(255, 131, 234, 0.904);
   border: 1px solid black;
   border-radius: 3px;
   box-shadow: 0 0 25px 3px black;
@@ -169,13 +164,25 @@ h5 {
 
 .pixelHit {
   background-color: #1ba829;
+  width: 2rem;
+  height: 2rem;
+}
+
+.pixelMiss {
+  background-color: #f5f075;
+  width: 2rem;
+  height: 2rem;
+}
+
+.HitInfo {
+  background-color: #1ba829;
   width: 1.8rem;
   height: 1.8rem;
   margin-right: 0.5rem;
   margin-left: 1rem;
 }
 
-.pixelMiss {
+.MissInfo {
   background-color: #f5f075;
   width: 1.8rem;
   height: 1.8rem;
@@ -257,6 +264,12 @@ h5 {
 }
 
 form .btn {
+  padding: 0.8rem;
+  font-size: larger;
+  margin-top: 1.6rem;
+}
+
+.result-screen-wrapper .btn {
   padding: 0.8rem;
   font-size: larger;
   margin-top: 1.6rem;
