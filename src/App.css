@@ -6,13 +6,12 @@ body {
   font-family: 'Montserrat', sans-serif;
 }
 
-
 .App {
-  margin: 2rem;
+  /*margin: 2rem;*/
   text-align: center;
-  position: relative;
+  /*position: relative;*/
 }
-
+/*
 body {
   background-image: url('https://media.giphy.com/media/2uI6DhDIWY9iBT2sB8/giphy.gif');
   background-size: cover;
@@ -23,11 +22,11 @@ body {
   font-size: 2.4rem;
   width: 100%;
 }
-
+*/
 /* all headings */
 
 h1 {
-  font-size: 6rem;
+  font-size: 5rem;
   font-weight:bolder;
   color:#fe71f0;
 }
@@ -55,6 +54,8 @@ p {
   padding: 0.5rem;
 }
 
+
+
 .start-screen {
   background-image: url('https://media.giphy.com/media/2uI6DhDIWY9iBT2sB8/giphy.gif');
   background-size: cover;
@@ -62,10 +63,10 @@ p {
   padding: 0;
   margin: 0;
 }
+
 .waiting-screen {
   background-color: aquamarine;
 }
-
 .waiting-screen {
   background-image: url('https://media.giphy.com/media/1iolyDnRDa4IZNCKAY/giphy.gif');
   background-size: cover;
