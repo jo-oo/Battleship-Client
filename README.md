@@ -58,6 +58,8 @@ When all of a ships squares is clicked and hit, the ship will sink. When all shi
 - VS Code
 - React
 
-## Printscreen
+## Printscreens
+
+<img src="https://github.com/jo-oo/Battleship-Client/blob/main/src/assets/screenprint.png" width=100%>
 
 <img src="https://github.com/jo-oo/Battleship-Client/blob/main/src/assets/screenprint2.png" width=100%>
